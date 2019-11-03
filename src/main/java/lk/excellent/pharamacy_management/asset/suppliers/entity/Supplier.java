@@ -23,7 +23,7 @@ public class Supplier{
     private String address;
 
     @Size(min = 10, message = "Provide valid phone number")
-    private String number;
+    private String land;
 
     @Email(message = "Provide valid email")
     private String email;
@@ -38,12 +38,12 @@ public class Supplier{
 
     private LocalDate createdAt;
 
-    public Supplier(Integer id, String code, @Size(min = 4, message = "Provide valid name") String name, @Size(min = 10, message = "Provide valid name") String address, @Size(min = 10, message = "Provide valid phone number") String number, @Email(message = "Provide valid email") String email, String contactName, String contactMobile, String contactEmail, LocalDate updatedAt, LocalDate createdAt) {
+    public Supplier(Integer id, String code, @Size(min = 4, message = "Provide valid name") String name, @Size(min = 10, message = "Provide valid name") String address, @Size(min = 10, message = "Provide valid phone number") String land, @Email(message = "Provide valid email") String email, String contactName, String contactMobile, String contactEmail, LocalDate updatedAt, LocalDate createdAt) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.address = address;
-        this.number = number;
+        this.land = land;
         this.email = email;
         this.contactName = contactName;
         this.contactMobile = contactMobile;
@@ -87,12 +87,12 @@ public class Supplier{
         this.address = address;
     }
 
-    public String getNumber() {
-        return number;
+    public String getLand() {
+        return land;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setLand(String land) {
+        this.land = land;
     }
 
     public String getEmail() {
@@ -162,8 +162,8 @@ public class Supplier{
         final Object this$address = this.getAddress();
         final Object other$address = other.getAddress();
         if (this$address == null ? other$address != null : !this$address.equals(other$address)) return false;
-        final Object this$number = this.getNumber();
-        final Object other$number = other.getNumber();
+        final Object this$number = this.getLand();
+        final Object other$number = other.getLand();
         if (this$number == null ? other$number != null : !this$number.equals(other$number)) return false;
         final Object this$email = this.getEmail();
         final Object other$email = other.getEmail();
@@ -204,7 +204,7 @@ public class Supplier{
         result = result * PRIME + ($name == null ? 43 : $name.hashCode());
         final Object $address = this.getAddress();
         result = result * PRIME + ($address == null ? 43 : $address.hashCode());
-        final Object $number = this.getNumber();
+        final Object $number = this.getLand();
         result = result * PRIME + ($number == null ? 43 : $number.hashCode());
         final Object $email = this.getEmail();
         result = result * PRIME + ($email == null ? 43 : $email.hashCode());

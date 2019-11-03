@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface SupplierDao extends JpaRepository<Supplier, Integer> {
     Supplier findFirstByOrderByIdDesc();
 
-    Supplier findByNumber(String number);
+    Supplier findByCode(String code);
 }

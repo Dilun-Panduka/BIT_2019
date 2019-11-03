@@ -79,8 +79,8 @@
                                 <label class="control-label col-md-4" for="land">Land Number</label>
                                 <div class="col-md-8">
                                     <input class="form-control" id="land" name="land" placeholder="Enter Land Here"
-                                           th:field="*{number}" type="text"/>
-                                    <span class="error" th:errors="*{number}" th:if="${#fields.hasErrors('land')}">Error Land Number</span>
+                                           th:field="*{land}" type="text"/>
+                                    <span class="error" th:errors="*{land}" th:if="${#fields.hasErrors('land')}">Error Land Number</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -99,7 +99,7 @@
                                 <div class="col-md-8">
                                     <input class="form-control" id="cpName" name="cpName" placeholder="Enter Contact Person Name Here"
                                            th:field="*{contactName}" type="text"/>
-                                    <span class="error" th:errors="*{contactName}" th:if="${#fields.hasErrors('name')}">Error Name</span>
+                                    <span class="error" th:errors="*{contactName}" th:if="${#fields.hasErrors('contactName')}">Error Name</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -107,7 +107,7 @@
                                 <div class="col-md-8">
                                     <input class="form-control" id="cpEmail" name="cpEmail" placeholder="Enter Contact Person email Here"
                                            th:field="*{contactEmail}" type="text"/>
-                                    <span class="error" th:errors="*{contactEmail}" th:if="${#fields.hasErrors('email')}">Error Email</span>
+                                    <span class="error" th:errors="*{contactEmail}" th:if="${#fields.hasErrors('contactEmail')}">Error Email</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -117,7 +117,7 @@
                                     <input class="form-control" id="cpMobile" name="cpMobile"
                                            placeholder="Enter Contact Person Mobile Here"
                                            required th:field="*{contactMobile}" type="text"/>
-                                    <span class="error" th:errors="*{contactMobile}" th:if="${#fields.hasErrors('mobile')}">Error Mobile Number</span>
+                                    <span class="error" th:errors="*{contactMobile}" th:if="${#fields.hasErrors('contactMobile')}">Error Mobile Number</span>
                                 </div>
                             </div>
                         </div>

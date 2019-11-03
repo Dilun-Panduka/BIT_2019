@@ -57,7 +57,7 @@ public class SupplierController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editSupplierFrom(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("supplier", supplierService.findById(id));
-        model.addAttribute("newSupplier",supplierService.findById(id).getNumber());
+        model.addAttribute("newSupplier",supplierService.findById(id).getCode());
         model.addAttribute("addStatus", false);
         model.addAttribute("title", Title.values());
         model.addAttribute("gender", Gender.values());
@@ -125,13 +125,13 @@ public class SupplierController {
         }
         if (supplier.getEmail() != null){
             String message = "Welcome to Excellent Health Solution \n " +
-                    "Your registration number is "+supplier.getNumber()+
+                    "Your registration number is "+supplier.getLand()+
                     "\nYour Details are"+
                     "\n "+supplier.getCode()+
                     "\n "+supplier.getName()+
                     "\n "+supplier.getAddress()+
                     "\n "+supplier.getEmail()+
-                    "\n "+supplier.getNumber()+
+                    "\n "+supplier.getLand()+
                     "\n "+supplier.getContactName()+
                     "\n "+supplier.getContactMobile()+
                     "\n "+supplier.getContactEmail()+

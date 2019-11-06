@@ -30,8 +30,10 @@ public class Supplier{
 
     private String contactName;
 
+    @Size(min = 10, message = "Provide valid phone number")
     private String contactMobile;
 
+    @Email(message = "Provide valid email")
     private String contactEmail;
 
     private LocalDate updatedAt;

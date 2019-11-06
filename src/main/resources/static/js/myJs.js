@@ -238,6 +238,14 @@ $("#mobile").bind("keyup", function () {
         backgroundColourChangeBad($(this));
     }
 });
+$("#contactMobile").bind("keyup", function () {
+    let mobile = $(this).val();
+    if (mobileRegex.test(mobile)) {
+        backgroundColourChangeGood($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
 $("#land").bind("keyup", function () {
     let land = $(this).val();
     if (landRegex.test(land)) {
@@ -256,7 +264,15 @@ $("#nic").bind("keyup", function () {
     }
 });
 //Name validation
-$("#patientName").bind("keyup", function () {
+$("#name").bind("keyup", function () {
+    let name = $(this).val();
+    if (nameRegex.test(name)) {
+        backgroundColourChangeGood($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+$("#contactName").bind("keyup", function () {
     let name = $(this).val();
     if (nameRegex.test(name)) {
         backgroundColourChangeGood($(this));

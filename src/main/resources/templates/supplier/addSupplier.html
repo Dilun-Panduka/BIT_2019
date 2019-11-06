@@ -46,10 +46,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="txtCode">Code <span
+                                <label class="control-label col-md-4" for="code">Code <span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-3">
-                                    <input class="form-control" id="txtCode" name="code" placeholder="Enter code"
+                                    <input class="form-control" id="code" name="code" placeholder="Enter code"
                                            required th:value="${newSupplier}" type="text"/>
                                     <span class="error" th:errors="*{code}" th:if="${#fields.hasErrors('code')}">Error code</span>
                                 </div>
@@ -59,10 +59,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="txtFullName">Name<span
+                                <label class="control-label col-md-4" for="name">Name<span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="txtFullName" name="name"
+                                    <input class="form-control" id="name" name="name"
                                            placeholder="Enter Full Here" required th:field="*{name}" type="text"/>
                                     <span class="error" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Error Name</span>
                                 </div>
@@ -95,26 +95,26 @@
                         <!-- /.col-sm-6 -->
                         <div class="col-sm-6 text-left">
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="cpName">Contact Person Name</label>
+                                <label class="control-label col-md-4" for="contactName">Contact Person Name</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="cpName" name="cpName" placeholder="Enter Contact Person Name Here"
+                                    <input class="form-control" id="contactName" name="contactName" placeholder="Enter Contact Person Name Here"
                                            th:field="*{contactName}" type="text"/>
                                     <span class="error" th:errors="*{contactName}" th:if="${#fields.hasErrors('contactName')}">Error Name</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="email">Email</label>
+                                <label class="control-label col-md-4" for="contactEmail">Email</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="cpEmail" name="cpEmail" placeholder="Enter Contact Person email Here"
+                                    <input class="form-control" id="contactEmail" name="contactEmail" placeholder="Enter Contact Person email Here"
                                            th:field="*{contactEmail}" type="text"/>
                                     <span class="error" th:errors="*{contactEmail}" th:if="${#fields.hasErrors('contactEmail')}">Error Email</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="cpMobile"> Contact Person Mobile <span
+                                <label class="control-label col-md-4" for="contactMobile"> Contact Person Mobile <span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="cpMobile" name="cpMobile"
+                                    <input class="form-control" id="contactMobile" name="contactMobile"
                                            placeholder="Enter Contact Person Mobile Here"
                                            required th:field="*{contactMobile}" type="text"/>
                                     <span class="error" th:errors="*{contactMobile}" th:if="${#fields.hasErrors('contactMobile')}">Error Mobile Number</span>

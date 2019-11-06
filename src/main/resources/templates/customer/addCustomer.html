@@ -46,10 +46,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="txtNumber">Number <span
+                                <label class="control-label col-md-4" for="number">Number <span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-3">
-                                    <input class="form-control" id="txtNumber" name="number" placeholder="Enter Number"
+                                    <input class="form-control" id="number" name="number" placeholder="Enter Number"
                                            required th:value="${newCustomer}" type="text"/>
                                     <span class="error" th:errors="*{number}" th:if="${#fields.hasErrors('number')}">Error Number</span>
                                 </div>
@@ -69,10 +69,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="txtFullName">Full Name<span
+                                <label class="control-label col-md-4" for="name">Full Name<span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="txtFullName" name="name"
+                                    <input class="form-control" id="name" name="name"
                                            placeholder="Enter Full Here" required th:field="*{name}" type="text"/>
                                     <span class="error" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Error Full Name</span>
                                 </div>

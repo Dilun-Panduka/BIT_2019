@@ -1,6 +1,7 @@
 package lk.excellent.pharamacy_management.asset.item.entity;
 
 
+import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -20,14 +22,19 @@ public class Item {
     @Id
     private Integer id;
 
-    @NotNull
-    @Column(unique = true)
+    @Column( unique = true )
+    @NotNull( message = "This code is already add or enter incorrectly" )
     private String code;
 
     private String description;
+
+    @NotNull
     private String generic;
 
-    private String supplier;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    private String suppliers;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -35,6 +42,10 @@ public class Item {
     private Double cost;
     private Double selling;
     private String soh;
+
+    private LocalDate updatedAt;
+
+    private LocalDate createdAt;
 
     public Integer getId() {
         return id;
@@ -68,12 +79,20 @@ public class Item {
         this.generic = generic;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public String getSupplier() {
-        return supplier;
+        return suppliers;
     }
 
     public void setSupplier(String supplier) {
-        this.supplier = supplier;
+        this.suppliers = supplier;
     }
 
     public Status getStatus() {
@@ -106,5 +125,21 @@ public class Item {
 
     public void setSoh(String soh) {
         this.soh = soh;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 }

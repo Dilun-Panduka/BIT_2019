@@ -51,6 +51,7 @@ public class SupplierController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String supplierView(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("supplierDetail", supplierService.findById(id));
+        model.addAttribute("addStatus", false);
         return "supplier/supplier-detail";
     }
 
@@ -67,9 +68,9 @@ public class SupplierController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String supplierAddFrom(Model model) {
         try {
-            String input;
-            if (supplierService.lastSupplier().getCode().equals(null)) {
-                input = "000";
+            String input = "";
+            if (supplierService.lastSupplier() == null) {
+                input = "EHS00";
             } else {
                 input = supplierService.lastSupplier().getCode();
             }

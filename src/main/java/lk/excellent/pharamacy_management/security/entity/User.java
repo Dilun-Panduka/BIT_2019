@@ -24,7 +24,7 @@ public class User {
     @Column(unique = true)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

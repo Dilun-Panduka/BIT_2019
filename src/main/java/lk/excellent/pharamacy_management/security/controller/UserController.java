@@ -1,11 +1,11 @@
-package lk.excellent.pharamacy_management.security.controller;/*
-package com.excellenthealthSolution.pharmacy.security.controller;
+package lk.excellent.pharamacy_management.security.controller;
 
-import com.excellenthealthSolution.pharmacy.util.service.DateTimeAgeService;
-import com.excellenthealthSolution.pharmacy.security.entity.User;
-import com.excellenthealthSolution.pharmacy.security.service.RoleService;
-import com.excellenthealthSolution.pharmacy.security.service.UserService;
-import com.excellenthealthSolution.pharmacy.asset.employee.service.EmployeeService;
+
+import lk.excellent.pharamacy_management.asset.employee.service.EmployeeService;
+import lk.excellent.pharamacy_management.security.entity.User;
+import lk.excellent.pharamacy_management.security.service.RoleService;
+import lk.excellent.pharamacy_management.security.service.UserService;
+import lk.excellent.pharamacy_management.util.service.DateTimeAgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.validation.Valid;
+
 
 
 
@@ -102,4 +102,3 @@ public class UserController {
         return "user/user-detail";
     }
 }
-*/

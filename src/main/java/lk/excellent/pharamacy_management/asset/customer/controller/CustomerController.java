@@ -51,13 +51,14 @@ public class CustomerController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String customerView(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("customerDetail", customerService.findById(id));
+        model.addAttribute("addStatus", false);
         return "customer/customer-detail";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editCustomerFrom(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("customer", customerService.findById(id));
-//          model.addAttribute("newCustomer",customerService.findById(id).getNumber());
+          model.addAttribute("newCustomer",customerService.findById(id).getNumber());
         model.addAttribute("addStatus", false);
         model.addAttribute("title", Title.values());
         model.addAttribute("gender", Gender.values());
@@ -68,8 +69,8 @@ public class CustomerController {
     public String customerAddFrom(Model model) {
         try {
             String input = "";
-            if (customerService.lastCustomer().getNumber().equals(null)) {
-                input = "00000";
+            if (customerService.lastCustomer() == null) {
+                input = "EHS00";
             } else {
                 input = customerService.lastCustomer().getNumber();
             }

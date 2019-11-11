@@ -9,15 +9,15 @@
 <div class="container-fluid" style="margin-top: 60px">
     <div class="panel panel-primary">
         <div class="panel panel-heading text-center">
-            <h4><b>Customer Management</b></h4>
+            <h4><b>Item Management</b></h4>
         </div>
         <div class="panel panel-body">
             <div class="row">
                 <div class="col-sm-12">
                     <form class="form-inline">
                         <div class="form-group">
-                            <a class="btn btn-success" th:href="${'/customer/add'}"><i class="fa fa-user-plus"></i>
-                                &nbsp; New Customer</a>
+                            <a class="btn btn-success" th:href="${'/item/add'}"><i class="fa fa-user-plus"></i>
+                                &nbsp; New Item</a>
                         </div>
                     </form>
                 </div>
@@ -28,29 +28,33 @@
                         <thead>
                         <tr>
                             <th>Index</th>
-                            <th>Number</th>
-                            <th>Name</th>
-                            <th>NIC</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Land Number</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Generic Name</th>
+                            <th>Category</th>
+                            <th>Supplier</th>
+                            <th>Cost</th>
+                            <th>Selling Price</th>
+                            <th>Item Status</th>
                             <th class="text-center">Modify</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="customer, rowCount : ${customers}">
+                        <tr th:each="item, rowCount : ${items}">
                             <th th:text="${rowCount.count}"></th>
-                            <th th:text="${customer.number}"></th>
-                            <th th:text="${customer.name}"></th>
-                            <th th:text="${customer.nic}"></th>
-                            <th th:text="${customer.email}"></th>
-                            <th th:text="${customer.mobile}"></th>
-                            <th th:text="${customer.land}"></th>
-                            <th><a class="btn btn-success" th:href="${'/customer/' + customer.id}"><i
+                            <th th:text="${item.code}"></th>
+                            <th th:text="${item.description}"></th>
+                            <th th:text="${item.generic}"></th>
+                            <th th:text="${item.category}"></th>
+                            <th th:text="${item.supplier}"></th>
+                            <th th:text="${item.cost}"></th>
+                            <th th:text="${item.selling}"></th>
+                            <th th:text="${item.status}"></th>
+                            <th><a class="btn btn-success" th:href="${'/item/' + item.id}"><i
                                     class="fa fa-folder-open"></i>&nbsp;View</a>
-                                <a class="btn btn-primary" th:href="${'/customer/edit/' + customer.id}"><i
+                                <a class="btn btn-primary" th:href="${'/item/edit/' + item.id}"><i
                                         class="fa fa-edit"></i>&nbsp;Edit</a>
-                                <a class="btn btn-danger" th:href="${'/customer/remove/' + customer.id}"><i
+                                <a class="btn btn-danger" th:href="${'/item/remove/' + item.id}"><i
                                         aria-hidden="true" class="fa fa-trash-o"></i>
                                     Delete</a></th>
                         </tr>

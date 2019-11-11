@@ -3,7 +3,7 @@ package lk.excellent.pharamacy_management.asset.commonAsset.Enum;
 public enum  Status {
 
     OUTOFSTOCK("Out of Stock"),
-    HIGHDEMAND("high demand");
+    ONDEMAND("On demand");
     private final String status;
 
     Status(String status) {

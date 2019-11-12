@@ -34,7 +34,7 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private String suppliers;
+    private String supplier;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -88,11 +88,11 @@ public class Item {
     }
 
     public String getSupplier() {
-        return suppliers;
+        return supplier;
     }
 
     public void setSupplier(String supplier) {
-        this.suppliers = supplier;
+        this.supplier = supplier;
     }
 
     public Status getStatus() {

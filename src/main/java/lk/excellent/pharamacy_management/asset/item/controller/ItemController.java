@@ -110,7 +110,13 @@ public class ItemController {
             model.addAttribute("item", item);
             return "/item/addItem";
         }
+        /*if(item.getId() != null){
+            item.setUpdatedAt(dateTimeAgeService.getCurrentDate());
+            itemService.persist(item);
+            return "redirect:/item";
+        }*/
         item.setCreatedAt(dateTimeAgeService.getCurrentDate());
+        item.setUpdatedAt(dateTimeAgeService.getCurrentDate());
         itemService.persist(item);
         return "redirect:/item";
     }

@@ -60,6 +60,7 @@ let landRegex = /^([0][\d]{9}])|([\d]{9})$/;
 let nameRegex = /^[a-zA-Z]{2}[ a-zA-Z]+$/;
 let numberRegex = /^([eE][hH][sS][\d]+)$/;
 let invoiceNumberRegex = /^[0-9]{10}$/;
+let priceRegex = /^[0-9]+[.][0-9][0-9]$/;
 let onlyNumberRegex = /^[0-9]*$/;
 
 
@@ -298,6 +299,26 @@ $("#patientNumber").bind("keyup", function () {
         backgroundColourChangeBad($(this));
     }
 });
+
+//Price Validation
+$("#cost").bind("keyup", function () {
+    let cost = $(this).val();
+    if(priceRegex.test(cost)){
+        backgroundColourChangeGood($(this));
+    }else{
+        backgroundColourChangeBad($(this));
+    }
+});
+
+$("#selling").bind("keyup", function () {
+    let selling = $(this).val();
+    if(priceRegex.test(selling)){
+        backgroundColourChangeGood($(this));
+    }else{
+        backgroundColourChangeBad($(this));
+    }
+});
+
 
 //colour change function --start
 function backgroundColourChangeGood(id) {

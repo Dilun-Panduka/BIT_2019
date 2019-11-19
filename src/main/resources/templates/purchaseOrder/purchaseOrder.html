@@ -9,15 +9,15 @@
 <div class="container-fluid" style="margin-top: 60px">
     <div class="panel panel-primary">
         <div class="panel panel-heading text-center">
-            <h4><b>Item Management</b></h4>
+            <h4><b>Purchase Order Management</b></h4>
         </div>
         <div class="panel panel-body">
             <div class="row">
                 <div class="col-sm-12">
                     <form class="form-inline">
                         <div class="form-group">
-                            <a class="btn btn-success" th:href="${'/item/add'}"><i class="fa fa-user-plus"></i>
-                                &nbsp; New Item</a>
+                            <a class="btn btn-success" th:href="${'/purchaseOrder/add'}"><i class="fa fa-user-plus"></i>
+                                &nbsp; New Purchase Order</a>
                         </div>
                     </form>
                 </div>
@@ -29,30 +29,28 @@
                         <tr>
                             <th>Index</th>
                             <th>Code</th>
-                            <th>Description</th>
-                            <th>Generic Name</th>
-                            <th>Category</th>
-                            <th>Cost</th>
-                            <th>Selling Price</th>
-                            <th>Item Status</th>
+                            <th>Supplier</th>
+                            <th>Created Date</th>
+                            <th>Expected Date</th>
+                            <th>Purchase Order Status</th>
+                            <th>Remarks</th>
                             <th class="text-center">Modify</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item, rowCount : ${items}">
+                        <tr th:each="purchaseOrder, rowCount : ${purchaseOrders}">
                             <th th:text="${rowCount.count}"></th>
-                            <th th:text="${item.code}"></th>
-                            <th th:text="${item.description}"></th>
-                            <th th:text="${item.generic}"></th>
-                            <th th:text="${item.category}"></th>
-                            <th th:text="${item.cost}"></th>
-                            <th th:text="${item.selling}"></th>
-                            <th th:text="${item.status}"></th>
-                            <th><a class="btn btn-success" th:href="${'/item/' + item.id}"><i
+                            <th th:text="${purchaseOrder.code}"></th>
+                            <th th:text="${purchaseOrder.supplier}"></th>
+                            <th th:text="${purchaseOrder.createdDate}"></th>
+                            <th th:text="${purchaseOrder.expectedDate}"></th>
+                            <th th:text="${purchaseOrder.status}"></th>
+                            <th th:text="${purchaseOrder.remarks}"></th>
+                            <th><a class="btn btn-success" th:href="${'/purchaseOrder/' + purchaseOrder.id}"><i
                                     class="fa fa-folder-open"></i>&nbsp;View</a>
-                                <a class="btn btn-primary" th:href="${'/item/edit/' + item.id}"><i
+                                <a class="btn btn-primary" th:href="${'/purchaseOrder/edit/' + purchaseOrder.id}"><i
                                         class="fa fa-edit"></i>&nbsp;Edit</a>
-                                <a class="btn btn-danger" th:href="${'/item/remove/' + item.id}"><i
+                                <a class="btn btn-danger" th:href="${'/purchaseOrder/remove/' + purchaseOrder.id}"><i
                                         aria-hidden="true" class="fa fa-trash-o"></i>
                                     Delete</a></th>
                         </tr>

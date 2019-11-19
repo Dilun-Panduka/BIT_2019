@@ -86,6 +86,17 @@
                         </h4>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="container-fluid">
+                        <h4>
+                            Items :
+                            <ul th:each="item1 : ${items}">
+                                    <li th:text="${item1.item.description}"></li>
+                            </ul>
+
+                        </h4>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div th:if="${addStatus==true}">

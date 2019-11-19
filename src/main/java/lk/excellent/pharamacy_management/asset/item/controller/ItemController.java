@@ -3,6 +3,7 @@ package lk.excellent.pharamacy_management.asset.item.controller;
 
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
+import lk.excellent.pharamacy_management.asset.commonAsset.service.SupplierItemService;
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.item.service.ItemService;
 import lk.excellent.pharamacy_management.asset.suppliers.service.SupplierService;
@@ -31,14 +32,16 @@ public class ItemController {
     private final DateTimeAgeService dateTimeAgeService;
     private final UserService userService;
     private final SupplierService supplierService;
+    private final SupplierItemService supplierItemService;
 
 
     @Autowired
-    public ItemController(ItemService itemService, DateTimeAgeService dateTimeAgeService, UserService userService, SupplierService supplierService) {
+    public ItemController(ItemService itemService, DateTimeAgeService dateTimeAgeService, UserService userService, SupplierService supplierService, SupplierItemService supplierItemService) {
         this.itemService = itemService;
         this.dateTimeAgeService = dateTimeAgeService;
         this.userService = userService;
         this.supplierService = supplierService;
+        this.supplierItemService = supplierItemService;
     }
 
     @RequestMapping
@@ -50,7 +53,10 @@ public class ItemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String itemView(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("itemDetail", itemService.findById(id));
+        Item item = itemService.findById(id);
+        model.addAttribute("suppliers", supplierItemService.findSupplier(item));
+        model.addAttribute("itemDetail",item );
+
         model.addAttribute("addStatus", false);
         return "item/item-detail";
     }

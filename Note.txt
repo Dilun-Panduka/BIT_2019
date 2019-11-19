@@ -1,0 +1,32 @@
+Purchase Order
+============
+1.  Id
+2.  Code
+3.  Supplier (ManyToOne)
+4.  purchaseOrderStatus
+5.  ItemQuantity(OneToMany)
+6.  createdDate
+7.  expectedDate
+8.  updatedDate
+9.  remarks
+
+GRN
+===============
+1.  id
+2.  code
+3.  grnStatus
+4.  item
+5.  quantity
+6.  selPrice
+7.  cost
+8.  createdDate
+9.  purchaseOrder
+
+Ledger
+============
+1.  id
+2.  code
+3.  availableQuantity
+4.  selPrice
+5.  item
+6.  updatedDate

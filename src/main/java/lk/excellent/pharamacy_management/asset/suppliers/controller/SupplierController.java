@@ -5,7 +5,9 @@ import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Gender;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Title;
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
 import lk.excellent.pharamacy_management.asset.commonAsset.service.SupplierItemService;
+import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.item.service.ItemService;
+import lk.excellent.pharamacy_management.asset.process.generalLedger.service.LedgerService;
 import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lk.excellent.pharamacy_management.asset.suppliers.service.SupplierService;
 import lk.excellent.pharamacy_management.security.service.UserService;
@@ -36,16 +38,18 @@ public class SupplierController {
     private final UserService userService;
     private final EmailService emailService;
     private final SupplierItemService supplierItemService;
+    private final LedgerService ledgerService;
 
 
     @Autowired
-    public SupplierController(SupplierService supplierService, ItemService itemService, DateTimeAgeService dateTimeAgeService, UserService userService, EmailService emailService, SupplierItemService supplierItemService) {
+    public SupplierController(SupplierService supplierService, ItemService itemService, DateTimeAgeService dateTimeAgeService, UserService userService, EmailService emailService, SupplierItemService supplierItemService, LedgerService ledgerService) {
         this.supplierService = supplierService;
         this.itemService = itemService;
         this.dateTimeAgeService = dateTimeAgeService;
         this.userService = userService;
         this.emailService = emailService;
         this.supplierItemService = supplierItemService;
+        this.ledgerService = ledgerService;
     }
 
     @RequestMapping
@@ -92,7 +96,6 @@ public class SupplierController {
             model.addAttribute("newSupplier", "EHS" + newSupplierCode);
             model.addAttribute("title", Title.values());
             model.addAttribute("items", itemService.findAll());
-            Model gender = model.addAttribute("gender", Gender.values());
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -137,6 +140,8 @@ public class SupplierController {
                 redirectAttributes.addFlashAttribute("message", "Successfully Updated.");
                 Supplier supplier1 = supplierService.persist(supplier);
 
+              /*  Ledger ledger = new Ledger();*/
+
                 SupplierItem supplierItem = new SupplierItem();
                 int lastitem = 0;
                 try {
@@ -148,9 +153,21 @@ public class SupplierController {
                 }
                 for (Integer i : supplier.getIds()) {
                     supplierItem.setId(lastitem+1);
-                    supplierItem.setItem(itemService.findById(i));
+                    Item item = itemService.findById(i);
+                    supplierItem.setItem(item);
                     supplierItem.setSupplier(supplier1);
                     supplierItemService.persist(supplierItem);
+                    /*int ledgerId = 0;
+                    if(ledgerService.getLastItemId() != null){
+                        ledgerId = ledgerService.getLastItemId().getId();
+                    }
+                    ledger.setId(ledgerId +1);
+                    ledger.setCode(UUID.randomUUID().toString());
+                    ledger.setSupplier(supplier);
+                    ledger.setItem(item);
+                    ledger.setAvailableQuantity(0);
+                    ledger.setSalePrice(BigDecimal.ZERO);
+                    ledgerService.persist(ledger);*/
                     lastitem++;
                 }
                 return "redirect:/supplier";

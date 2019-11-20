@@ -15,36 +15,36 @@ import java.util.List;
 @Service
 @Transactional
 public class SupplierService implements AbstractService<Supplier, Integer > {
-    private final SupplierDao supplierdao;
+    private final SupplierDao supplierDao;
 
     @Autowired
-    public SupplierService(SupplierDao supplierdao) {
-        this.supplierdao = supplierdao;
+    public SupplierService(SupplierDao supplierDao) {
+        this.supplierDao = supplierDao;
     }
 
 
     public List<Supplier> findAll() {
-        return supplierdao.findAll();
+        return supplierDao.findAll();
     }
 
 
     public Supplier findById(Integer id) {
-        return supplierdao.getOne(id);
+        return supplierDao.getOne(id);
     }
 
 
     public Supplier persist(Supplier supplier) {
-        return supplierdao.save(supplier);
+        return supplierDao.save(supplier);
     }
 
 
     public boolean delete(Integer id) {
-        supplierdao.deleteById(id);
+        supplierDao.deleteById(id);
         return false;
     }
 
     public Supplier lastSupplier(){
-        return supplierdao.findFirstByOrderByIdDesc();
+        return supplierDao.findFirstByOrderByIdDesc();
     }
 
 public List<Supplier> search(Supplier supplier) {
@@ -53,6 +53,14 @@ public List<Supplier> search(Supplier supplier) {
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example<Supplier> supplierExample = Example.of(supplier, matcher);
-        return supplierdao.findAll(supplierExample);
+        return supplierDao.findAll(supplierExample);
+    }
+
+    public Supplier findByCode(String code) {
+        return supplierDao.findByCode(code);
+    }
+
+    public Supplier findByName(String name) {
+     return supplierDao.findByName(name);
     }
 }

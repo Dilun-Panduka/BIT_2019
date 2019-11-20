@@ -3,28 +3,42 @@ package lk.excellent.pharamacy_management.asset.process.generalLedger.service;
 
 import lk.excellent.pharamacy_management.asset.process.generalLedger.dao.LedgerDao;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
+import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lk.excellent.pharamacy_management.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LedgerService implements AbstractService<Ledger, Long > {
-    private final LedgerDao ledgerDao;
+public class LedgerService implements AbstractService<Ledger, Integer > { private final LedgerDao ledgerDao;
 
     @Autowired
     public LedgerService(LedgerDao ledgerDao) {
         this.ledgerDao = ledgerDao;
     }
 
+
+
+    public List<Ledger> findBySupplier(Supplier supplier){
+        return ledgerDao.findBySupplier(supplier);
+    }
+    public List<Ledger> findBySupplierS(List<Supplier> suppliers){
+        List<Ledger> ledgers = new ArrayList<>();
+        for(Supplier supplier : suppliers){
+            ledgers.addAll(ledgerDao.findBySupplier(supplier));
+        }
+
+        return ledgers;
+    }
     @Override
-    public List< Ledger > findAll() {
-        return ledgerDao.findAll();
+    public List<Ledger> findAll() {
+        return null;
     }
 
     @Override
-    public Ledger findById(Long id) {
+    public Ledger findById(Integer id) {
         return null;
     }
 
@@ -34,12 +48,16 @@ public class LedgerService implements AbstractService<Ledger, Long > {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Integer id) {
         return false;
     }
 
     @Override
-    public List< Ledger > search(Ledger ledger) {
+    public List<Ledger> search(Ledger ledger) {
         return null;
+    }
+
+    public Ledger getLastItemId() {
+        return ledgerDao.findFirstByOrderByIdDesc();
     }
 }

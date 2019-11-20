@@ -39,4 +39,7 @@ public class SupplierItemService {
     public List<SupplierItem> findSupplier(Item item) {
         return supplierItemDao.findByItem(item);
     }
+
+
+
 }

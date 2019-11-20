@@ -4,6 +4,7 @@ package lk.excellent.pharamacy_management.asset.item.entity;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
+import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GoodReceivingManagement;
 import lombok.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Item {
 
 
@@ -40,6 +42,10 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<SupplierItem> supplierItems;
+
+    @OneToMany(mappedBy = "item")
+    private List<Ledger> ledgers;
+
 
     @OneToMany(mappedBy = "item")
     private List<GoodReceivingManagement> goodReceivingManagements;

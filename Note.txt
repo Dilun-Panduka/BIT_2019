@@ -2,13 +2,12 @@ Purchase Order
 ============
 1.  Id
 2.  Code
-3.  Supplier (ManyToOne)
-4.  purchaseOrderStatus
-5.  ItemQuantity(OneToMany)
-6.  createdDate
-7.  expectedDate
-8.  updatedDate
-9.  remarks
+3.  purchaseOrderStatus
+4.  ItemQuantity(OneToMany) - { supplier, quantity, item}
+5.  createdDate
+6.  expectedDate
+7.  updatedDate
+8.  remarks
 
 GRN
 ===============
@@ -30,3 +29,4 @@ Ledger
 4.  selPrice
 5.  item
 6.  updatedDate
+7.  supplier

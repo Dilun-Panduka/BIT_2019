@@ -2,6 +2,7 @@ package lk.excellent.pharamacy_management.asset.process.generalLedger.entity;
 
 
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
+import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lk.excellent.pharamacy_management.util.audit.AuditEntity;
 import lombok.*;
 
@@ -30,6 +31,9 @@ public class Ledger extends AuditEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Item item;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Supplier supplier;
 
 
 }

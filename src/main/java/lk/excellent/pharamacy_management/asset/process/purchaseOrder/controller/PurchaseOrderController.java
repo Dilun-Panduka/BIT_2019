@@ -1,19 +1,24 @@
 package lk.excellent.pharamacy_management.asset.process.purchaseOrder.controller;
 
+import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
+import lk.excellent.pharamacy_management.asset.commonAsset.service.SupplierItemService;
+import lk.excellent.pharamacy_management.asset.item.entity.Item;
+import lk.excellent.pharamacy_management.asset.item.service.ItemService;
+import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
+import lk.excellent.pharamacy_management.asset.process.generalLedger.service.LedgerService;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.Enum.PurchaseOrderStatus;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.service.PurchaseOrderService;
+import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lk.excellent.pharamacy_management.asset.suppliers.service.SupplierService;
 import lk.excellent.pharamacy_management.security.service.UserService;
 import lk.excellent.pharamacy_management.util.service.DateTimeAgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,37 +28,96 @@ public class PurchaseOrderController {
     private final DateTimeAgeService dateTimeAgeService;
     private final UserService userService;
     private final SupplierService supplierService;
+    private final SupplierItemService supplierItemService;
+    private final ItemService itemService;
+    private final LedgerService ledgerService;
 
     @Autowired
-    public PurchaseOrderController(PurchaseOrderService purchaseOrderService, DateTimeAgeService dateTimeAgeService, UserService userService, SupplierService supplierService) {
+    public PurchaseOrderController(PurchaseOrderService purchaseOrderService, DateTimeAgeService dateTimeAgeService, UserService userService, SupplierService supplierService, SupplierItemService supplierItemService, ItemService itemService, LedgerService ledgerService) {
         this.purchaseOrderService = purchaseOrderService;
         this.dateTimeAgeService = dateTimeAgeService;
         this.userService = userService;
         this.supplierService = supplierService;
+        this.supplierItemService = supplierItemService;
+        this.itemService = itemService;
+        this.ledgerService = ledgerService;
     }
 
+    //give all PO to frontend
     @RequestMapping
-    public String puchaseOrderPage(Model model){
+    public String purchaseOrderPage(Model model) {
         List<PurchaseOrder> purchaseOrders = purchaseOrderService.findAll();
         model.addAttribute("purchaseOrders", purchaseOrders);
         return "purchaseOrder/purchaseOrder";
     }
 
+    //give PO details
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String purchaseOrderView(@PathVariable("id") Integer id, Model model){
+    public String purchaseOrderView(@PathVariable("id") Integer id, Model model) {
         PurchaseOrder purchaseOrder = purchaseOrderService.findById(id);
         model.addAttribute("purchaseOrderDetail", purchaseOrder);
         model.addAttribute("addStatus", false);
         return "purchaseOrder/purchaseOrder-detail";
     }
 
-    @GetMapping("/add")
-    public String purchaseOrderAdd(Model model){
+    //OP add  given start
+    @GetMapping("/addFind")
+    public String pOAddForm(Model model) {
+        model.addAttribute("searchArea", true);
         model.addAttribute("addStatus", true);
-        model.addAttribute("supplier", supplierService.findAll());
-        model.addAttribute("status", PurchaseOrderStatus.values());
-        model.addAttribute("purchesOrder", new PurchaseOrder());
         return "purchaseOrder/addPurchaseOrder";
     }
+
+    private Supplier commonSearch(Supplier supplier) {
+        Supplier supplier1 = supplier;
+        if (supplier.getCode() != null) {
+            supplier1 = supplierService.findByCode(supplier.getCode());
+        }
+        if (supplier.getName() != null) {
+            supplier1 = supplierService.findByName(supplier.getName());
+        }
+        return supplier1;
+    }
+
+    @PostMapping("/findByItem")
+    public String searchByItem(@ModelAttribute("item") Item item, Model model) {
+        Item item1 = itemService.findByCode(item.getCode());
+        List<SupplierItem> supplierItems = supplierItemService.findSupplier(item1);
+        List<Supplier> supplier1 = new ArrayList<>();
+        for(SupplierItem s : supplierItems){
+            supplier1.add(s.getSupplier());
+        }
+        List<Ledger> ledgers = ledgerService.findBySupplierS(supplier1);
+
+
+        model.addAttribute("addStatus", true);
+        model.addAttribute("ledgers",ledgers );
+        model.addAttribute("searchArea", false);
+        model.addAttribute("purchaseOrder", new PurchaseOrder());
+        return "purchaseOrder/addPurchaseOrder";
+    }
+
+    @PostMapping("/findBySupplier")
+    public String searchBySupplier(@ModelAttribute("supplier") Supplier supplier, Model model) {
+        List<Item> items = new ArrayList<>();
+        Supplier supplier1 = commonSearch(supplier);
+        List<SupplierItem> supplierItems = supplierItemService.findItems(supplier1);
+        for (SupplierItem s : supplierItems) {
+            items.add(s.getItem());
+        }
+        List<Ledger> ledgers = null;
+        if (ledgerService.findBySupplier(supplier1) != null) {
+            ledgers = ledgerService.findBySupplier(supplier1);
+        }
+
+        model.addAttribute("addStatus", true);
+        model.addAttribute("ledgers",ledgers );
+        model.addAttribute("items", items);
+        model.addAttribute("purchaseOrderStatus", PurchaseOrderStatus.values());
+        model.addAttribute("searchArea", false);
+        model.addAttribute("purchaseOrder", new PurchaseOrder());
+        return "purchaseOrder/addPurchaseOrder";
+    }
+
 
 }

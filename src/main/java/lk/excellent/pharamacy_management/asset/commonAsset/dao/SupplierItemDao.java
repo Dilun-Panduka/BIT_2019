@@ -15,4 +15,5 @@ public interface SupplierItemDao extends JpaRepository<SupplierItem, Integer> {
     SupplierItem findFirstByOrderByIdDesc();
 
     List<SupplierItem> findByItem(Item item);
+
 }

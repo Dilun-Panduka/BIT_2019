@@ -1,5 +1,6 @@
 package lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity;
 
+import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,4 +20,7 @@ public class ItemQuantity {
     private PurchaseOrder purchaseOrder;
 
     private int quantity;
+
+    @ManyToOne
+    private Supplier supplier;
 }

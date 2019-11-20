@@ -3,7 +3,6 @@ package lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GoodReceivingManagement;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.Enum.PurchaseOrderStatus;
-import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,13 +34,10 @@ public class PurchaseOrder {
 
     private String remarks;
 
-    @ManyToOne
-    private Supplier supplier;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
     private List<ItemQuantity> itemQuantity;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
+    @OneToMany(mappedBy = "purchaseOrder")
     private List<GoodReceivingManagement> goodReceivingManagements;
 
 }

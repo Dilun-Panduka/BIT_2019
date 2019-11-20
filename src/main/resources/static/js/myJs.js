@@ -303,18 +303,18 @@ $("#patientNumber").bind("keyup", function () {
 //Price Validation
 $("#cost").bind("keyup", function () {
     let cost = $(this).val();
-    if(priceRegex.test(cost)){
+    if (priceRegex.test(cost)) {
         backgroundColourChangeGood($(this));
-    }else{
+    } else {
         backgroundColourChangeBad($(this));
     }
 });
 
 $("#selling").bind("keyup", function () {
     let selling = $(this).val();
-    if(priceRegex.test(selling)){
+    if (priceRegex.test(selling)) {
         backgroundColourChangeGood($(this));
-    }else{
+    } else {
         backgroundColourChangeBad($(this));
     }
 });
@@ -501,3 +501,30 @@ $("#btnSummaryFind").bind("mouseover", function () {
     }
 });
 //search form date validation - end
+
+//Supplier find when
+$("#supp").bind("change", function () {
+    let attrName = $("#name").attr('id');
+    let attrCode = $("#code").attr('id');
+    if (attrName === 'name') {
+        $("#name").val('');
+        $("#name").attr('id', 'criteria');
+    }
+    if (attrCode === 'code') {
+        $("#code").val('');
+        $("#code").attr('id', 'criteria');
+    }
+    $("#criteria").attr('name', $(this).val());
+
+});
+
+$("#criteria").bind('keyup', function () {
+    let criteriaName = $(this).attr('name');
+    if (criteriaName === 'name') {
+        $("#criteria").attr('id', 'name');
+    }
+    if (criteriaName === 'code') {
+        $("#criteria").attr('id', 'code');
+    }
+});
+

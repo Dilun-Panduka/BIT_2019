@@ -6,6 +6,7 @@ import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
 import lk.excellent.pharamacy_management.asset.commonAsset.service.SupplierItemService;
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.item.service.ItemService;
+import lk.excellent.pharamacy_management.asset.process.generalLedger.service.LedgerService;
 import lk.excellent.pharamacy_management.asset.suppliers.service.SupplierService;
 import lk.excellent.pharamacy_management.security.service.UserService;
 import lk.excellent.pharamacy_management.util.service.DateTimeAgeService;
@@ -33,15 +34,17 @@ public class ItemController {
     private final UserService userService;
     private final SupplierService supplierService;
     private final SupplierItemService supplierItemService;
+    private final LedgerService ledgerService;
 
 
     @Autowired
-    public ItemController(ItemService itemService, DateTimeAgeService dateTimeAgeService, UserService userService, SupplierService supplierService, SupplierItemService supplierItemService) {
+    public ItemController(ItemService itemService, DateTimeAgeService dateTimeAgeService, UserService userService, SupplierService supplierService, SupplierItemService supplierItemService, LedgerService ledgerService) {
         this.itemService = itemService;
         this.dateTimeAgeService = dateTimeAgeService;
         this.userService = userService;
         this.supplierService = supplierService;
         this.supplierItemService = supplierItemService;
+        this.ledgerService = ledgerService;
     }
 
     @RequestMapping
@@ -121,8 +124,18 @@ public class ItemController {
             itemService.persist(item);
             return "redirect:/item";
         }*/
+
         item.setCreatedAt(dateTimeAgeService.getCurrentDate());
         item.setUpdatedAt(dateTimeAgeService.getCurrentDate());
+        /*Ledger ledger = new Ledger();
+        ledger.setId(item.getId() ==null? 0: item.getId()+1);
+        ledger.setSalePrice(item.getSelling());
+        ledger.setAvailableQuantity(0);
+        ledger.setItem(item);
+        ledger.setSupplier(null);
+        ledger.setCreatedAt(dateTimeAgeService.getCurrentDate());
+        ledger.setUpdatedAt(dateTimeAgeService.getCurrentDate());
+        ledgerService.persist(ledger);*/
         itemService.persist(item);
         return "redirect:/item";
     }

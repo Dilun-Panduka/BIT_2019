@@ -131,7 +131,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right ">
 					<li class="dropdown"  sec:authorize="isAuthenticated()">
-						<a href="/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp; <span class="mainWindowText">Log out</span></a>
+						<a href="/login"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp; <span class="mainWindowText">Log out</span></a>
 					</li>
 					<li class="dropdown"  sec:authorize="!isAuthenticated()">
 						<a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp; <span class="mainWindowText">Login</span></a>

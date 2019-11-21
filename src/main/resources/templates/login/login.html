@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Login - KL</title>
+    <title>Login - EHS</title>
     <link rel="stylesheet" th:href="@{/css/myCss.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body id="loginBack">
+<body id="loginBack" style="background-color: #1d5653">
 <div class="col-sm-10">
     <div class="container-fluid">
         <form action="login" method="post">
             <div class="col-md-6 col-md-offset-4 col-sm-8 col-sm-offset-2"
-                 style="margin-top:125px;margin-left:80px; ">
-                <div class="panel panel-warning">
-                    <div class="panel-heading" style="background-color: saddlebrown">
+                 style="width: 50%; margin: 150px 400px; background-color: #5ca80f; border-radius: 20px">
+                <div class="panel panel-warning" style="background-color: #5ca80f; border: none;">
+                    <div class="panel-heading" style="background-color: #5ca80f; border: none;">
                         <h2 align="center"
                             style="color: white">
-                            <b>Karunadasa Learners </b></h2></div>
-                    <div class="panel-body" style="background-color: oldlace">
+                            <b>Excellent Health Solutions </b></h2></div>
+                    <div class="panel-body" style="background-color: #5ca80f; border: none;">
                         <div class="input-group" style="margin-bottom: 20px">
                                         <span class="input-group-addon"><span
                                                 class="glyphicon glyphicon-user"></span></span>
@@ -34,15 +34,15 @@
                                    type="password">
                         </div>
                         <div style="margin-top:10px">
-                            <button class="btn btn-warning btn-lg"
-                                    style="background-color: peru"
+                            <button class="btn btn-lg"
+                                    style="background-color: #1d5653; color: white"
                                     type="Submit"><span
                                     class=" glyphicon glyphicon-log-in"></span>&nbsp; Log in &nbsp;
                             </button>
                         </div>
                     </div>
                     <div class="container-fluid" th:if="${param.error}">
-                        <p class="text text-center text-danger">Invalid username or password. </p>
+                        <p class="text text-center text-danger"><b>Invalid username or password.</b> </p>
                     </div>
                 </div>
             </div>

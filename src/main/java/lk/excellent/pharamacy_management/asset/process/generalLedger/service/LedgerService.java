@@ -44,7 +44,7 @@ public class LedgerService implements AbstractService<Ledger, Integer > { privat
 
     @Override
     public Ledger persist(Ledger ledger) {
-        return null;
+        return ledgerDao.save(ledger);
     }
 
     @Override

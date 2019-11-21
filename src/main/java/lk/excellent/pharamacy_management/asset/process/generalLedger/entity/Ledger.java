@@ -3,19 +3,19 @@ package lk.excellent.pharamacy_management.asset.process.generalLedger.entity;
 
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
-import lk.excellent.pharamacy_management.util.audit.AuditEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Ledger extends AuditEntity {
+@EqualsAndHashCode()
+public class Ledger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,5 +35,8 @@ public class Ledger extends AuditEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Supplier supplier;
 
+    private LocalDate updatedAt;
+
+    private LocalDate createdAt;
 
 }

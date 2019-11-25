@@ -30,9 +30,9 @@
                             <th>Index</th>
                             <th>Code</th>
                             <th>Supplier</th>
-                            <th>Created Date</th>
                             <th>Expected Date</th>
-                            <th>Purchase Order Status</th>
+                            <th>Received Date</th>
+                            <th>GRN Status</th>
                             <th>Remarks</th>
                             <th class="text-center">Modify</th>
                         </tr>
@@ -42,8 +42,8 @@
                             <th th:text="${rowCount.count}"></th>
                             <th th:text="${grn.code}"></th>
                             <th th:text="${grn.supplier}"></th>
-                            <th th:text="${grn.createdDate}"></th>
                             <th th:text="${grn.expectedDate}"></th>
+                            <th th:text="${grn.receivedDate}"></th>
                             <th th:text="${grn.status}"></th>
                             <th th:text="${grn.remarks}"></th>
                             <th><a class="btn btn-success" th:href="${'/grn/' + grn.id}"><i

@@ -8,12 +8,12 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body id="loginBack" style="background-color: #1d5653">
+<body id="loginBack" style="background: url('img/bg.jpg') no-repeat fixed center; background-size: cover;">
 <div class="col-sm-10">
     <div class="container-fluid">
         <form action="login" method="post">
             <div class="col-md-6 col-md-offset-4 col-sm-8 col-sm-offset-2"
-                 style="width: 50%; margin: 150px 400px; background-color: #5ca80f; border-radius: 20px">
+                 style="width: 50%; margin: 185px 400px; background-color: #5ca80f; border-radius: 20px">
                 <div class="panel panel-warning" style="background-color: #5ca80f; border: none;">
                     <div class="panel-heading" style="background-color: #5ca80f; border: none;">
                         <h2 align="center"
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="container-fluid" th:if="${param.error}">
-                        <p class="text text-center text-danger"><b>Invalid username or password.</b> </p>
+                        <p class="text text-center text-danger"><b>Invalid username or password.</b></p>
                     </div>
                 </div>
             </div>

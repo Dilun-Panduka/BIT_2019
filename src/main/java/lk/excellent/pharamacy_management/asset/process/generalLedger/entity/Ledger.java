@@ -2,7 +2,6 @@ package lk.excellent.pharamacy_management.asset.process.generalLedger.entity;
 
 
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
-import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,13 +26,16 @@ public class Ledger {
     private Integer availableQuantity;
 
     @Column(nullable = false)
+    private BigDecimal cost;
+
+    @Column(nullable = false)
     private BigDecimal salePrice;
+
+    @Column(nullable = false)
+    private int reorderLimit;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Item item;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Supplier supplier;
 
     private LocalDate updatedAt;
 

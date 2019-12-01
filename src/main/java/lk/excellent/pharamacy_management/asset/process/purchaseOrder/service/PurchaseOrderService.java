@@ -49,4 +49,8 @@ public class PurchaseOrderService implements AbstractService<PurchaseOrder, Inte
         Example<PurchaseOrder> purchaseOrderExample = Example.of(purchaseOrder, matcher);
         return purchaseOrderDao.findAll(purchaseOrderExample);
     }
+
+    public PurchaseOrder findLastPONumber() {
+   return purchaseOrderDao.findFirstByOrderByIdDesc();
+    }
 }

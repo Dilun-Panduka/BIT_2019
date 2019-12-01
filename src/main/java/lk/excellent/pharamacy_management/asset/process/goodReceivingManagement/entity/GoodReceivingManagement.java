@@ -41,6 +41,10 @@ public class GoodReceivingManagement extends AuditEntity {
 
     private LocalDate createdDate;
 
+    private LocalDate receivedDate;
+
+    private String remarks;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private PurchaseOrder purchaseOrder;
 

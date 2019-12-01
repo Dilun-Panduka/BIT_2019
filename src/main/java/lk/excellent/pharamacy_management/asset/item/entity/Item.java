@@ -1,11 +1,13 @@
 package lk.excellent.pharamacy_management.asset.item.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GoodReceivingManagement;
+import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.ItemQuantity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
+@JsonIgnoreProperties(value = {"createdAt","updatedAt"}, allowGetters = true)
 public class Item {
 
 
@@ -40,26 +42,33 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @OneToMany(mappedBy = "item")
-    private List<SupplierItem> supplierItems;
-
-    @OneToMany(mappedBy = "item")
-    private List<Ledger> ledgers;
-
-
-    @OneToMany(mappedBy = "item")
-    private List<GoodReceivingManagement> goodReceivingManagements;
-
     @Enumerated(EnumType.STRING)
     private Status status;
 
     private BigDecimal cost;
+
     private BigDecimal selling;
-    private String soh;
+
+    private int soh;
+
     private int reorderLimit;
 
     private LocalDate updatedAt;
 
     private LocalDate createdAt;
 
+    @OneToMany(mappedBy = "item")
+    private List<SupplierItem> supplierItems;
+
+    @OneToMany(mappedBy = "item")
+    private List<Ledger> ledgers;
+
+    @OneToMany(mappedBy = "item")
+    private List<GoodReceivingManagement> goodReceivingManagements;
+
+    @OneToMany(mappedBy = "item")
+    private List<ItemQuantity> itemQuantities;
+
+    @Transient
+    private int quantity;
 }

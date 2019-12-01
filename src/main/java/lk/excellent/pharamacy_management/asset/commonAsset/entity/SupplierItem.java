@@ -17,9 +17,9 @@ public class SupplierItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Supplier supplier;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Item item;
 }

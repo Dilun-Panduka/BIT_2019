@@ -9,4 +9,5 @@ public interface ItemDao extends JpaRepository<Item, Integer> {
     Item findFirstByOrderByIdDesc();
 
     Item findByCode(String code);
+
 }

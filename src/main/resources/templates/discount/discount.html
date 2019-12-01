@@ -9,15 +9,15 @@
 <div class="container-fluid" style="margin-top: 60px">
     <div class="panel panel-primary">
         <div class="panel panel-heading text-center">
-            <h4><b>Purchase Order Management</b></h4>
+            <h4><b>Discount Management</b></h4>
         </div>
         <div class="panel panel-body">
             <div class="row">
                 <div class="col-sm-12">
                     <form class="form-inline">
                         <div class="form-group">
-                            <a class="btn btn-success" th:href="${'/purchaseOrder/addFind'}"><i class="fa fa-user-plus"></i>
-                                &nbsp; New Purchase Order</a>
+                            <a class="btn btn-success" th:href="${'/discount/add'}">+
+                                &nbsp; New Discount</a>
                         </div>
                     </form>
                 </div>
@@ -28,31 +28,23 @@
                         <thead>
                         <tr>
                             <th>Index</th>
-                            <th>Code</th>
-                            <th>Supplier</th>
-                            <th>Created Date</th>
-                            <th>Expected Date</th>
-                            <th>Purchase Order Status</th>
-                            <th>Remarks</th>
+                            <th>Name</th>
+                            <th>Amount</th>
                             <th class="text-center">Modify</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="purchaseOrder, rowCount : ${purchaseOrders}">
+                        <tr th:each="discount, rowCount : ${discounts}">
                             <th th:text="${rowCount.count}"></th>
-                            <th th:text="${purchaseOrder.code}"></th>
-                            <th th:text="${purchaseOrder.supplier.name}"></th>
-                            <th th:text="${purchaseOrder.createdDate}"></th>
-                            <th th:text="${purchaseOrder.expectedDate}"></th>
-                            <th th:text="${purchaseOrder.purchaseOrderStatus.purchaseOrderStatus}"></th>
-                            <th th:text="${purchaseOrder.remarks}"></th>
-                            <th><a class="btn btn-success" th:href="${'/purchaseOrder/' + purchaseOrder.id}"><i
-                                    class="fa fa-folder-open"></i>&nbsp;View</a>
-                                <a class="btn btn-primary" th:href="${'/purchaseOrder/edit/' + purchaseOrder.id}"><i
+                            <th th:text="${discount.name}"></th>
+                            <th th:text="${discount.amount}"></th>
+                            <th>
+                                <a class="btn btn-primary" th:href="${'/discount/edit/' + discount.id}"><i
                                         class="fa fa-edit"></i>&nbsp;Edit</a>
-                                <a class="btn btn-danger" th:href="${'/purchaseOrder/remove/' + purchaseOrder.id}"><i
+                                <a class="btn btn-danger" th:href="${'/discount/remove/' + discount.id}"><i
                                         aria-hidden="true" class="fa fa-trash-o"></i>
-                                    Delete</a></th>
+                                    Delete</a>
+                            </th>
                         </tr>
                         </tbody>
                     </table>

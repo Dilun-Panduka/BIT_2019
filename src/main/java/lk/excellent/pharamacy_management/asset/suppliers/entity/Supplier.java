@@ -2,8 +2,7 @@ package lk.excellent.pharamacy_management.asset.suppliers.entity;
 
 
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
-import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
-import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.ItemQuantity;
+import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
 import lombok.*;
 
 import javax.persistence.*;
@@ -48,14 +47,7 @@ public class Supplier {
     private List<Integer> ids;
 
     @OneToMany(mappedBy = "supplier")
-    private List<Ledger> ledgers;
-
-
-    @OneToMany(mappedBy = "supplier")
     private List<SupplierItem> supplierItems = new ArrayList<>();
-
-    @OneToMany(mappedBy = "supplier")
-    private List<ItemQuantity> itemQuantities;
 
     @Size(min = 10, message = "Provide valid phone number")
     private String contactMobile;
@@ -67,5 +59,6 @@ public class Supplier {
 
     private LocalDate createdAt;
 
-
+    @OneToMany(mappedBy = "supplier")
+    private List<PurchaseOrder> purchaseOrders;
 }

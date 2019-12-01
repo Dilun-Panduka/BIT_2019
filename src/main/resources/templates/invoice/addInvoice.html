@@ -73,56 +73,64 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="container-fluid">
+                        <div class="row">
+                            <div class="table-responsive" style="margin: auto">
+                                <table class="table table-striped table-condensed text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>Index</th>
+                                        <th>Item</th>
+                                        <th>Available Qty.</th>
+                                        <th>Requested Qty.</th>
+                                        <th class="text-center">Modify</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="item, rowCount : ${items}">
+                                        <th th:text="${rowCount.count}"></th>
+                                        <th th:text="${item.description}">
+                                            <input type="hidden" name="id" th:value="${item.id}">
+                                        </th>
+                                        <th th:text="${item.soh}"></th>
+                                        <th><input type="text" name="quantity"></th>
 
-                            <div>
-                                <label class="control-label col-md-4" for="name">Item <span
-                                        class="text-danger">*</span></label>
-
+                                        <th><a class="btn btn-danger"><i
+                                                aria-hidden="true" class="fa fa-trash-o"></i>
+                                            Delete</a></th>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <!-- /.col-sm-6 -->
-                        <div class="col-sm-6 text-left">
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="contactName">Contact Person Name</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="contactName" name="contactName"
-                                           placeholder="Enter Contact Person Name Here"
-                                           th:field="*{contactName}" type="text"/>
-                                    <span class="error" th:errors="*{contactName}"
-                                          th:if="${#fields.hasErrors('contactName')}">Error Name</span>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group text-left">
+                                    <label class="control-label col-md-4" for="expectedDate">Rec Date :</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" id="expectedDate" placeholder="Enter ID Here"
+                                               th:field="*{receivedDate}" type="date" required/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="contactEmail">Email</label>
+                            <!--       <div class="col-sm-6" th:if="${addStatus == false}">
+                                       <div class="form-group">
+                                           <label class="control-label col-md-4" for="poS">PO Status</label>
+                                           <div class="col-md-4">
+                                               <select class="form-control" id="poS" th:field="*{purchaseOrderStatus}">
+                                                   <option th:each="p : ${purchaseOrderStatus}"
+                                                           th:text="${p.purchaseOrderStatus}"
+                                                           th:value="${p}"></option>
+                                               </select>
+                                           </div>
+                                       </div>
+                                   </div>-->
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group text-left">
+                                <label class="control-label col-md-4" for="remarks">Remarks :</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="contactEmail" name="contactEmail"
-                                           placeholder="Enter Contact Person email Here"
-                                           th:field="*{contactEmail}" type="text"/>
-                                    <span class="error" th:errors="*{contactEmail}"
-                                          th:if="${#fields.hasErrors('contactEmail')}">Error Email</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="contactMobile"> Contact Person Mobile <span
-                                        class="text-danger">*</span></label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="contactMobile" name="contactMobile"
-                                           placeholder="Enter Contact Person Mobile Here"
-                                           required th:field="*{contactMobile}" type="text"/>
-                                    <span class="error" th:errors="*{contactMobile}"
-                                          th:if="${#fields.hasErrors('contactMobile')}">Error Mobile Number</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4" for="items">Items:</label>
-                                <div class="col-md-8">
-                                    <select class="form-control" id="items" th:field="*{ids}" multiple required>
-                                        <option th:each="item : ${items}"
-                                                th:text="${item.description}"
-                                                th:value="${item.id}"
-                                        ></option>
-                                    </select>
+                                    <input class="form-control" id="remarks" placeholder="Enter Remarks Here"
+                                           th:value="${remarks}" type="text" name="remarks"/>
                                 </div>
                             </div>
                         </div>

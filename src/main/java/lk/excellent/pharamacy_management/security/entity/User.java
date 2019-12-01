@@ -28,8 +28,7 @@ public class User {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Size(min = 5, message = "user name should include at least five characters")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Size(min = 5, message = "user name should include at least five characters")
     private String username;
 

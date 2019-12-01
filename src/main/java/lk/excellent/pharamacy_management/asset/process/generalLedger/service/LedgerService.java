@@ -1,14 +1,13 @@
 package lk.excellent.pharamacy_management.asset.process.generalLedger.service;
 
 
+import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.dao.LedgerDao;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
-import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lk.excellent.pharamacy_management.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,17 +20,8 @@ public class LedgerService implements AbstractService<Ledger, Integer > { privat
 
 
 
-    public List<Ledger> findBySupplier(Supplier supplier){
-        return ledgerDao.findBySupplier(supplier);
-    }
-    public List<Ledger> findBySupplierS(List<Supplier> suppliers){
-        List<Ledger> ledgers = new ArrayList<>();
-        for(Supplier supplier : suppliers){
-            ledgers.addAll(ledgerDao.findBySupplier(supplier));
-        }
 
-        return ledgers;
-    }
+
     @Override
     public List<Ledger> findAll() {
         return null;
@@ -59,5 +49,9 @@ public class LedgerService implements AbstractService<Ledger, Integer > { privat
 
     public Ledger getLastItemId() {
         return ledgerDao.findFirstByOrderByIdDesc();
+    }
+
+    public Ledger findByItem(Item item) {
+        return ledgerDao.findByItem(item);
     }
 }

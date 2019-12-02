@@ -26,6 +26,6 @@ public class ItemQuantity {
     @ManyToOne
     private Item item;
 
-    @Transient
+//    @Transient
     private BigDecimal amount;
 }

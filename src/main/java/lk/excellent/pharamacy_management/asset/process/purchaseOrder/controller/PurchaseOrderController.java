@@ -155,14 +155,17 @@ public class PurchaseOrderController {
             } else {
                 input = purchaseOrderService.findLastPONumber().getCode();
             }
-
-            purchaseOrder.setCode("EHSPO" + Integer.parseInt(input.replaceAll("[^0-9]+", "") + 1));
+            String po= input.replaceAll("[^0-9]+", "");
+            Integer PONumber = Integer.parseInt(po);
+            int newPONumber = PONumber+1;
+            purchaseOrder.setCode("EHSPO" + newPONumber);
             purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.NOT);
             purchaseOrder.setCreatedDate(dateTimeAgeService.getCurrentDate());
             purchaseOrder.setUpdatedDate(dateTimeAgeService.getCurrentDate());
 //            List<ItemQuantity> itemQuantities = new ArrayList<>();
             for (ItemQuantity itemQuantity : purchaseOrder.getItemQuantity()) {
                 itemQuantity.setPurchaseOrder(purchaseOrder);
+                itemQuantity.setAmount(itemQuantity.getAmount());
             }
 //        save purchase order
             PurchaseOrder purchaseOrder1 = purchaseOrderService.persist(purchaseOrder);
@@ -171,7 +174,7 @@ public class PurchaseOrderController {
         }
 
         System.out.println(purchaseOrder.toString());
-        return "redirect: /purchaseOrder";
+        return "redirect:/purchaseOrder";
     }
 
     /* List<Item> items = new ArrayList<>();

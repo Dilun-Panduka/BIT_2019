@@ -1,23 +1,25 @@
 package lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity;
 
 
-import lk.excellent.pharamacy_management.asset.item.entity.Item;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.Enum.GRNStatus;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
-import lk.excellent.pharamacy_management.util.audit.AuditEntity;
+import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class GoodReceivingManagement extends AuditEntity {
+@EqualsAndHashCode
+@JsonIgnoreProperties(value = {"updatedDate", "remarks"}, allowGetters = true)
+public class GoodReceivingManagement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,25 +30,25 @@ public class GoodReceivingManagement extends AuditEntity {
     @Enumerated(EnumType.STRING)
     private GRNStatus grnStatus;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Item item;
+    @ManyToOne
+    private Supplier supplier;
 
-    private String quantity;
-
-    @Column(unique = true)
-    private BigDecimal selPrice;
-
-    @Column(unique = true)
-    private BigDecimal cost;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate updatedDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate receivedDate;
 
     private String remarks;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private PurchaseOrder purchaseOrder;
+
+    @OneToMany( cascade = CascadeType.ALL, mappedBy = "goodReceivingManagement")
+    private List<GrnQuantity> grnQuantities;
 
 }
 

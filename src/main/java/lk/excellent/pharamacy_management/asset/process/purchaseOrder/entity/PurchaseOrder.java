@@ -28,10 +28,13 @@ public class PurchaseOrder {
 
     @Enumerated(EnumType.STRING)
     private PurchaseOrderStatus purchaseOrderStatus;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate expectedDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedDate;
 

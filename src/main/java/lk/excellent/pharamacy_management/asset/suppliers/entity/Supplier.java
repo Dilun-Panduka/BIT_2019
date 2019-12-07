@@ -2,6 +2,7 @@ package lk.excellent.pharamacy_management.asset.suppliers.entity;
 
 
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
+import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GoodReceivingManagement;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
 import lombok.*;
 
@@ -61,4 +62,7 @@ public class Supplier {
 
     @OneToMany(mappedBy = "supplier")
     private List<PurchaseOrder> purchaseOrders;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<GoodReceivingManagement> goodReceivingManagements;
 }

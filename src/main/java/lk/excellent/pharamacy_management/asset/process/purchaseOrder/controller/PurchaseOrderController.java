@@ -69,13 +69,14 @@ public class PurchaseOrderController {
 
     // purchase order edit
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String purchaseOrderEdit(@PathVariable("id") Integer id, Model model){
+    public String purchaseOrderEdit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("searchArea", false);
         model.addAttribute("addStatus", false);
         model.addAttribute("purchaseOrder", purchaseOrderService.findById(id));
         model.addAttribute("purchaseOrderStatus", PurchaseOrderStatus.values());
         return "purchaseOrder/addPurchaseOrder";
     }
+
     //OP add  given start
     @GetMapping("/addFind")
     public String pOAddForm(Model model) {
@@ -110,9 +111,7 @@ public class PurchaseOrderController {
         List<Item> items = new ArrayList<>();
         if (suppliers.size() == 1) {
             supplierItemService.findBySupplier1(suppliers.get(0))
-                    .forEach((supplierItem) -> {
-                        items.add(supplierItem.getItem());
-                    });
+                    .forEach((supplierItem) -> items.add(supplierItem.getItem()));
 
             List<ItemQuantity> itemQuantities = new ArrayList<>();
 
@@ -155,17 +154,20 @@ public class PurchaseOrderController {
             } else {
                 input = purchaseOrderService.findLastPONumber().getCode();
             }
-            String po= input.replaceAll("[^0-9]+", "");
+            String po = input.replaceAll("[^0-9]+", "");
             Integer PONumber = Integer.parseInt(po);
-            int newPONumber = PONumber+1;
+            int newPONumber = PONumber + 1;
             purchaseOrder.setCode("EHSPO" + newPONumber);
             purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.NOT);
             purchaseOrder.setCreatedDate(dateTimeAgeService.getCurrentDate());
             purchaseOrder.setUpdatedDate(dateTimeAgeService.getCurrentDate());
 //            List<ItemQuantity> itemQuantities = new ArrayList<>();
             for (ItemQuantity itemQuantity : purchaseOrder.getItemQuantity()) {
-                itemQuantity.setPurchaseOrder(purchaseOrder);
-                itemQuantity.setAmount(itemQuantity.getAmount());
+                if(!(itemQuantity.getQuantity() == 0)) {
+                    itemQuantity.setPurchaseOrder(purchaseOrder);
+                    itemQuantity.setAmount(itemQuantity.getAmount());
+                }
+
             }
 //        save purchase order
             PurchaseOrder purchaseOrder1 = purchaseOrderService.persist(purchaseOrder);
@@ -195,4 +197,10 @@ public class PurchaseOrderController {
         model.addAttribute("searchArea", false);
         model.addAttribute("purchaseOrder", new PurchaseOrder());
         return "purchaseOrder/addPurchaseOrder";*/
+
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
+    public String deletePurchaseOrder(@PathVariable Integer id) {
+        purchaseOrderService.delete(id);
+        return "redirect:/purchaseOrder";
+    }
 }

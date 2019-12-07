@@ -51,6 +51,10 @@ public class PurchaseOrderService implements AbstractService<PurchaseOrder, Inte
     }
 
     public PurchaseOrder findLastPONumber() {
-   return purchaseOrderDao.findFirstByOrderByIdDesc();
+        return purchaseOrderDao.findFirstByOrderByIdDesc();
+    }
+
+    public PurchaseOrder findByCode(String code){
+        return purchaseOrderDao.findByCode(code);
     }
 }

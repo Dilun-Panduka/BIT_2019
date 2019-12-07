@@ -6,7 +6,7 @@ import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
-import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GoodReceivingManagement;
+import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GrnQuantity;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.ItemQuantity;
 import lombok.*;
 
@@ -64,7 +64,7 @@ public class Item {
     private List<Ledger> ledgers;
 
     @OneToMany(mappedBy = "item")
-    private List<GoodReceivingManagement> goodReceivingManagements;
+    private List<GrnQuantity> grnQuantities;
 
     @OneToMany(mappedBy = "item")
     private List<ItemQuantity> itemQuantities;

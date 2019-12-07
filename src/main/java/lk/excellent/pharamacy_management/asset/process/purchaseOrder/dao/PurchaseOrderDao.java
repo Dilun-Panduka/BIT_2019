@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface PurchaseOrderDao extends JpaRepository<PurchaseOrder, Integer> {
 
     PurchaseOrder findFirstByOrderByIdDesc();
+
+    PurchaseOrder findByCode(String code);
 }

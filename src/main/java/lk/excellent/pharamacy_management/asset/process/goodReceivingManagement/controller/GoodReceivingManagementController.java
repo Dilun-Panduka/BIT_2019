@@ -49,7 +49,6 @@ public class GoodReceivingManagementController {
         for (ItemQuantity itemQuantity : itemQuantities) {
             GrnQuantity grnQuantity = new GrnQuantity();
             grnQuantity.setItem(itemQuantity.getItem());
-            grnQuantity.setAmount(itemQuantity.getAmount());
             grnQuantity.setRequestedQty(itemQuantity.getQuantity());
             grnQuantity.setReceivedQuantity(0);
             grnQuantities.add(grnQuantity);
@@ -59,6 +58,7 @@ public class GoodReceivingManagementController {
 
         model.addAttribute("grn", goodReceivingManagement);
         model.addAttribute("supplier", purchaseOrder1.getSupplier());
+        model.addAttribute("purchaseOrder", purchaseOrder1);
         model.addAttribute("searchArea", false);
         model.addAttribute("addStatus", true);
         return "grn/addGrn";

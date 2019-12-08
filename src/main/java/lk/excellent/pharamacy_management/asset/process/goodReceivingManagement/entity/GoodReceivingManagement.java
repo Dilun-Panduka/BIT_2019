@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,6 +44,8 @@ public class GoodReceivingManagement {
     private LocalDate receivedDate;
 
     private String remarks;
+
+    private BigDecimal total;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private PurchaseOrder purchaseOrder;

@@ -23,7 +23,7 @@ public class Ledger {
     private String code;
 
     @Column(nullable = false)
-    private Integer availableQuantity;
+    private int availableQuantity;
 
     @Column(nullable = false)
     private BigDecimal cost;

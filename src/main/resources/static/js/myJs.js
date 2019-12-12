@@ -61,6 +61,7 @@ let nameRegex = /^[a-zA-Z]{2}[ a-zA-Z]+$/;
 let numberRegex = /^([eE][hH][sS][\d]+)$/;
 let invoiceNumberRegex = /^[0-9]{10}$/;
 let priceRegex = /^[0-9]+[.][0-9][0-9]$/;
+let qtyRegex = /^([1-9][0-9]*)$/;
 let onlyNumberRegex = /^[0-9]*$/;
 
 
@@ -313,6 +314,16 @@ $("#cost").bind("keyup", function () {
 $("#selling").bind("keyup", function () {
     let selling = $(this).val();
     if (priceRegex.test(selling)) {
+        backgroundColourChangeGood($(this));
+    } else {
+        backgroundColourChangeBad($(this));
+    }
+});
+
+//Quantity Validation
+$("#qty").bind("keyup", function () {
+    let qty = $(this).val();
+    if (qtyRegex.test(qty)) {
         backgroundColourChangeGood($(this));
     } else {
         backgroundColourChangeBad($(this));

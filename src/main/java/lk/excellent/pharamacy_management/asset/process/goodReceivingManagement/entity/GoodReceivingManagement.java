@@ -47,10 +47,10 @@ public class GoodReceivingManagement {
 
     private BigDecimal total;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private PurchaseOrder purchaseOrder;
 
-    @OneToMany( cascade = CascadeType.ALL, mappedBy = "goodReceivingManagement")
+    @OneToMany( cascade = CascadeType.PERSIST, mappedBy = "goodReceivingManagement")
     private List<GrnQuantity> grnQuantities;
 
 }

@@ -18,18 +18,6 @@
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_CASHIER'')')}">
 							<li><a href="/customer">Customer Management</a></li>
 						</ul>
-						<!--MLT1 NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MLT1'')')}">
-							<li><a href="/lab/searchReportFrom">Search Patient</a></li>
-							<li><a href="/lab/worksheetPrinted">Pending Report</a></li>
-							<!--<li><a href="#">Report Reprint</a></li>-->
-						</ul>
-						<!--MLT2 NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MLT2'')')}">
-							<li><a href="/lab/searchReportFrom">Search Patient</a></li>
-							<li><a href="/lab/worksheetPrinted">Pending Report</a></li>
-							<!--<li><a href="#">Report Reprint</a></li>-->
-						</ul>
 						<!--MANAGER NAV BAR CONTENT -->
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
 							<li><a href="/employee">Employee Management</a></li>
@@ -37,58 +25,18 @@
 							<li><a href="/supplier">Supplier Management </a></li>
 							<li><a href="/item">Item Management </a></li>
 							<li><a href="/invoice">Invoice Management</a></li>
-							<!--<li><a href="/medicalPackage">Medical Package Management </a></li>
-							<li><a href="/collectingCenter">Collecting Center Management </a></li>
-							<li><a href="/labTest">Lab Test Management </a></li>
-							<li><a href="/refund">Refund Management </a></li>-->
 							<li><a href="/user">User Management </a></li>
 						</ul>
-						<!--PHLABOTO NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_PHLEBOTOMY'')')}">
-							<li><a href="/phlaboto">Pending Patient</a></li>
-						</ul>
 					</li>
+
 					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" sec:authorize="isAuthenticated()">Transaction<span class="caret"></span></a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" sec:authorize="isAuthenticated()">Data Maintenance<span class="caret"></span></a>
 						<!--CASHIER NAV BAR CONTENT -->
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_CASHIER'')')}">
 							<li><a href="/invoiceProcess">Make Invoice</a></li>
 							<li><a href="/customer">Search Customer</a></li>
 							<!--<li><a href="#" >Search Invoice</a></li>-->
 <!--							<li><a href="/refund/add">Refund</a></li>-->
-						</ul>
-						<!--MLT1 NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MLT1'')')}">
-							<li class="dropdown-header text-center" >Laboratory</li>
-							<li><a href="/labTest">Laboratory Test </a></li>
-							<li><a href="/lab/sampleCollect">Print Request Form</a></li>
-							<li><a href="/lab/worksheetPrinted">Enter Test Result</a></li>
-							<li><a href="/lab/authorize/resultAuthorizeList">Authorization</a></li>
-							<li><a href="/lab/afterResultAuthorizeList">Print Report</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header text-center">Medical Package </li>
-							<li><a href="/medicalPackage">Medical Package </a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header text-center">Collecting Center</li>
-							<li><a href="/collectingCenter">Collecting Center </a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header text-center">Invoice Related</li>
-							<li><a href="/refund">Refund</a></li>
-						</ul>
-						<!--MLT2 NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MLT2'')')}">
-							<li class="dropdown-header text-center">Laboratory</li>
-							<li><a href="/labTest">Laboratory Test </a></li>
-							<li><a href="/lab/sampleCollect">Print Request Form</a></li>
-							<li><a href="/lab/worksheetPrinted">Enter Test Result</a></li>
-							<li><a href="/lab//afterResultAuthorizeList">Print Report</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header text-center">Medical Package </li>
-							<li><a href="/medicalPackage">Medical Package </a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header text-center">Collecting Center</li>
-							<li><a href="/collectingCenter">Collecting Center </a></li>
-							<li class="divider"></li>
 						</ul>
 						<!--MANAGER NAV BAR CONTENT -->
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
@@ -98,9 +46,13 @@
 							<li><a href="/item/add">Add a New Item</a></li>
 							<li><a href="/user/add">New User</a></li>
 						</ul>
-						<!--PHLABOTO NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_PHLEBOTOMY'')')}">
-							<li><a href="/phlaboto/repeatSamplePatientForm">Repeat Sample Taken Enter</a></li>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" sec:authorize="isAuthenticated()">Transaction <span class="caret"></span></a>
+						<!--MANAGER NAV BAR CONTENT -->
+						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
+							<li><a href="/purchaseOrder">Purchase Orders </a></li>
+							<li><a href="/grn">Received Goods</a></li>
 						</ul>
 					</li>
 					<li class="dropdown" >

@@ -79,9 +79,9 @@
                                 <li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
                             </ul>
                             <div th:if="${addStatus==true}" class="row text-center bg-info" style="margin: auto; width: 90%; border-radius: 10px;">
-                                <h3 th:text="${supplier.name}"></h3>
-                                <input type="hidden" th:field="*{supplier}">
-                                <input type="hidden" th:field="*{purchaseOrder}">
+                                <h3 th:text="${grn.supplier.name}"></h3>
+                                <input type="hidden" th:field="*{supplier}" />
+                                <input type="hidden" th:field="*{purchaseOrder}" />
                             </div>
                             <!--From Start-->
                             <div class="row text-left" th:if="${addStatus==false}">
@@ -167,8 +167,9 @@
                                         <tbody>
                                         <tr th:each="item, rowCount : ${grn.grnQuantities }">
                                             <th th:text="${rowCount.count}"></th>
-                                            <th th:text="${item.item.description}">
-                                                <input type="hidden" th:value="${item.item}">
+                                            <th>
+                                                <span th:text="${item.item.description}"></span>
+                                                <input type="hidden" th:field="*{grnQuantities[__${rowCount.index}__].item.id}">
                                             </th>
                                             <th th:text="${item.item.soh}"></th>
                                             <th><input class="form-control" type="text" id="cost" th:field="*{grnQuantities[__${rowCount.index}__].item.cost}" onkeyup="calculateAmount()"></th>
@@ -243,3 +244,18 @@
     <script th:replace="fragments/script"></script>
 </body>
 </html>
+GoodReceivingManagement(
+id=null,
+code=null,
+grnStatus=null,
+supplier=Supplier(id=15, code=EHS9, name=Panduka, address=rgrwg, gwrgwr,wrg rg, land=0112457881, email=panduka@gmail.com, contactName=Mr asaasaasa, ids=null, supplierItems=[lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@cbb0939f, lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@e2a64e4b, lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@abff0c0f, lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@fe849b48], contactMobile=0778726246, contactEmail=adasda@gmail.com,
+updatedAt=2019-11-30,
+createdAt=null,
+purchaseOrders=[lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@c741177c, lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@bcd99e81, lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@2a28167a],goodReceivingManagements=[]),
+createdDate=null,
+updatedDate=null,
+receivedDate=2019-12-12,
+remarks=asasdasds,
+total=4407.04,
+purchaseOrder=lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@2a28167a,
+grnQuantities=[GrnQuantity(id=0, requestedQty=74, receivedQuantity=74, amount=2547.82, item=lk.excellent.pharamacy_management.asset.item.entity.Item@9bdbb537, goodReceivingManagement=null), GrnQuantity(id=0, requestedQty=54, receivedQuantity=54, amount=1859.22, item=lk.excellent.pharamacy_management.asset.item.entity.Item@9bdbb537, goodReceivingManagement=null)])

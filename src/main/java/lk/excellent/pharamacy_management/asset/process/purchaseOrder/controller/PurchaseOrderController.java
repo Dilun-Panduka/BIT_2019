@@ -200,7 +200,9 @@ public class PurchaseOrderController {
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
     public String deletePurchaseOrder(@PathVariable Integer id) {
-        purchaseOrderService.delete(id);
+        PurchaseOrder purchaseOrder = purchaseOrderService.findById(id);
+        purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.CANCELLED);
+        purchaseOrderService.persist(purchaseOrder);
         return "redirect:/purchaseOrder";
     }
 }

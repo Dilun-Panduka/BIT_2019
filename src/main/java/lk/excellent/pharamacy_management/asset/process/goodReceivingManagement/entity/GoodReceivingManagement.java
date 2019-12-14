@@ -2,7 +2,6 @@ package lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.Enum.GRNStatus;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
 import lk.excellent.pharamacy_management.asset.suppliers.entity.Supplier;
 import lombok.*;
@@ -28,9 +27,6 @@ public class GoodReceivingManagement {
     @Column(unique = true)
     private String code;
 
-    @Enumerated(EnumType.STRING)
-    private GRNStatus grnStatus;
-
     @ManyToOne
     private Supplier supplier;
 
@@ -50,7 +46,7 @@ public class GoodReceivingManagement {
     @ManyToOne
     private PurchaseOrder purchaseOrder;
 
-    @OneToMany( cascade = CascadeType.PERSIST, mappedBy = "goodReceivingManagement")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "goodReceivingManagement")
     private List<GrnQuantity> grnQuantities;
 
 }

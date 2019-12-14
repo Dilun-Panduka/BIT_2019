@@ -7,6 +7,7 @@ import lk.excellent.pharamacy_management.asset.process.generalLedger.service.Led
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GoodReceivingManagement;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GrnQuantity;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.service.GoodReceivingManagementService;
+import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.Enum.PurchaseOrderStatus;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.ItemQuantity;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.service.PurchaseOrderService;
@@ -77,27 +78,29 @@ public class GoodReceivingManagementController {
     }
 
     @RequestMapping(value = {"/add", "/update"}, method = RequestMethod.POST)
-    public String addGRN(@Valid @ModelAttribute("grn")GoodReceivingManagement goodReceivingManagement, BindingResult result, Model model, RedirectAttributes redirectAttributes){
-//        GoodReceivingManagement goodReceivingManagement1 = goodReceivingManagement;
-        System.out.println(goodReceivingManagement.toString());
+    public String addGRN(@Valid @ModelAttribute("grn") GoodReceivingManagement goodReceivingManagement, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+
         List<GrnQuantity> grnQuantities = new ArrayList<>();
-        for(GrnQuantity grnQuantity : goodReceivingManagement.getGrnQuantities()){
+        for (GrnQuantity grnQuantity : goodReceivingManagement.getGrnQuantities()) {
             Ledger ledger = ledgerService.findByItem(grnQuantity.getItem());
-            if (ledger !=null){
-                if (ledger.getItem().getCost().equals(grnQuantity.getItem().getCost())){
+            if (ledger != null) {
+                if (ledger.getItem().getCost().equals(grnQuantity.getItem().getCost())) {
                     ledger.setAvailableQuantity(ledger.getAvailableQuantity() + grnQuantity.getReceivedQuantity());
-                    Item item= itemService.findById(grnQuantity.getItem().getId());
+                    Item item = itemService.findById(grnQuantity.getItem().getId());
                     item.setSoh(ledger.getAvailableQuantity());
                     itemService.persist(item);
                     ledger.setUpdatedAt(dateTimeAgeService.getCurrentDate());
-               grnQuantity.setItem(ledgerService.persist(ledger).getItem());
-               grnQuantities.add(grnQuantity);
+                    grnQuantity.setItem(ledgerService.persist(ledger).getItem());
+                    grnQuantities.add(grnQuantity);
                 } else {
-                    Item item =ledger.getItem();
-//                    item.setId(null);
+                    Item item = new Item();
+                    item.setGeneric(ledger.getItem().getGeneric());
+                    item.setDescription(ledger.getItem().getDescription());
+                    item.setCategory(ledger.getItem().getCategory());
+                    item.setSoh(grnQuantity.getReceivedQuantity());
                     String c = "";
                     if (itemService.lastItem() == null) {
-                         c = "EHS00";
+                        c = "EHS00";
                     } else {
                         c = itemService.lastItem().getCode();
                     }
@@ -105,29 +108,55 @@ public class GoodReceivingManagementController {
                     Integer ItemNumber = Integer.parseInt(itemNumber);
                     int newItemNumber = ItemNumber + 1;
                     item.setCode("EHS" + newItemNumber);
-//                    item.setDescription(grnQuantity.getItem().getDescription());
                     item.setCost(grnQuantity.getItem().getCost());
                     item.setSelling(grnQuantity.getItem().getSelling());
-//                    item.setCategory(grnQuantity.getItem().getCategory());
-//                    item.setGeneric(grnQuantity.getItem().getGeneric());
-//                    item.setCreatedAt(dateTimeAgeService.getCurrentDate());
+                    item.setCreatedAt(dateTimeAgeService.getCurrentDate());
                     item.setUpdatedAt(dateTimeAgeService.getCurrentDate());
-                 ledger.setId(ledgerService.getLastItemId().getId()+1);
-                 ledger.setCost(grnQuantity.getItem().getCost());
-                 ledger.setSalePrice(grnQuantity.getItem().getSelling());
-                 ledger.setCreatedAt(dateTimeAgeService.getCurrentDate());
-                 ledger.setUpdatedAt(dateTimeAgeService.getCurrentDate());
-                ledger.setAvailableQuantity(grnQuantity.getReceivedQuantity());
-                    grnQuantity.setItem(ledgerService.persist(ledger).getItem());
+                    Item item1 = itemService.persist(item);
+
+                    Ledger ledger1 = new Ledger();
+                    ledger1.setItem(item1);
+                    ledger1.setCode(item1.getCode());
+                    ledger1.setSalePrice(item1.getSelling());
+                    ledger1.setAvailableQuantity(item1.getSoh());
+                    ledger1.setCost(item1.getCost());
+                    ledger1.setReorderLimit(item1.getReorderLimit());
+                    ledger1.setCreatedAt(dateTimeAgeService.getCurrentDate());
+                    ledger1.setUpdatedAt(dateTimeAgeService.getCurrentDate());
+                    grnQuantity.setItem(ledgerService.persist(ledger1).getItem());
                     grnQuantities.add(grnQuantity);
                 }
             }
         }
 
+
         goodReceivingManagement.setCreatedDate(dateTimeAgeService.getCurrentDate());
         goodReceivingManagement.setUpdatedDate(dateTimeAgeService.getCurrentDate());
         goodReceivingManagement.setGrnQuantities(grnQuantities);
         goodReceivingManagementService.persist(goodReceivingManagement);
-        return "redirect:/grn";
+
+        PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodReceivingManagement.getPurchaseOrder().getId());
+        if (purchaseOrder.getItemQuantity().size() != goodReceivingManagement.getGrnQuantities().size()) {
+            purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.PARTIALY);
+            purchaseOrderService.persist(purchaseOrder);
+        } else {
+            for (GrnQuantity quantity : goodReceivingManagement.getGrnQuantities()) {
+                if (!purchaseOrder.getItemQuantity().isEmpty()) {
+                    for (ItemQuantity purchase : purchaseOrder.getItemQuantity()) {
+                        if (quantity.getItem().getCode().equals(purchase.getItem().getCode())) {
+                            if (quantity.getReceivedQuantity() >= purchase.getQuantity()) {
+                                purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.FULLY);
+                            } else {
+                                purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.PARTIALY);
+                            }
+                        }
+                    }
+                }
+            }
+            purchaseOrderService.persist(purchaseOrder);
+        }
+
+
+        return "redirect:/grn/add";
     }
 }

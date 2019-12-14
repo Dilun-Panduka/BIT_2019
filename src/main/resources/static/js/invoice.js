@@ -1,13 +1,37 @@
 $(document).ready(function () {
-        //data show content show and hide - start
-        contentHide(document.getElementById("medicalPackageDetails"));
-        contentHide(document.getElementById("labTestShowTable"));
-        contentHide(document.getElementById("patientContent"));
-        contentHide(document.getElementById("card"));
-        contentHide(document.getElementById("patientListDisplay"));
-        //data show content show and hide - end
-    }
-);
+    //data show content show and hide - start
+$("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
+
+// new Customer
+    $("#btnNewCustomer").bind("click", function () {
+       $("#customerDetail").show();
+       $("#existingCustomer").hide();
+       $("#customerShow").hide();
+    });
+//existing Customer customer
+    $("#btnExistingCustomer").bind("click", function () {
+        $("#existingCustomer").show();
+        $("#customerDetail").hide();
+        $("#customerShow").hide();
+    });
+//existing customer value is adding
+    $("#mobileValue").bind("keyup",function () {
+        $("#customerDetail").hide();
+        $("#customerShow").hide();
+        let typedValue = $(this).val();
+        if (mobileRegex.test(typedValue)){
+            $("#customerShow").show();
+            Promise.resolve(getData(findCutomerUrl + typedValue)).then(value => item = value).then(function (value) {
+                    console.log(value);
+                }
+            );
+        }else{
+            $("#customerDetail").hide();
+            $("#customerShow").hide();
+        }
+    });
+
+});
 
 /*// Create new table selected lab test table - start//*/
 class LabTest {
@@ -513,10 +537,10 @@ function fillPatientDetailsForm(patientInArray) {
 $("#amountTendered").on("keyup", function () {
     $("#balance").val($("#amountTendered").val() - $("#amount").val());
 
-    if ($("#balance").val() < 0 ) {
+    if ($("#balance").val() < 0) {
         backgroundColourChangeBad($(this));
         contentHide(document.getElementById("btnSubmitInvoice"));
-    } else{
+    } else {
         backgroundColourChangeGood($(this));
         contentShow(document.getElementById("btnSubmitInvoice"));
         $("#btnSubmitInvoice").attr('class', 'btn btn-success');
@@ -530,17 +554,17 @@ $("#amountTendered").on("keyup", function () {
 $("#cmbDiscountRatio").on("change", function () {
     $("#amount").val($("#totalPrice").val() - ($("#totalPrice").val() * (parseFloat($("#cmbDiscountRatio option:selected").text()) / 100)));
 
-    if  ($("#amountTendered").val()!==""){
+    if ($("#amountTendered").val() !== "") {
 
-            $("#balance").val($("#amountTendered").val() - $("#amount").val());
+        $("#balance").val($("#amountTendered").val() - $("#amount").val());
 
-            if ($("#balance").val() < 0) {
-                contentHide(document.getElementById("btnSubmitInvoice"));
-            } else {
-                contentShow(document.getElementById("btnSubmitInvoice"));
-                $("#btnSubmitInvoice").attr('class', 'btn btn-success');
+        if ($("#balance").val() < 0) {
+            contentHide(document.getElementById("btnSubmitInvoice"));
+        } else {
+            contentShow(document.getElementById("btnSubmitInvoice"));
+            $("#btnSubmitInvoice").attr('class', 'btn btn-success');
 
-            }
+        }
     }
 });
 //payment method show and hide

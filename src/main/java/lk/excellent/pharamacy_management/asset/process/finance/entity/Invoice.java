@@ -3,6 +3,7 @@ package lk.excellent.pharamacy_management.asset.process.finance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.excellent.pharamacy_management.asset.customer.entity.Customer;
+import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.process.finance.entity.Enum.InvoicePrintOrNot;
 import lk.excellent.pharamacy_management.asset.process.finance.entity.Enum.PaymentMethod;
 import lk.excellent.pharamacy_management.util.audit.AuditEntity;
@@ -12,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -68,6 +70,12 @@ public class Invoice extends AuditEntity {
 
     @ManyToOne
     private Customer customer;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "invoice_item",
+            joinColumns = @JoinColumn(name = "invoice_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<Item> items;
 /*
     @ManyToOne
     private Branch branch;*/

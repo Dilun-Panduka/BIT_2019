@@ -16,4 +16,5 @@ public interface SupplierItemDao extends JpaRepository<SupplierItem, Integer> {
 
     List<SupplierItem> findByItem(Item item);
 
+
 }

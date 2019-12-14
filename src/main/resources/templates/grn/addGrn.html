@@ -56,7 +56,8 @@
                             <div class="col-sm-5">
                                 <div class="col-md-4 form-group">
                                     <label for="code">PO Code:</label>
-                                    <input class="form-control" type="text" id="code" name="code" placeholder="Please Enter PO code">
+                                    <input class="form-control" type="text" id="code" name="code"
+                                           placeholder="Please Enter PO code">
                                 </div>
                                 <div class="text-center col-md-1 form-group">
                                     <br>
@@ -78,10 +79,11 @@
                             <ul>
                                 <li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
                             </ul>
-                            <div th:if="${addStatus==true}" class="row text-center bg-info" style="margin: auto; width: 90%; border-radius: 10px;">
+                            <div th:if="${addStatus==true}" class="row text-center bg-info"
+                                 style="margin: auto; width: 90%; border-radius: 10px;">
                                 <h3 th:text="${grn.supplier.name}"></h3>
-                                <input type="hidden" th:field="*{supplier}" />
-                                <input type="hidden" th:field="*{purchaseOrder}" />
+                                <input type="hidden" th:field="*{supplier}"/>
+                                <input type="hidden" th:field="*{purchaseOrder}"/>
                             </div>
                             <!--From Start-->
                             <div class="row text-left" th:if="${addStatus==false}">
@@ -119,26 +121,28 @@
                                     let cst = document.querySelectorAll("#cost");
                                     let amnt = document.querySelectorAll("#amount");
 
-                                    for (let i = 0; i < qty.length; i++) {
-                                        quantity.push(parseFloat(qty[i].value));
-                                    }
-                                    for (let r = 0; r < cst.length; r++) {
-                                        cost.push(parseFloat(cst[r].value));
-                                    }
-                                    for (let n = 0; n < qty.length; n++) {
-                                        amnt[n].value = quantity[n] * cost[n];
-                                        if (!isNaN(amnt[n].value)){
-                                            amounts.push(parseFloat(amnt[n].value));
-                                        }else{
-                                            amnt[n].value = 0.0;
-                                            amounts.push(parseFloat(amnt[n].value));
+                                    if (qty.length === cst.length) {
+                                        for (let i = 0; i < qty.length; i++) {
+                                            quantity.push(parseFloat(qty[i].value));
                                         }
+                                        for (let r = 0; r < cst.length; r++) {
+                                            cost.push(parseFloat(cst[r].value));
+                                        }
+                                        for (let n = 0; n < qty.length; n++) {
+                                            amnt[n].value = quantity[n] * cost[n];
+                                            if (!isNaN(amnt[n].value)) {
+                                                amounts.push(parseFloat(amnt[n].value));
+                                            } else {
+                                                amnt[n].value = 0.0;
+                                                amounts.push(parseFloat(amnt[n].value));
+                                            }
 
+                                        }
+                                        for (let m = 0; m < amounts.length; m++) {
+                                            t = t + amounts[m];
+                                        }
+                                        document.getElementById("total").value = t.toFixed(2);
                                     }
-                                    for (let m = 0; m < amounts.length; m++) {
-                                        t = t + amounts[m];
-                                    }
-                                    document.getElementById("total").value = t.toFixed(2);
                                 }
 
                                 function deleteRows(r) {
@@ -169,14 +173,25 @@
                                             <th th:text="${rowCount.count}"></th>
                                             <th>
                                                 <span th:text="${item.item.description}"></span>
-                                                <input type="hidden" th:field="*{grnQuantities[__${rowCount.index}__].item.id}">
+                                                <input type="hidden"
+                                                       th:field="*{grnQuantities[__${rowCount.index}__].item.id}">
                                             </th>
                                             <th th:text="${item.item.soh}"></th>
-                                            <th><input class="form-control" type="text" id="cost" th:field="*{grnQuantities[__${rowCount.index}__].item.cost}" onkeyup="calculateAmount()"></th>
-                                            <th><input class="form-control" type="text" th:field="*{grnQuantities[__${rowCount.index}__].item.selling}"></th>
-                                            <th><input class="form-control" type="text" th:field="*{grnQuantities[__${rowCount.index}__].requestedQty}" readonly></th>
-                                            <th><input class="form-control" type="text" id="qty" th:field="*{grnQuantities[__${rowCount.index}__].receivedQuantity}" onkeyup="calculateAmount()"></th>
-                                            <th><input class="form-control" type="text" id="amount" th:field="*{grnQuantities[__${rowCount.index}__].amount}" readonly></th>
+                                            <th><input class="form-control" type="text" id="cost"
+                                                       th:field="*{grnQuantities[__${rowCount.index}__].item.cost}"
+                                                       onkeyup="calculateAmount()"></th>
+                                            <th><input class="form-control" type="text"
+                                                       th:field="*{grnQuantities[__${rowCount.index}__].item.selling}">
+                                            </th>
+                                            <th><input class="form-control" type="text"
+                                                       th:field="*{grnQuantities[__${rowCount.index}__].requestedQty}"
+                                                       readonly></th>
+                                            <th><input class="form-control" type="text" id="qty"
+                                                       th:field="*{grnQuantities[__${rowCount.index}__].receivedQuantity}"
+                                                       onkeyup="calculateAmount()"></th>
+                                            <th><input class="form-control" type="text" id="amount"
+                                                       th:field="*{grnQuantities[__${rowCount.index}__].amount}"
+                                                       readonly></th>
 
 
                                             <th><a class="btn btn-danger" onclick="deleteRows(this)"><i
@@ -186,7 +201,8 @@
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                            <th colspan="7" class="text-right"><label class="control-label text-capitalize">Total
+                                            <th colspan="7" class="text-right"><label
+                                                    class="control-label text-capitalize">Total
                                                 :</label></th>
                                             <th><input type="text" id="total" class="form-control" th:field="*{total}"
                                                        readonly></th>
@@ -240,22 +256,8 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer" th:replace="fragments/footer"></footer>
-    <script th:replace="fragments/script"></script>
+</div>
+<footer class="page-footer" th:replace="fragments/footer"></footer>
+<script th:replace="fragments/script"></script>
 </body>
 </html>
-GoodReceivingManagement(
-id=null,
-code=null,
-grnStatus=null,
-supplier=Supplier(id=15, code=EHS9, name=Panduka, address=rgrwg, gwrgwr,wrg rg, land=0112457881, email=panduka@gmail.com, contactName=Mr asaasaasa, ids=null, supplierItems=[lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@cbb0939f, lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@e2a64e4b, lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@abff0c0f, lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem@fe849b48], contactMobile=0778726246, contactEmail=adasda@gmail.com,
-updatedAt=2019-11-30,
-createdAt=null,
-purchaseOrders=[lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@c741177c, lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@bcd99e81, lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@2a28167a],goodReceivingManagements=[]),
-createdDate=null,
-updatedDate=null,
-receivedDate=2019-12-12,
-remarks=asasdasds,
-total=4407.04,
-purchaseOrder=lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder@2a28167a,
-grnQuantities=[GrnQuantity(id=0, requestedQty=74, receivedQuantity=74, amount=2547.82, item=lk.excellent.pharamacy_management.asset.item.entity.Item@9bdbb537, goodReceivingManagement=null), GrnQuantity(id=0, requestedQty=54, receivedQuantity=54, amount=1859.22, item=lk.excellent.pharamacy_management.asset.item.entity.Item@9bdbb537, goodReceivingManagement=null)])

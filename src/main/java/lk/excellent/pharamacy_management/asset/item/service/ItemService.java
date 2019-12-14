@@ -1,5 +1,6 @@
 package lk.excellent.pharamacy_management.asset.item.service;
 
+import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.item.dao.ItemDao;
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.util.interfaces.AbstractService;
@@ -59,4 +60,7 @@ public class ItemService implements AbstractService<Item, Integer> {
     }
 
 
+    public List<Item> findByCategory(Category category) {
+        return itemDao.findByCategory(category);
+    }
 }

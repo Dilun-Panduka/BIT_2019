@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -42,12 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       /* http.csrf().disable();
-        http.authorizeRequests().antMatchers("/").permitAll();*/
+        http.csrf().disable();
+        http.authorizeRequests().antMatchers("/").permitAll();
 
         //for developing easy to give permission all link
 
-        http  //To display pdf in same html page i frame
+      /*  http  //To display pdf in same html page i frame
                 .headers()
                 .frameOptions()
                 .sameOrigin()
@@ -93,6 +92,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Cross site disable
                 .and()
                 .csrf()
-                .disable();
+                .disable();*/
     }
 }

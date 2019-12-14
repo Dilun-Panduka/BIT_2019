@@ -232,7 +232,7 @@ function calculateGender(nic) {
 /*//Nic - gender - end//*/
 
 //mobile number and land number validation
-$("#mobile").bind("keyup", function () {
+$("#mobile, #mobileValue").bind("keyup", function () {
     let mobile = $(this).val();
     if (mobileRegex.test(mobile)) {
         backgroundColourChangeGood($(this));
@@ -374,7 +374,7 @@ async function getData(url) {
 
 // conformation message and to login page
 function conformationAndLoginWindow() {
-    let message = "There is no way to access to the system without  re-login \n Please click \'Ok\' to login";
+    let message = "Please give me a time to refresh";
     swal({
         title: "Attention !",
         icon: "warning",
@@ -385,8 +385,7 @@ function conformationAndLoginWindow() {
         },
     }).then(value => {
         if (value) {
-            let loginUrl = window.location.protocol + "/login";
-            window.open(loginUrl, '_self');
+            location.reload();
         }
     });
 }

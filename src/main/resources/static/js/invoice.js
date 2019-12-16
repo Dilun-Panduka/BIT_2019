@@ -21,8 +21,10 @@ $("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
         let typedValue = $(this).val();
         if (mobileRegex.test(typedValue)){
             $("#customerShow").show();
-            Promise.resolve(getData(findCutomerUrl + typedValue)).then(value => item = value).then(function (value) {
-                    console.log(value);
+            let findCustomerUrl = $("#customerUrl").val();
+            Promise.resolve(getData(findCustomerUrl + typedValue)).then(value => item = value).then(function (value) {
+                console.log(value);
+                addCustomerRow(value)
                 }
             );
         }else{
@@ -72,6 +74,100 @@ class LabTest {
 
     set price(value) {
         this._price = value;
+    }
+}
+/*Customer Model*/
+class customer{
+    constructor(id, number, name, mobile, email, nic, land, dateOfBirth, gender, title){
+        this._id = id;
+        this._number = number;
+        this._name = name;
+        this._nic = nic;
+        this._email = email;
+        this._mobile = mobile;
+        this._land = land;
+        this._dateOfBirth = dateOfBirth
+        this._gender = gender;
+        this._title = title
+    }
+    get id() {
+        return this._id;
+    }
+
+    set id(value) {
+        this._id = value;
+    }
+
+    get number() {
+        return this._number;
+    }
+
+    set number(value) {
+        this._number = value;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        this._name = value;
+    }
+
+    get mobile() {
+        return this._mobile;
+    }
+
+    set mobile(value) {
+        this._mobile = value;
+    }
+
+    get email() {
+        return this._email;
+    }
+
+    set email(value) {
+        this._email = value;
+    }
+
+    get nic() {
+        return this._nic;
+    }
+
+    set nic(value) {
+        this._nic = value;
+    }
+
+    get land() {
+        return this._land;
+    }
+
+    set land(value) {
+        this._land = value;
+    }
+
+    get dateOfBirth() {
+        return this._dateOfBirth;
+    }
+
+    set dateOfBirth(value) {
+        this._dateOfBirth = value;
+    }
+
+    get gender() {
+        return this._gender;
+    }
+
+    set gender(value) {
+        this._gender = value;
+    }
+
+    get title() {
+        return this._title;
+    }
+
+    set title(value) {
+        this._title = value;
     }
 }
 
@@ -165,6 +261,42 @@ function addRow(labTest) {
     row.insertCell(3).innerHTML = labTest.name;
     row.insertCell(4).innerHTML = '<button value="Remove" class="btn btn-danger" onClick="deleteRow(this)"><i style="font-size:24px" class="fa">&#xf00d;</i></button>';
 
+}
+
+function addCustomerRow(customer){
+    let customerTable = document.getElementById("customers");
+    let rowCount = customerTable.rows.length;
+    let row = customerTable.insertRow(rowCount);
+
+    for (let i = 0; i<rowCount; i++) {
+        row.insertCell(0).innerHTML = customer[i].id;
+        row.insertCell(1).innerHTML = customer[i].number;
+        row.insertCell(2).innerHTML = customer[i].title;
+        row.insertCell(3).innerHTML = customer[i].name;
+        row.insertCell(4).innerHTML = customer[i].nic;
+        row.insertCell(5).innerHTML = customer[i].dateOfBirth;
+        row.insertCell(6).innerHTML = customer[i].gender;
+        row.insertCell(7).innerHTML = customer[i].email;
+        row.insertCell(8).innerHTML = customer[i].mobile;
+        row.insertCell(9).innerHTML = customer[i].land;
+        row.insertCell(10).innerHTML = '<button type="button" value="Select" class="btn btn-primary" onClick="selectedCustomer(this)"></button>';
+    }
+
+}
+
+function selectedCustomer(obj) {
+    let index = obj.parentNode.parentNode.rowIndex;
+    let customerTable = document.getElementById("customers");
+    let array =[];
+    let customerSelected = customerTable.rows.item(index).cells;
+    console.log("customerselele",customerSelected)
+    for (let cus = 0;cus<customerSelected.length; cus++){
+        array.push(customerSelected[cus].textContent);
+    }
+    console.log("araaaaaa",array)
+    $("#customerDetail").show();
+
+    this.fillPatientDetailsForm(array);
 }
 
 function deleteRow(obj) {
@@ -499,20 +631,20 @@ function fillPatientDetailsForm(patientInArray) {
                 $("#id").val(patientInArray[i]);
                 break;
             case 1:
-                $("#patientNumber").val(patientInArray[i]);
+                $("#number").val(patientInArray[i]);
                 break;
             case 2:
                 $("#title").val(patientInArray[i]);
                 break;
             case 3:
-                $("#patientName").val(patientInArray[i]);
+                $("#name").val(patientInArray[i]);
                 break;
             case 4:
-                $("#gender").val(patientInArray[i]);
-                break;
-            case 5:
                 $("#nic").val(patientInArray[i]);
                 $("#dateOfBirth").val(calculateDateOfBirth(patientInArray[i]));
+                break;
+            case 5:
+                $("#gender").val(patientInArray[i]);
                 break;
             case 6:
                 break;

@@ -1,12 +1,12 @@
 $(document).ready(function () {
     //data show content show and hide - start
-$("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
+    $("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
 
 // new Customer
     $("#btnNewCustomer").bind("click", function () {
-       $("#customerDetail").show();
-       $("#existingCustomer").hide();
-       $("#customerShow").hide();
+        $("#customerDetail").show();
+        $("#existingCustomer").hide();
+        $("#customerShow").hide();
     });
 //existing Customer customer
     $("#btnExistingCustomer").bind("click", function () {
@@ -15,19 +15,19 @@ $("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
         $("#customerShow").hide();
     });
 //existing customer value is adding
-    $("#mobileValue").bind("keyup",function () {
+    $("#mobileValue").bind("keyup", function () {
         $("#customerDetail").hide();
         $("#customerShow").hide();
         let typedValue = $(this).val();
-        if (mobileRegex.test(typedValue)){
+        if (mobileRegex.test(typedValue)) {
             $("#customerShow").show();
             let findCustomerUrl = $("#customerUrl").val();
             Promise.resolve(getData(findCustomerUrl + typedValue)).then(value => item = value).then(function (value) {
-                console.log(value);
-                addCustomerRow(value)
+                    console.log(value);
+                    addCustomerRow(value)
                 }
             );
-        }else{
+        } else {
             $("#customerDetail").hide();
             $("#customerShow").hide();
         }
@@ -76,9 +76,10 @@ class LabTest {
         this._price = value;
     }
 }
+
 /*Customer Model*/
-class customer{
-    constructor(id, number, name, mobile, email, nic, land, dateOfBirth, gender, title){
+class customer {
+    constructor(id, number, name, mobile, email, nic, land, dateOfBirth, gender, title) {
         this._id = id;
         this._number = number;
         this._name = name;
@@ -90,6 +91,7 @@ class customer{
         this._gender = gender;
         this._title = title
     }
+
     get id() {
         return this._id;
     }
@@ -263,12 +265,12 @@ function addRow(labTest) {
 
 }
 
-function addCustomerRow(customer){
+function addCustomerRow(customer) {
     let customerTable = document.getElementById("customers");
     let rowCount = customerTable.rows.length;
     let row = customerTable.insertRow(rowCount);
 
-    for (let i = 0; i<rowCount; i++) {
+    for (let i = 0; i < rowCount; i++) {
         row.insertCell(0).innerHTML = customer[i].id;
         row.insertCell(1).innerHTML = customer[i].number;
         row.insertCell(2).innerHTML = customer[i].title;
@@ -279,7 +281,7 @@ function addCustomerRow(customer){
         row.insertCell(7).innerHTML = customer[i].email;
         row.insertCell(8).innerHTML = customer[i].mobile;
         row.insertCell(9).innerHTML = customer[i].land;
-        row.insertCell(10).innerHTML = '<button type="button" value="Select" class="btn btn-primary" onClick="selectedCustomer(this)"></button>';
+        row.insertCell(10).innerHTML = '<button type="button" value="Select" class="btn btn-primary" onClick="selectedCustomer(this)">Select</button>';
     }
 
 }
@@ -287,16 +289,55 @@ function addCustomerRow(customer){
 function selectedCustomer(obj) {
     let index = obj.parentNode.parentNode.rowIndex;
     let customerTable = document.getElementById("customers");
-    let array =[];
+    let array = [];
     let customerSelected = customerTable.rows.item(index).cells;
-    console.log("customerselele",customerSelected)
-    for (let cus = 0;cus<customerSelected.length; cus++){
+    for (let cus = 0; cus < customerSelected.length; cus++) {
         array.push(customerSelected[cus].textContent);
     }
-    console.log("araaaaaa",array)
     $("#customerDetail").show();
 
     this.fillPatientDetailsForm(array);
+}
+
+function selectedItem(obj) {
+    let itemIndex = obj.parentNode.parentNode.rowIndex;
+    let itemTable = document.getElementById("myTable");
+    let array = [];
+    let itemSelected = itemTable.rows.item(itemIndex).cells;
+    for (let n = 0; n < itemSelected.length; n++) {
+        array.push(itemSelected[n].textContent);
+    }
+    console.log(array);
+
+    let selectedItemsTable = document.getElementById("selectedItems");
+    let rowCount = selectedItemsTable.rows.length;
+    let row = selectedItemsTable.insertRow(rowCount);
+
+    // for (let i=0; i < rowCount.length; i++){
+        row.insertCell(0).innerHTML = array[0];
+        row.insertCell(1).innerHTML = array[1];
+        row.insertCell(2).innerHTML = array[2];
+        row.insertCell(3).innerHTML = array[4];
+        row.insertCell(4).innerHTML = '<th>\n' +
+            '                                            <select class="form-control" default="1"\n' +
+            '                                                    id="frequencyRatio" name="discountRatio">\n' +
+            '                                                <option>BD</option>\n' +
+            '                                                <option>TDS</option>\n' +
+            '                                                <option>OD</option>\n' +
+            '                                                <option>OM</option>\n' +
+            '                                                <option>ON</option>\n' +
+            '                                                <option>PRN</option>\n' +
+            '                                                <option>QDS</option>\n' +
+            '                                                <option>QQH</option>\n' +
+            '                                                <option>TID</option>\n' +
+            '                                                <option>FIVE_TIMES</option>\n' +
+            '                                            </select>\n' +
+            '                                        </th>';
+        row.insertCell(5).innerHTML = '<th><input type="number"></th>';
+        row.insertCell(6).innerHTML = '<th><input type="number"></th>';
+        row.insertCell(7).innerHTML = '<th><input type="number"></th>';
+        row.insertCell(8).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
+    // }
 }
 
 function deleteRow(obj) {

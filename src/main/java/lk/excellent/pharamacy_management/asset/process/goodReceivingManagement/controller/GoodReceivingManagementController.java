@@ -97,6 +97,8 @@ public class GoodReceivingManagementController {
                     item.setGeneric(ledger.getItem().getGeneric());
                     item.setDescription(ledger.getItem().getDescription());
                     item.setCategory(ledger.getItem().getCategory());
+                    item.setReorderLimit(ledger.getItem().getReorderLimit());
+                    item.setStatus(ledger.getItem().getStatus());
                     item.setSoh(grnQuantity.getReceivedQuantity());
                     String c = "";
                     if (itemService.lastItem() == null) {

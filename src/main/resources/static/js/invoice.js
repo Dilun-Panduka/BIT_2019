@@ -321,22 +321,23 @@ function selectedItem(obj) {
         row.insertCell(4).innerHTML = '<th>\n' +
             '                                            <select class="form-control" default="1"\n' +
             '                                                    id="frequencyRatio" name="discountRatio">\n' +
-            '                                                <option>BD</option>\n' +
-            '                                                <option>TDS</option>\n' +
-            '                                                <option>OD</option>\n' +
-            '                                                <option>OM</option>\n' +
-            '                                                <option>ON</option>\n' +
-            '                                                <option>PRN</option>\n' +
-            '                                                <option>QDS</option>\n' +
-            '                                                <option>QQH</option>\n' +
-            '                                                <option>TID</option>\n' +
-            '                                                <option>FIVE_TIMES</option>\n' +
+            '                                                <option>BD <span type="hidden" value="2"></span></option>\n' +
+            '                                                <option>TDS <span type="hidden" value="3"></span></option>\n' +
+            '                                                <option>OD <span type="hidden" value="1"></span></option>\n' +
+            '                                                <option>OM <span type="hidden" value="1"></span></option>\n' +
+            '                                                <option>ON <span type="hidden" value="1"></span></option>\n' +
+            // '                                                <option>PRN <span type="hidden" value="0"></span></option>\n' +
+            '                                                <option>QDS <span type="hidden" value="4"></span></option>\n' +
+            '                                                <option>QQH <span type="hidden" value="6"></span></option>\n' +
+            '                                                <option>TID <span type="hidden" value="3"></span></option>\n' +
+            '                                                <option>FIVE_TIMES <span type="hidden" value="5"></span></option>\n' +
             '                                            </select>\n' +
             '                                        </th>';
         row.insertCell(5).innerHTML = '<th><input type="number"></th>';
         row.insertCell(6).innerHTML = '<th><input type="number"></th>';
         row.insertCell(7).innerHTML = '<th><input type="number"></th>';
-        row.insertCell(8).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
+        row.insertCell(8).innerHTML = '<th><input type="number"></th>';
+        row.insertCell(9).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
     // }
 }
 

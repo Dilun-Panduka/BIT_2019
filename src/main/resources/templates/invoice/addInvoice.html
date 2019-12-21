@@ -206,7 +206,6 @@
                                             <th th:text="${item.description}"></th>
                                             <th th:text="${item.category.category}"></th>
                                             <th th:text="${item.selling}"></th>
-                                            <th th:text="${item.status.status}"></th>
                                             <th>
                                                 <button class="btn btn-sm btn-info" type="button" onClick="selectedItem(this)">Select</button>
                                             </th>
@@ -225,6 +224,7 @@
                                         <th>Name</th>
                                         <th>Unit Price</th>
                                         <th>Frequency</th>
+                                        <th>No.pills</th>
                                         <th>Duration</th>
                                         <th>Medicine Qty</th>
                                         <th>Price</th>
@@ -232,26 +232,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <!--<tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>
-                                            <select class="form-control" default="1"
-                                                    id="frequencyRatio" name="discountRatio">
-                                                <option th:each="frequency : ${frequencies}"
-                                                        th:text="${frequency}"
-                                                        th:value="${frequency.frequency}"></option>
-                                            </select>
-                                        </th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>
-                                            <button class="btn btn-primary btn-sm">Select</button>
-                                        </th>
-                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>

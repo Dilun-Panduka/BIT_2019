@@ -46,7 +46,7 @@ public class GoodReceivingManagement {
     @ManyToOne
     private PurchaseOrder purchaseOrder;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "goodReceivingManagement")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goodReceivingManagement")
     private List<GrnQuantity> grnQuantities;
 
 }

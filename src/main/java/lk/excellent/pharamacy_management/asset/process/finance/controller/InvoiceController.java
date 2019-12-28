@@ -50,7 +50,7 @@ public class InvoiceController {
             model.addAttribute("lastCustomer", input);
             model.addAttribute("newCustomer", "EHS" + newCustomerNumber);
             model.addAttribute("title", Title.values());
-            Model gender = model.addAttribute("gender", Gender.values());
+            model.addAttribute("gender", Gender.values());
             model.addAttribute("customer", new Customer());
         } catch (NumberFormatException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 //todo --> need to create checkbox select or notR
 
-        $(e.currentTarget).children('th').css('background-color', '#00FFFF');
+        // $(e.currentTarget).children('th').css('background-color', '#00FFFF');
 
         checkLabTestInArrayOrNot($(e.currentTarget).children('th'));
     });

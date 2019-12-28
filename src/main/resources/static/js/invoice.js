@@ -23,7 +23,7 @@ $(document).ready(function () {
             $("#customerShow").show();
             let findCustomerUrl = $("#customerUrl").val();
             Promise.resolve(getData(findCustomerUrl + typedValue)).then(value => item = value).then(function (value) {
-                    console.log(value);
+                    // console.log(value);
                     addCustomerRow(value)
                 }
             );
@@ -36,46 +36,46 @@ $(document).ready(function () {
 });
 
 /*// Create new table selected lab test table - start//*/
-class LabTest {
-    constructor(id, code, name, price) {
-        this._id = id;
-        this._code = code;
-        this._name = name;
-        this._price = price;
-    }
-
-    get id() {
-        return this._id;
-    }
-
-    set id(value) {
-        this._id = value;
-    }
-
-    get code() {
-        return this._code;
-    }
-
-    set code(value) {
-        this._code = value;
-    }
-
-    get name() {
-        return this._name;
-    }
-
-    set name(value) {
-        this._name = value;
-    }
-
-    get price() {
-        return this._price;
-    }
-
-    set price(value) {
-        this._price = value;
-    }
-}
+// class LabTest {
+//     constructor(id, code, name, price) {
+//         this._id = id;
+//         this._code = code;
+//         this._name = name;
+//         this._price = price;
+//     }
+//
+//     get id() {
+//         return this._id;
+//     }
+//
+//     set id(value) {
+//         this._id = value;
+//     }
+//
+//     get code() {
+//         return this._code;
+//     }
+//
+//     set code(value) {
+//         this._code = value;
+//     }
+//
+//     get name() {
+//         return this._name;
+//     }
+//
+//     set name(value) {
+//         this._name = value;
+//     }
+//
+//     get price() {
+//         return this._price;
+//     }
+//
+//     set price(value) {
+//         this._price = value;
+//     }
+// }
 
 /*Customer Model*/
 class customer {
@@ -173,6 +173,103 @@ class customer {
     }
 }
 
+class item {
+    constructor(id, code, description, category, selling
+                // , frequency, pills, duration, qty, price
+    ){
+        this._id = id;
+        this._code = code;
+        this._description = description;
+        this._category = category;
+        this._selling = selling;
+       /* this._frequency = frequency;
+        this._pills = pills;
+        this._duration = duration;
+        this._qty = qty;
+        this._price = price;*/
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    set id(value) {
+        this._id = value;
+    }
+
+    get code() {
+        return this._code;
+    }
+
+    set code(value) {
+        this._code = value;
+    }
+
+    get description() {
+        return this._description;
+    }
+
+    set description(value) {
+        this._description = value;
+    }
+
+    get selling() {
+        return this._selling;
+    }
+
+    set selling(value) {
+        this._selling = value;
+    }
+
+    /*get frequency() {
+        return this._frequency;
+    }
+
+    set frequency(value) {
+        this._frequency = value;
+    }
+
+    get pills() {
+        return this._pills;
+    }
+
+    set pills(value) {
+        this._pills = value;
+    }
+
+    get duration() {
+        return this._duration;
+    }
+
+    set duration(value) {
+        this._duration = value;
+    }
+
+    get qty() {
+        return this._qty;
+    }
+
+    set qty(value) {
+        this._qty = value;
+    }
+
+    get price() {
+        return this._price;
+    }
+
+    set price(value) {
+        this._price = value;
+    }*/
+
+    get category() {
+        return this._category;
+    }
+
+    set category(value) {
+        this._category = value;
+    }
+}
+
 function rowDataToLabTest(rowDetails) {
     const labTest = new LabTest();
     for (let i = 0; i <= rowDetails.length; i++) {
@@ -249,21 +346,21 @@ function checkLabTestInArrayOrNot(rowDetails) {
     }
 }
 
-function addRow(labTest) {
-    let table = document.getElementById("myTableData");
-    let rowCount = table.rows.length;
-
-    let row = table.insertRow(rowCount);
-
-    updateTotalPrice(labTest.price);
-
-    row.insertCell(0).innerHTML = labTest.id;
-    row.insertCell(1).innerHTML = `<input class="tableCell" type="text" name="labTests" value="${labTest.id}" readonly>`;
-    row.insertCell(2).innerHTML = labTest.code;
-    row.insertCell(3).innerHTML = labTest.name;
-    row.insertCell(4).innerHTML = '<button value="Remove" class="btn btn-danger" onClick="deleteRow(this)"><i style="font-size:24px" class="fa">&#xf00d;</i></button>';
-
-}
+// function addRow(labTest) {
+//     let table = document.getElementById("myTableData");
+//     let rowCount = table.rows.length;
+//
+//     let row = table.insertRow(rowCount);
+//
+//     updateTotalPrice(labTest.price);
+//
+//     row.insertCell(0).innerHTML = labTest.id;
+//     row.insertCell(1).innerHTML = `<input class="tableCell" type="text" name="labTests" value="${labTest.id}" readonly>`;
+//     row.insertCell(2).innerHTML = labTest.code;
+//     row.insertCell(3).innerHTML = labTest.name;
+//     row.insertCell(4).innerHTML = '<button value="Remove" class="btn btn-danger" onClick="deleteRow(this)"><i style="font-size:24px" class="fa">&#xf00d;</i></button>';
+//
+// }
 
 function addCustomerRow(customer) {
     let customerTable = document.getElementById("customers");
@@ -296,7 +393,45 @@ function selectedCustomer(obj) {
     }
     $("#customerDetail").show();
 
-    this.fillPatientDetailsForm(array);
+    this.fillCustomerDetailsForm(array);
+}
+
+function fillCustomerDetailsForm(customerInArray) {
+    for (let i = 0; i < customerInArray.length; i++) {
+        switch (i) {
+            case 0:
+                $("#id").val(customerInArray[i]);
+                break;
+            case 1:
+                $("#number").val(customerInArray[i]);
+                break;
+            case 2:
+                $("#title").val(customerInArray[i]);
+                break;
+            case 3:
+                $("#name").val(customerInArray[i]);
+                break;
+            case 4:
+                $("#nic").val(customerInArray[i]);
+                $("#dateOfBirth").val(calculateDateOfBirth(customerInArray[i]));
+                $("#gender").val(calculateGender(customerInArray[i]));
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                $("#email").val(customerInArray[i]);
+                break;
+            case 8:
+                $("#mobile").val(customerInArray[i]);
+                break;
+            case 9:
+                $("#land").val(customerInArray[i]);
+                break;
+
+        }
+    }
 }
 
 function selectedItem(obj) {
@@ -304,6 +439,7 @@ function selectedItem(obj) {
     let itemTable = document.getElementById("myTable");
     let array = [];
     let itemSelected = itemTable.rows.item(itemIndex).cells;
+    const item = {};
     for (let n = 0; n < itemSelected.length; n++) {
         array.push(itemSelected[n].textContent);
     }
@@ -314,31 +450,87 @@ function selectedItem(obj) {
     let row = selectedItemsTable.insertRow(rowCount);
 
     // for (let i=0; i < rowCount.length; i++){
-        row.insertCell(0).innerHTML = array[0];
-        row.insertCell(1).innerHTML = array[1];
-        row.insertCell(2).innerHTML = array[2];
-        row.insertCell(3).innerHTML = array[4];
-        row.insertCell(4).innerHTML = '<th>\n' +
-            '                                            <select class="form-control" default="1"\n' +
-            '                                                    id="frequencyRatio" name="discountRatio">\n' +
-            '                                                <option>BD <span type="hidden" value="2"></span></option>\n' +
-            '                                                <option>TDS <span type="hidden" value="3"></span></option>\n' +
-            '                                                <option>OD <span type="hidden" value="1"></span></option>\n' +
-            '                                                <option>OM <span type="hidden" value="1"></span></option>\n' +
-            '                                                <option>ON <span type="hidden" value="1"></span></option>\n' +
-            // '                                                <option>PRN <span type="hidden" value="0"></span></option>\n' +
-            '                                                <option>QDS <span type="hidden" value="4"></span></option>\n' +
-            '                                                <option>QQH <span type="hidden" value="6"></span></option>\n' +
-            '                                                <option>TID <span type="hidden" value="3"></span></option>\n' +
-            '                                                <option>FIVE_TIMES <span type="hidden" value="5"></span></option>\n' +
-            '                                            </select>\n' +
-            '                                        </th>';
-        row.insertCell(5).innerHTML = '<th><input type="number"></th>';
-        row.insertCell(6).innerHTML = '<th><input type="number"></th>';
-        row.insertCell(7).innerHTML = '<th><input type="number"></th>';
-        row.insertCell(8).innerHTML = '<th><input type="number"></th>';
-        row.insertCell(9).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
+    row.insertCell(0).innerHTML = `<span>${array[0]}</span>`;
+    row.insertCell(1).innerHTML = `<span>${array[1]}</span>`;
+    row.insertCell(2).innerHTML = `<span>${array[2]}</span>`;
+    row.insertCell(3).innerHTML = `<span id="selling">${array[4]}</span>`;
+    if (array[3] == "Tablet" || array[3] == "Capsule") {
+        row.insertCell(4).innerHTML = `<select class="form-control" default="1" id="frequencyRatio" name="frequencyRatio" onChange="calculateAmount()"><option value="2">BD</option><option value="3">TDS</option><option value="1">OD</option><option value="1">OM </option><option value="1">ON </option><option value="4">QDS</option><option value="6">QQH</option><option value="3">TID</option><option value="5">FIVE_TIMES</option></select>`;
+        row.insertCell(5).innerHTML = '<input id="pills" name="pills" class="form-control" type="number" onkeyup="calculateAmount()">';
+        row.insertCell(6).innerHTML = '<input id="duration" class="form-control" type="number" onkeyup="calculateAmount()">';
+    }
+    else {
+        row.insertCell(4).innerHTML = '<select disabled class="form-control" default="1" id="frequencyRatio" name="frequencyRatio"><option>BD <span type="hidden" value="2"></span></option><option>TDS <span type="hidden" value="3"></span></option><option>OD <span type="hidden" value="1"></span></option><option>OM <span type="hidden" value="1"></span></option><option>ON <span type="hidden" value="1"></span></option> <option>PRN <span type="hidden" value="0"></span></option><option>QDS <span type="hidden" value="4"></span></option> <option>QQH <span type="hidden" value="6"></span></option> <option>TID <span type="hidden" value="3"></span></option> <option>FIVE_TIMES <span type="hidden" value="5"></span></option></select>';
+        row.insertCell(5).innerHTML = '<input class="form-control" disabled type="number">';
+        row.insertCell(6).innerHTML = '<input class="form-control" disabled type="number">';
+    }
+
+
+    row.insertCell(7).innerHTML = '<input id="qty" class="form-control" type="text" onkeyup="calculateAmount()">';
+    row.insertCell(8).innerHTML = '<input id="amount" class="form-control" disabled type="text">';
+    row.insertCell(9).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
     // }
+}
+
+function calculateAmount() {
+    let quantity = [];
+    let selling = [];
+    let amounts = [];
+    let pillQty = [];
+    let frequency = [];
+    let durationArray = [];
+    let amount = [];
+    let t = 0.0;
+
+    let pills = document.querySelectorAll("#pills");
+    let qty = document.querySelectorAll("#qty");
+    let freq = document.querySelectorAll("#frequencyRatio");
+    let duration = document.querySelectorAll("#duration");
+    let sel = document.querySelectorAll("#selling");
+    let amnt = document.querySelectorAll("#amount");
+
+    for (let i = 0; i < pills.length; i++) {
+        pillQty.push(parseFloat(pills[i].value));
+    }
+
+    for (let w = 0; w < sel.length; w++){
+        selling.push(parseFloat(sel[w].textContent));
+    }
+    for (let r = 0; r < freq.length; r++) {
+        frequency.push(parseFloat(freq[r].value));
+    }
+
+    for (let r = 0; r < duration.length; r++) {
+        if (!isNaN(duration[r].value)) {
+            durationArray.push(parseFloat(duration[r].value));
+        }
+    }
+
+    for (let n = 0; n < qty.length; n++) {
+        qty[n].value = pillQty[n] * frequency[n] * durationArray[n];
+        if (!isNaN(qty[n].value)) {
+            quantity.push(parseFloat(qty[n].value));
+        } else {
+            qty[n].value = 0;
+            quantity.push(parseFloat(qty[n].value));
+        }
+    }
+
+    for (let val = 0; val < quantity.length; val++){
+        let price = selling[val] * quantity[val];
+        amnt[val].value = price.toFixed(2);
+
+        if (!isNaN(amnt[val].value)){
+            amount.push(parseFloat(amnt[val].value));
+        }else{
+            amnt[val].value = 0.0;
+            amount.push(parseFloat(amnt[val].value));
+        }
+    }
+    for (let m = 0; m < amounts.length; m++) {
+        t = t + amounts[m];
+    }
+    // document.getElementById("total").value = t.toFixed(2);
 }
 
 function deleteRow(obj) {
@@ -371,16 +563,16 @@ function deleteRow(obj) {
 }
 
 //remove all lab test in table
-function removeLabTestDetail() {
-    let table = document.getElementById("myTableData");
-    let rowCount = table.rows.length;
-    for (let x = rowCount - 1; x > 0; x--) {
-        table.deleteRow(x);
-    }
-}
+// function removeLabTestDetail() {
+//     let table = document.getElementById("myTableData");
+//     let rowCount = table.rows.length;
+//     for (let x = rowCount - 1; x > 0; x--) {
+//         table.deleteRow(x);
+//     }
+// }
 
 //update total price medical package and lab test
-function updateTotalPrice() {
+/*function updateTotalPrice() {
 
     totalLabTestPrice = 0;
     selectedLabTestArray.forEach(function (element) {
@@ -401,9 +593,9 @@ function updateTotalPrice() {
     }
 }
 
-/*// Create new table selected lab test table - end//*/
+/!*!// Create new table selected lab test table - end//!*!/
 
-/*//medical package details show and manage - start //*/
+/!*!//medical package details show and manage - start //!*!/
 $('#cmbMedicalPackage').on("change", function cmbMedicalPackageDetailGet() {
     contentShow(document.getElementById("medicalPackageDetails"));
     // get selected medical package id
@@ -445,14 +637,14 @@ function removeMedicalPackageDetail() {
     for (let x = rowCount - 1; x > 0; x--) {
         table.deleteRow(x);
     }
-}
+}*/
 
 /*//medical package details show and manage - end //*/
 
 /*//-----------------> Information selection ------ start <----------------------------//*/
 
 /*Patient details taken - start*/
-$("#btnNewPatient").on("click", function () {
+/*$("#btnNewPatient").on("click", function () {
     contentHide(document.getElementById("patientSearchContent"));
     contentHide(document.getElementById("newPatientID"));
     contentShow(document.getElementById("patientContent"));
@@ -579,10 +771,10 @@ $("#btnSearchPatient").on("click", function () {
         }
         sendDataToDetailsForm();
     });
-});
+});*/
 
 // show search details according to patient details
-function creatNewPatientList(patient) {
+/*function creatNewPatientList(patient) {
     if (patient === null || patient === undefined) {
         let selectedParameter = document.getElementById("patientFind").value;
         let selectedValue = document.getElementById("patientFindValue").value;
@@ -606,7 +798,7 @@ function sendDataToDetailsForm() {
         contentShow(document.getElementById("patientContent"));
         contentHide(document.getElementById("patientListDisplay"));
 
-        fillPatientDetailsForm(patientList[0]);
+        fillCustomerDetailsForm(patientList[0]);
     }
 
     if (1 < patientList.length) {
@@ -662,49 +854,10 @@ function fillToForm(obj) {
 
     let index = obj.parentNode.parentNode.rowIndex;
     console.log(index);
-    fillPatientDetailsForm(patientList[index - 1]);
+    fillCustomerDetailsForm(patientList[index - 1]);
 
-}
+}*/
 
-function fillPatientDetailsForm(patientInArray) {
-    for (let i = 0; i < patientInArray.length; i++) {
-        switch (i) {
-            case 0:
-                $("#id").val(patientInArray[i]);
-                break;
-            case 1:
-                $("#number").val(patientInArray[i]);
-                break;
-            case 2:
-                $("#title").val(patientInArray[i]);
-                break;
-            case 3:
-                $("#name").val(patientInArray[i]);
-                break;
-            case 4:
-                $("#nic").val(patientInArray[i]);
-                $("#dateOfBirth").val(calculateDateOfBirth(patientInArray[i]));
-                break;
-            case 5:
-                $("#gender").val(patientInArray[i]);
-                break;
-            case 6:
-                break;
-            case 7:
-                $("#email").val(patientInArray[i]);
-                break;
-            case 8:
-                $("#mobile").val(patientInArray[i]);
-                break;
-            case 9:
-                $("#land").val(patientInArray[i]);
-                break;
-
-        }
-    }
-
-
-}
 
 /*Patient details taken - end*/
 //balance settlement

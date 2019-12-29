@@ -35,48 +35,6 @@ $(document).ready(function () {
 
 });
 
-/*// Create new table selected lab test table - start//*/
-// class LabTest {
-//     constructor(id, code, name, price) {
-//         this._id = id;
-//         this._code = code;
-//         this._name = name;
-//         this._price = price;
-//     }
-//
-//     get id() {
-//         return this._id;
-//     }
-//
-//     set id(value) {
-//         this._id = value;
-//     }
-//
-//     get code() {
-//         return this._code;
-//     }
-//
-//     set code(value) {
-//         this._code = value;
-//     }
-//
-//     get name() {
-//         return this._name;
-//     }
-//
-//     set name(value) {
-//         this._name = value;
-//     }
-//
-//     get price() {
-//         return this._price;
-//     }
-//
-//     set price(value) {
-//         this._price = value;
-//     }
-// }
-
 /*Customer Model*/
 class customer {
     constructor(id, number, name, mobile, email, nic, land, dateOfBirth, gender, title) {
@@ -346,22 +304,6 @@ function checkLabTestInArrayOrNot(rowDetails) {
     }
 }
 
-// function addRow(labTest) {
-//     let table = document.getElementById("myTableData");
-//     let rowCount = table.rows.length;
-//
-//     let row = table.insertRow(rowCount);
-//
-//     updateTotalPrice(labTest.price);
-//
-//     row.insertCell(0).innerHTML = labTest.id;
-//     row.insertCell(1).innerHTML = `<input class="tableCell" type="text" name="labTests" value="${labTest.id}" readonly>`;
-//     row.insertCell(2).innerHTML = labTest.code;
-//     row.insertCell(3).innerHTML = labTest.name;
-//     row.insertCell(4).innerHTML = '<button value="Remove" class="btn btn-danger" onClick="deleteRow(this)"><i style="font-size:24px" class="fa">&#xf00d;</i></button>';
-//
-// }
-
 function addCustomerRow(customer) {
     let customerTable = document.getElementById("customers");
     let rowCount = customerTable.rows.length;
@@ -449,46 +391,57 @@ function selectedItem(obj) {
     let rowCount = selectedItemsTable.rows.length;
     let row = selectedItemsTable.insertRow(rowCount);
 
-    // for (let i=0; i < rowCount.length; i++){
+
     row.insertCell(0).innerHTML = `<span>${array[0]}</span>`;
     row.insertCell(1).innerHTML = `<span>${array[1]}</span>`;
     row.insertCell(2).innerHTML = `<span>${array[2]}</span>`;
-    row.insertCell(3).innerHTML = `<span id="selling">${array[4]}</span>`;
     if (array[3] == "Tablet" || array[3] == "Capsule") {
+        row.insertCell(3).innerHTML = `<span id="selling">${array[4]}</span>`;
         row.insertCell(4).innerHTML = `<select class="form-control" default="1" id="frequencyRatio" name="frequencyRatio" onChange="calculateAmount()"><option value="2">BD</option><option value="3">TDS</option><option value="1">OD</option><option value="1">OM </option><option value="1">ON </option><option value="4">QDS</option><option value="6">QQH</option><option value="3">TID</option><option value="5">FIVE_TIMES</option></select>`;
         row.insertCell(5).innerHTML = '<input id="pills" name="pills" class="form-control" type="number" onkeyup="calculateAmount()">';
         row.insertCell(6).innerHTML = '<input id="duration" class="form-control" type="number" onkeyup="calculateAmount()">';
+        row.insertCell(7).innerHTML = '<input id="qty" class="form-control" type="text" onkeyup="calculateAmount()">';
+        row.insertCell(8).innerHTML = '<input id="amount" class="form-control" disabled type="text">';
     }
     else {
+        row.insertCell(3).innerHTML = `<span id="SyrupSelling">${array[4]}</span>`;
         row.insertCell(4).innerHTML = '<select disabled class="form-control" default="1" id="frequencyRatio" name="frequencyRatio"><option>BD <span type="hidden" value="2"></span></option><option>TDS <span type="hidden" value="3"></span></option><option>OD <span type="hidden" value="1"></span></option><option>OM <span type="hidden" value="1"></span></option><option>ON <span type="hidden" value="1"></span></option> <option>PRN <span type="hidden" value="0"></span></option><option>QDS <span type="hidden" value="4"></span></option> <option>QQH <span type="hidden" value="6"></span></option> <option>TID <span type="hidden" value="3"></span></option> <option>FIVE_TIMES <span type="hidden" value="5"></span></option></select>';
         row.insertCell(5).innerHTML = '<input class="form-control" disabled type="number">';
         row.insertCell(6).innerHTML = '<input class="form-control" disabled type="number">';
+        row.insertCell(7).innerHTML = '<input id="SyrupQty" class="form-control" type="text" onkeyup="calculateAmount()">';
+        row.insertCell(8).innerHTML = '<input id="SyrupAmount" class="form-control" disabled type="text">';
     }
 
 
-    row.insertCell(7).innerHTML = '<input id="qty" class="form-control" type="text" onkeyup="calculateAmount()">';
-    row.insertCell(8).innerHTML = '<input id="amount" class="form-control" disabled type="text">';
     row.insertCell(9).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
-    // }
+
 }
 
 function calculateAmount() {
+
+    //<editor-fold desc="Properties need for Calculation">
     let quantity = [];
     let selling = [];
-    let amounts = [];
     let pillQty = [];
     let frequency = [];
     let durationArray = [];
     let amount = [];
     let t = 0.0;
-
+    let Squantity = [];
+    let selling1 = [];
+    let amounts = [];
+    let Sqty = document.querySelectorAll("#SyrupQty");
+    let sel1 = document.querySelectorAll("#SyrupSelling");
+    let amnt1 = document.querySelectorAll("#SyrupAmount");
     let pills = document.querySelectorAll("#pills");
     let qty = document.querySelectorAll("#qty");
     let freq = document.querySelectorAll("#frequencyRatio");
     let duration = document.querySelectorAll("#duration");
     let sel = document.querySelectorAll("#selling");
     let amnt = document.querySelectorAll("#amount");
+    //</editor-fold>
 
+    //<editor-fold desc="Calculate Amount of Tablets and Capsules">
     for (let i = 0; i < pills.length; i++) {
         pillQty.push(parseFloat(pills[i].value));
     }
@@ -527,339 +480,59 @@ function calculateAmount() {
             amount.push(parseFloat(amnt[val].value));
         }
     }
-    for (let m = 0; m < amounts.length; m++) {
-        t = t + amounts[m];
+    //</editor-fold>
+
+    //<editor-fold desc="Calculate Amount of Other Categories">
+    for (let w = 0; w < sel1.length; w++){
+        selling1.push(parseFloat(sel1[w].textContent));
     }
-    // document.getElementById("total").value = t.toFixed(2);
+
+    for (let i = 0; i < Sqty.length; i++) {
+        Squantity.push(parseFloat(Sqty[i].value));
+    }
+
+    for (let n = 0; n < Sqty.length; n++) {
+        amnt1[n].value = Squantity[n] * selling1[n];
+        if (!isNaN(amnt1[n].value)){
+            amounts.push(parseFloat(amnt1[n].value));
+        }else{
+            amnt1[n].value = 0.0;
+            amounts.push(parseFloat(amnt1[n].value));
+        }
+    }
+    //</editor-fold>
+
+    calculateTotal(amount, amounts);
+}
+
+function calculateTotal(amount1, amount2) {
+    let t = 0.0;
+    let p = 0.0;
+    let total = document.getElementById("totalPrice");
+    for (let m = 0; m < amount1.length; m++) {
+        t = t + amount1[m];
+    }
+    for (let m = 0; m < amount2.length; m++) {
+        p = p + amount2[m];
+    }
+    total.value = t + p;
+    discountedPrice();
+}
+
+function discountedPrice() {
+    if($("#cmbDiscountRatio option:selected").text() === "No Discount"){
+        $("#TotalAmount").val($("#totalPrice").val());
+    }else {
+        $("#TotalAmount").val($("#totalPrice").val() - ($("#totalPrice").val() * (parseFloat($("#cmbDiscountRatio option:selected").text()) / 100))).toFixed(2);
+    }
 }
 
 function deleteRow(obj) {
-    let index = obj.parentNode.parentNode.rowIndex;
-    let table = document.getElementById("myTableData");
-    // GET THE CELLS COLLECTION OF THE CURRENT ROW.
-    let objCells = myTableData.rows.item(index).cells;
-    //REMOVE DELETED LAB TEST FORM selectedLabTestArray
-    let removedLabTest;
-    for (let i = 0; i < selectedLabTestArray.length; i++) {
-        if (selectedLabTestArray[i]._id === rowDataToLabTest(Object.values(objCells)).id) {
-            removedLabTest = selectedLabTestArray[i];
-            {
-                selectedLabTestArray.splice(i, 1);
-                break;
-            }
-        }
-    }
-    // remove colour form original lab test array
-    let mainTable = document.getElementById("myTable");
-    for (let i = 0; i < mainTable.rows.length; i++) {
-        let removedLabTestFromArray = rowDataToLabTest(mainTable.rows.item(i).cells);
-        if (removedLabTestFromArray.id === removedLabTest._id) {
-            mainTable.rows[i].setAttribute("class", "removeLabTest");
-        }
-    }
-    updateTotalPrice();
-    table.deleteRow(index);
-    selectedLabTestShowAndHide();
+    let i = obj.parentNode.parentNode.rowIndex;
+    document.getElementById("selectedItems").deleteRow(i);
+    calculateAmount();
 }
 
-//remove all lab test in table
-// function removeLabTestDetail() {
-//     let table = document.getElementById("myTableData");
-//     let rowCount = table.rows.length;
-//     for (let x = rowCount - 1; x > 0; x--) {
-//         table.deleteRow(x);
-//     }
-// }
-
-//update total price medical package and lab test
-/*function updateTotalPrice() {
-
-    totalLabTestPrice = 0;
-    selectedLabTestArray.forEach(function (element) {
-        totalLabTestPrice += parseFloat(element.price);
-    });
-
-    document.getElementById("selectedLabTestCount").innerText = "Selected Lab Test Count = " + selectedLabTestArray.length;
-    document.getElementById("totalPrice1").innerText = "Total Price = " + totalLabTestPrice;
-
-
-    if (isNaN(selectedMedicalPackageNameAndPrice)) {
-        $("#totalPrice").val(totalLabTestPrice);
-        $("#amount").val(totalLabTestPrice);
-    } else {
-
-        document.getElementById("totalPrice").value = totalLabTestPrice + selectedMedicalPackageNameAndPrice;
-        $("#amount").val($("#totalPrice").val());
-    }
-}
-
-/!*!// Create new table selected lab test table - end//!*!/
-
-/!*!//medical package details show and manage - start //!*!/
-$('#cmbMedicalPackage').on("change", function cmbMedicalPackageDetailGet() {
-    contentShow(document.getElementById("medicalPackageDetails"));
-    // get selected medical package id
-    selectedMedicalPackageId = document.getElementById('cmbMedicalPackage').value;
-    // ajax response
-    let givenData = getData(`${currentURL}/medicalPackageLabTestGet/${selectedMedicalPackageId}`).then(data => givenData = data);
-
-    selectedMedicalPackageNameAndPrice = parseFloat($("#cmbMedicalPackage option:selected").text());
-
-    Promise.resolve(givenData).then(function (val) {
-        medicalPackageLabTestSet(val);
-    });
-    updateTotalPrice();
-});
-
-//fill the medical package class details
-function medicalPackageLabTestSet(includeLabTest) {
-    removeMedicalPackageDetail();
-    document.getElementById("includedLabTestCount").innerHTML = includeLabTest.length;
-    for (let i = 0; i < includeLabTest.length; i++) {
-        fillMedicalPackageDetail(includeLabTest[i]);
-    }
-}
-
-//access and fill medical package details table
-function fillMedicalPackageDetail(medicalPackageLabTest) {
-    let table = document.getElementById("myMedicalPackageData");
-    let rowCount = table.rows.length;
-    let row = table.insertRow(rowCount);
-
-    row.insertCell(0).innerHTML = medicalPackageLabTest.code;
-    row.insertCell(1).innerHTML = medicalPackageLabTest.name;
-    row.insertCell(2).innerHTML = medicalPackageLabTest.labtestDoneHere;
-}
-
-function removeMedicalPackageDetail() {
-    let table = document.getElementById("myMedicalPackageData");
-    let rowCount = table.rows.length;
-    for (let x = rowCount - 1; x > 0; x--) {
-        table.deleteRow(x);
-    }
-}*/
-
-/*//medical package details show and manage - end //*/
-
-/*//-----------------> Information selection ------ start <----------------------------//*/
-
-/*Patient details taken - start*/
-/*$("#btnNewPatient").on("click", function () {
-    contentHide(document.getElementById("patientSearchContent"));
-    contentHide(document.getElementById("newPatientID"));
-    contentShow(document.getElementById("patientContent"));
-    contentShow(document.getElementById("previousNumber"));
-    //set value to new patient's number
-    let previousPatientNumber = document.getElementById("previousPatientNumber").innerHTML;
-    document.getElementById("patientNumber").value = "EHS".concat(Number(previousPatientNumber.slice(3)) + 1);
-    //set all new patient value to empty
-    $("#id,#number,#patientName,#nic,#dateOfBirth,#email,#mobile,#land").val("").css('background-color', '');
-    //$("#id,#number,#patientName,#nic,#dateOfBirth,#email,#mobile,#land").val(""); //this and below ones is the previous one
-    //$("#id,#number,#patientName,#nic,#dateOfBirth,#email,#mobile,#land");
-});
-// language=JQuery-CSS
-$("#btnRegisteredPatient").on("click", function () {
-    contentShow(document.getElementById("patientSearchContent"));
-    contentHide(document.getElementById("patientContent"));
-});
-//when patient find combo box value change
-$("#patientFind").on("change", function () {
-    document.getElementById("patientFindValue").value = '';
-    document.getElementById("patientFindValue").style.setProperty('background-color', '#ffffff', 'important');
-});
-//patient search filed validation
-$("#patientFindValue").on("keyup", function () {
-    let selectedValue = document.getElementById("patientFindValue").value;
-
-    switch (document.getElementById("patientFind").value) {
-        case ("name"):
-            if (nameRegex.test(selectedValue)) {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#7ae899', 'important');
-                contentShow(document.getElementById("patientSearch"));
-            } else {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#ff88b3', 'important');
-                contentHide(document.getElementById("patientSearch"));
-            }
-            break;
-        case ("nic"):
-            if (nicRegex.test(selectedValue)) {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#7ae899', 'important');
-                contentShow(document.getElementById("patientSearch"));
-            } else {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#ff88b3', 'important');
-                contentHide(document.getElementById("patientSearch"));
-            }
-            break;
-        case ("number"):
-            if (numberRegex.test(selectedValue)) {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#7ae899', 'important');
-                contentShow(document.getElementById("patientSearch"));
-            } else {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#ff88b3', 'important');
-                contentHide(document.getElementById("patientSearch"));
-            }
-            break;
-        case ("mobile"):
-            if (mobileRegex.test(selectedValue)) {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#7ae899', 'important');
-                contentShow(document.getElementById("patientSearch"));
-            } else {
-                document.getElementById("patientFindValue").style.setProperty('background-color', '#ff88b3', 'important');
-                contentHide(document.getElementById("patientSearch"));
-            }
-            break;
-
-    }
-});
-//search button function
-$("#btnSearchPatient").on("click", function () {
-    contentShow(document.getElementById("patientListDisplay"));
-    //get data from selected parameter
-    let selectedParameter = document.getElementById("patientFind").value;
-    let selectedValue = document.getElementById("patientFindValue").value;
-
-    switch (selectedParameter) {
-        case ("name"):
-            if (!nameRegex.test(selectedValue.replace(/\s/g, ''))) {
-                swal({
-                    title: "Please enter letters ",
-                    icon: "warning",
-                });
-            }
-            break;
-        case ("nic"):
-            if (!nicRegex.test(selectedValue)) {
-                swal({
-                    title: "Please enter valid NIC ",
-                    icon: "warning",
-                });
-            }
-            break;
-        case ("number"):
-            if (!numberRegex.test(selectedValue)) {
-                swal({
-                    title: "Please enter valid register number",
-                    icon: "warning",
-                });
-            }
-            break;
-        case ("mobile"):
-            if (!mobileRegex.test(selectedValue)) {
-                swal({
-                    title: "Please enter valid mobile number",
-                    icon: "warning",
-                });
-            }
-            break;
-        default :
-            swal({
-                title: "Please enter select parameter value",
-                icon: "warning",
-            });
-            break;
-    }
-    let url = currentURL + `/patientFind?${selectedParameter}=${selectedValue}`;
-
-    if (patientList.length !== 0) {
-        // make patient list to empty
-        patientList = [];
-        //delete all row in the lab test show table
-    }
-    Promise.resolve(getData(url)).then(function (patient) {
-        for (let i = 0; i < patient.length; i++) {
-            creatNewPatientList(patient[i]);
-        }
-        sendDataToDetailsForm();
-    });
-});*/
-
-// show search details according to patient details
-/*function creatNewPatientList(patient) {
-    if (patient === null || patient === undefined) {
-        let selectedParameter = document.getElementById("patientFind").value;
-        let selectedValue = document.getElementById("patientFindValue").value;
-        let message = `System was not able to find patient 
-                        according to you provided details
-                        Patient's ${selectedParameter} as ${selectedValue} `;
-        swal({
-            title: message,
-            icon: "warning",
-        });
-    }
-    patientList.push(Object.values(patient));
-}
-
-function sendDataToDetailsForm() {
-
-    contentHide(document.getElementById("patientSearchContent"));
-
-    if (patientList.length === 1) {
-        contentHide(document.getElementById("previousNumber"));
-        contentShow(document.getElementById("patientContent"));
-        contentHide(document.getElementById("patientListDisplay"));
-
-        fillCustomerDetailsForm(patientList[0]);
-    }
-
-    if (1 < patientList.length) {
-        contentHide(document.getElementById("previousNumber"));
-        if (document.getElementById("patientShowTable")) {
-            $("#patientShowTable").remove();
-        }
-        $("#patientListDisplay").append("<table id=\"patientShowTable\" class=\" table table-striped table-condensed \">\n" +
-            "<tr>\n" +
-            "<th>Register Number</th>\n" +
-            "<th>Name</th>\n" +
-            "<th>Date of Birth</th>\n" +
-            "<th>NIC No</th>\n" +
-            "<th>Mobile Number</th>\n" +
-            "<th>Add</th>\n" +
-            "</tr>\n" +
-            "</table>");
-        for (let i = 0; i < patientList.length; i++) {
-            showPatientList(patientList[i]);
-        }
-    }
-}
-
-function showPatientList(patient) {
-
-    contentShow(document.getElementById("patientListDisplay"));
-
-    //$("#patientShowTable").addClass("");
-
-    contentHide(document.getElementById("patientContent"));
-
-    let table = document.getElementById("patientShowTable");
-    let rowCount = table.rows.length;
-
-    let row = table.insertRow(rowCount);
-
-    row.insertCell(0).innerHTML = patient[1];
-    row.insertCell(1).innerHTML = patient[2] + " " + patient[3];
-    row.insertCell(2).innerHTML = patient[6];
-    row.insertCell(3).innerHTML = patient[5];
-    row.insertCell(4).innerHTML = patient[8];
-
-    row.insertCell(5).innerHTML = '<input type="button" value = "Select" onClick="fillToForm(this)" class="btn btn-success">';
-
-}
-
-function fillToForm(obj) {
-    contentShow(document.getElementById("patientContent"));
-    contentHide(document.getElementById("patientListDisplay"));
-
-    $("#id,#number,#title,#patientName,#gender,#nic,#dateOfBirth,#email,#mobile,#land").val("");
-    $("#id,#number,#patientName,#nic,#dateOfBirth,#email,#mobile,#land").css('background-color', '');
-
-    let index = obj.parentNode.parentNode.rowIndex;
-    console.log(index);
-    fillCustomerDetailsForm(patientList[index - 1]);
-
-}*/
-
-
-/*Patient details taken - end*/
 //balance settlement
 $("#amountTendered").on("keyup", function () {
     $("#balance").val($("#amountTendered").val() - $("#amount").val());
@@ -876,10 +549,10 @@ $("#amountTendered").on("keyup", function () {
 
 });
 
-
 //discount ratio apply or not
 $("#cmbDiscountRatio").on("change", function () {
-    $("#amount").val($("#totalPrice").val() - ($("#totalPrice").val() * (parseFloat($("#cmbDiscountRatio option:selected").text()) / 100)));
+
+    discountedPrice();
 
     if ($("#amountTendered").val() !== "") {
 

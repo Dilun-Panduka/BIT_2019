@@ -17,6 +17,7 @@ import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledg
 import lk.excellent.pharamacy_management.asset.process.generalLedger.service.LedgerService;
 import lk.excellent.pharamacy_management.security.service.UserService;
 import lk.excellent.pharamacy_management.util.service.DateTimeAgeService;
+import lk.excellent.pharamacy_management.util.service.FileHandelService;
 import lk.excellent.pharamacy_management.util.service.OperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,9 +47,11 @@ public class InvoiceController {
     private final LedgerService ledgerService;
     private final UserService userService;
     private final OperatorService operatorService;
+    private final FileHandelService fileHandelService;
+    private final ServletContext context;
 
     @Autowired
-    public InvoiceController(InvoiceService invoiceService, CustomerService customerService, ItemService itemService, DiscountRatioService discountRatioService, DateTimeAgeService dateTimeAgeService, LedgerService ledgerService, UserService userService, OperatorService operatorService) {
+    public InvoiceController(InvoiceService invoiceService, CustomerService customerService, ItemService itemService, DiscountRatioService discountRatioService, DateTimeAgeService dateTimeAgeService, LedgerService ledgerService, UserService userService, OperatorService operatorService, FileHandelService fileHandelService, ServletContext context) {
         this.invoiceService = invoiceService;
         this.customerService = customerService;
         this.itemService = itemService;
@@ -54,6 +60,8 @@ public class InvoiceController {
         this.ledgerService = ledgerService;
         this.userService = userService;
         this.operatorService = operatorService;
+        this.fileHandelService = fileHandelService;
+        this.context = context;
     }
 
     @GetMapping("/addForm")
@@ -95,7 +103,7 @@ public class InvoiceController {
     }
 
     @RequestMapping(value = {"/add"}, method = RequestMethod.POST)
-    public String addInvoice(@ModelAttribute("invoice") Invoice invoice) {
+    public String addInvoice(@ModelAttribute("invoice") Invoice invoice, HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Integer userId = userService.findByUserIdByUserName(auth.getName());
         if (invoice.getCustomer() != null) {
@@ -135,8 +143,12 @@ public class InvoiceController {
                     itemService.persist(item);
                 }
         );
-
-        return "redirect:addForm";
+        boolean isFlag = invoiceService.createPdf(invoice, context, request, response);
+        if (isFlag) {
+            String fullPath = request.getServletContext().getRealPath("/resources/report/" + "invoices" + ".pdf");
+            fileHandelService.filedownload(fullPath, response, "invoices.pdf");
+        }
+        return "redirect:/addForm";
     }
 
 }

@@ -35,6 +35,7 @@ public class RoleService implements AbstractService<Role, Integer> {
 
 
     public Role persist(Role role) {
+        role.setRoleName(role.getRoleName().toUpperCase());
         return roleDao.save(role);
     }
 

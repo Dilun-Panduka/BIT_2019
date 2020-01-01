@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/restCustomer")
@@ -20,6 +21,6 @@ public class CustomerRestController {
     public List<Customer> searchCustomer(@PathVariable String mobile){
         Customer customer = new Customer();
         customer.setMobile(mobile);
-        return customerService.search(customer);
+        return customerService.search(customer).stream().distinct().collect(Collectors.toList());
     }
 }

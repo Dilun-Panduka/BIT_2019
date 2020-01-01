@@ -264,9 +264,17 @@ let currentURL = window.location.href;
 // regex
 let creditVisaCardRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
 
+function removeRows(value) {
+    let table = document.getElementById(value);
+    let rowCount = table.rows.length;
+    for (let x = rowCount - 1; x > 0; x--) {
+        table.deleteRow(x);
+    }
+}
 
 function addCustomerRow(customer) {
     let customerTable = document.getElementById("customers");
+    removeRows("customers");
     let rowCount = customerTable.rows.length;
     let row = customerTable.insertRow(rowCount);
 
@@ -568,6 +576,9 @@ $("#cardNumber").on("keyup", function () {
 
 /*When click the reset button */
 $("#reset").on("click", function () {
+    $("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
+    removeRows("selectedItems");
+    removeRows("customers");
     removeMedicalPackageDetail();
     removeLabTestDetail();
     totalLabTestPrice = 0;
@@ -576,5 +587,11 @@ $("#reset").on("click", function () {
     contentHide(document.getElementById("medicalPackageDetails"));
 
 });
+
+function resetFormAfterPrint() {
+    $("#existingCustomer, #customerDetail, #card, #cash,#customerIdShow").hide();
+    removeRows("selectedItems");
+    removeRows("customers");
+}
 
 

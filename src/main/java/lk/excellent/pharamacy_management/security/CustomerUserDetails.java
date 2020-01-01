@@ -18,7 +18,6 @@ public class CustomerUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    user.getRoles().forEach(System.out::println);
     return user.getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))

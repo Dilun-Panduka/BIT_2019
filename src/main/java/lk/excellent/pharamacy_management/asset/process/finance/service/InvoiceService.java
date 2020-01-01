@@ -6,12 +6,16 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lk.excellent.pharamacy_management.asset.process.finance.dao.InvoiceDao;
 import lk.excellent.pharamacy_management.asset.process.finance.entity.Invoice;
+import lk.excellent.pharamacy_management.asset.process.finance.entity.InvoiceQuantity;
 import lk.excellent.pharamacy_management.util.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
@@ -62,8 +66,6 @@ public class InvoiceService implements AbstractService<Invoice, Integer> {
     }
 
 
-    private static final String FILE_NAME = "/invoice.pdf";
-
     private void commonTableHeader(PdfPCell pdfPCell) {
         pdfPCell.setBorderColor(BaseColor.BLACK);
         pdfPCell.setPaddingLeft(10);
@@ -72,19 +74,29 @@ public class InvoiceService implements AbstractService<Invoice, Integer> {
         pdfPCell.setBackgroundColor(BaseColor.DARK_GRAY);
         pdfPCell.setExtraParagraphSpace(5f);
     }
-    public void createPdf(Invoice invoice) {
+    private void commonTableBody(PdfPCell pdfPCell) {
+        pdfPCell.setBorderColor(BaseColor.BLACK);
+        pdfPCell.setPaddingLeft(10);
+        pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pdfPCell.setVerticalAlignment(Element.ALIGN_CENTER);
+        pdfPCell.setBackgroundColor(BaseColor.WHITE);
+        pdfPCell.setExtraParagraphSpace(5f);
+    }
+
+    public boolean createPdf(Invoice invoice, ServletContext context, HttpServletRequest request, HttpServletResponse response) {
         Document document = new Document(PageSize.A4, 15, 15, 45, 30);
         try {
-            String filePath = FILE_NAME;
+            String filePath = context.getRealPath("/resources/report");
             File file = new File(filePath);
             boolean exists = new File(filePath).exists();
             if (!exists) {
                 new File(filePath).mkdirs();
             }
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file+"/"+"invoices"+".pdf"));
             document.open();
-            Font mainFont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
-
+            Font mainFont = FontFactory.getFont("Arial", 15, BaseColor.BLACK);
+            Font priceFont = FontFactory.getFont("Arial", 12, BaseColor.BLACK);
+            Font customerFont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
 
             Paragraph paragraph = new Paragraph("Excellent Health Solution \n" +
                     "34/5, Gunananda Road\n" +
@@ -97,63 +109,83 @@ public class InvoiceService implements AbstractService<Invoice, Integer> {
             paragraph.setSpacingAfter(10);
             document.add(paragraph);
 
+            Paragraph customer = new Paragraph("Customer : "+invoice.getCustomer().getName()+"\t"+"Mobile : "+invoice.getCustomer().getMobile()
+                    , customerFont);
+            customer.setAlignment(Element.ALIGN_LEFT);
+            customer.setIndentationLeft(50);
+            customer.setIndentationRight(50);
+            customer.setSpacingAfter(10);
+            document.add(customer);
 
             PdfPTable table = new PdfPTable(4);//column amount
             table.setWidthPercentage(100);
             table.setSpacingBefore(10f);
             table.setSpacingAfter(10);
 
-            Font tableHeader = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+            Font tableHeader = FontFactory.getFont("Arial", 12, BaseColor.WHITE);
             Font tableBody = FontFactory.getFont("Arial", 9, BaseColor.BLACK);
 
             float[] columnWidths = {2f, 2f, 2f, 2f};
             table.setWidths(columnWidths);
 
-            PdfPCell name = new PdfPCell(new Paragraph("name", tableHeader));
-            commonTableHeader(name);
-            table.addCell(name);
+            PdfPCell item = new PdfPCell(new Paragraph("item", tableHeader));
+            commonTableHeader(item);
+            table.addCell(item);
 
-            PdfPCell email = new PdfPCell(new Paragraph("email", tableHeader));
-            commonTableHeader(email);
-            table.addCell(email);
+            PdfPCell unitPrice = new PdfPCell(new Paragraph("unitPrice", tableHeader));
+            commonTableHeader(unitPrice);
+            table.addCell(unitPrice);
 
-            PdfPCell mobile = new PdfPCell(new Paragraph("mobile", tableHeader));
-            commonTableHeader(mobile);
-            table.addCell(mobile);
+            PdfPCell qty = new PdfPCell(new Paragraph("qty", tableHeader));
+            commonTableHeader(qty);
+            table.addCell(qty);
 
-            PdfPCell address = new PdfPCell(new Paragraph("address", tableHeader));
-            commonTableHeader(address);
-            table.addCell(address);
-/*
-            for (Employee employee : employees) {
-                PdfPCell nameValue = new PdfPCell(new Paragraph(employee.getName(), tableHeader));
-                commonTableHeader(nameValue);
-                table.addCell(nameValue);
+            PdfPCell amount = new PdfPCell(new Paragraph("amount", tableHeader));
+            commonTableHeader(amount);
+            table.addCell(amount);
 
-                PdfPCell emailValue = new PdfPCell(new Paragraph(employee.getEmail(), tableHeader));
-               commonTableHeader(emailValue);
-                table.addCell(emailValue);
+            for (InvoiceQuantity invoiceQty : invoice.getInvoiceQuantities()) {
+                PdfPCell itemName = new PdfPCell(new Paragraph(invoiceQty.getItem().getDescription(), tableBody));
+                commonTableBody(itemName);
+                table.addCell(itemName);
 
-                PdfPCell mobileValue = new PdfPCell(new Paragraph(employee.getMobile(), tableHeader));
-                commonTableHeader(mobileValue);
-                table.addCell(mobileValue);
+                PdfPCell itemUnitPrice = new PdfPCell(new Paragraph(invoiceQty.getItem().getSelling().toString(), tableBody));
+                commonTableBody(itemUnitPrice);
+                table.addCell(itemUnitPrice);
 
-                PdfPCell addressValue = new PdfPCell(new Paragraph(employee.getAddress(), tableHeader));
-                commonTableHeader(addressValue);
-                table.addCell(addressValue);
-            }*/
+                PdfPCell itemQty = new PdfPCell(new Paragraph(String.valueOf(invoiceQty.getQuantity()), tableBody));
+                commonTableBody(itemQty);
+                table.addCell(itemQty);
 
+
+                PdfPCell itemAmount = new PdfPCell(new Paragraph(String.valueOf(invoiceQty.getAmount()), tableBody));
+                commonTableBody(itemAmount);
+                table.addCell(itemAmount);
+            }
             document.add(table);
+
+            Paragraph TotalPrice = new Paragraph("Total Price :"+invoice.getTotalPrice() +"\n" +
+                    "Discount :"+invoice.getDiscountAmount()+"\n" +
+                    "Net Amount : "+invoice.getTotalAmount()+"\n" +
+                    "Payed By : "+invoice.getPaymentMethod().getPaymentMethod()+"\n"
+                    , priceFont);
+            TotalPrice.setAlignment(Element.ALIGN_RIGHT);
+            TotalPrice.setIndentationLeft(50);
+            TotalPrice.setIndentationRight(50);
+            TotalPrice.setSpacingAfter(10);
+            document.add(TotalPrice);
+
             document.close();
             writer.close();
-
+            return true;
 
         } catch (Exception e) {
-            System.out.println("Exception "+ e.toString());
+            System.out.println("Exception " + e.toString());
+            return false;
         }
     }
 
     public List<Invoice> findByGivenDate(LocalDate currentDate, LocalDate currentDate1) {
-        return invoiceDao.findByInvoicedAtBetween(currentDate,currentDate1);
+        return invoiceDao.findByInvoicedAtBetween(currentDate, currentDate1);
     }
 }

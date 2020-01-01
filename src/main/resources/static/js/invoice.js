@@ -10,6 +10,7 @@ $(document).ready(function () {
     });
 //existing Customer customer
     $("#btnExistingCustomer").bind("click", function () {
+        $("#mobileValue").val("");
         $("#existingCustomer").show();
         $("#customerDetail").hide();
         $("#customerShow").hide();
@@ -263,46 +264,6 @@ let currentURL = window.location.href;
 // regex
 let creditVisaCardRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
 
-//Patient list from taken database
-let patientList = [];
-
-function selectedLabTestShowAndHide() {
-    let content = document.getElementById("labTestShowTable");
-    if (selectedLabTestArray.length === 0) {
-        contentHide(content);
-    } else {
-        contentShow(content);
-    }
-}
-
-function checkLabTestInArrayOrNot(rowDetails) {
-
-    let existOrNot;
-    //take lab test which was selected
-    let labTest = rowDataToLabTest(rowDetails);
-    // no lab test in Array
-    if (selectedLabTestArray.length === 0) {
-        selectedLabTestArray.push(labTest);
-        addRow(labTest);
-        selectedLabTestShowAndHide();
-    } else {
-        for (let i = 0; i < selectedLabTestArray.length; i++) {
-            if (selectedLabTestArray[i]._id === labTest.id) {
-                existOrNot = true;
-                break;
-            }
-        }
-        if (existOrNot) {
-            swal({
-                title: "Already selected one ",
-                icon: "warning",
-            });
-        } else {
-            selectedLabTestArray.push(labTest);
-            addRow(labTest);
-        }
-    }
-}
 
 function addCustomerRow(customer) {
     let customerTable = document.getElementById("customers");
@@ -378,6 +339,8 @@ function fillCustomerDetailsForm(customerInArray) {
 
 function selectedItem(obj) {
     let itemIndex = obj.parentNode.parentNode.rowIndex;
+    let index = itemIndex - 1;
+    console.log("index",itemIndex);
     let itemTable = document.getElementById("myTable");
     let array = [];
     let itemSelected = itemTable.rows.item(itemIndex).cells;
@@ -385,14 +348,14 @@ function selectedItem(obj) {
     for (let n = 0; n < itemSelected.length; n++) {
         array.push(itemSelected[n].textContent);
     }
-    console.log(array);
+    // console.log(array);
 
     let selectedItemsTable = document.getElementById("selectedItems");
     let rowCount = selectedItemsTable.rows.length;
     let row = selectedItemsTable.insertRow(rowCount);
 
 
-    row.insertCell(0).innerHTML = `<span>${array[0]}</span>`;
+    row.insertCell(0).innerHTML = `<span>${array[0]}<input type="hidden" name="invoiceQuantities[${index}].item" value="${array[0]}"/></span>`;
     row.insertCell(1).innerHTML = `<span>${array[1]}</span>`;
     row.insertCell(2).innerHTML = `<span>${array[2]}</span>`;
     if (array[3] == "Tablet" || array[3] == "Capsule") {
@@ -400,16 +363,16 @@ function selectedItem(obj) {
         row.insertCell(4).innerHTML = `<select class="form-control" default="1" id="frequencyRatio" name="frequencyRatio" onChange="calculateAmount()"><option value="2">BD</option><option value="3">TDS</option><option value="1">OD</option><option value="1">OM </option><option value="1">ON </option><option value="4">QDS</option><option value="6">QQH</option><option value="3">TID</option><option value="5">FIVE_TIMES</option></select>`;
         row.insertCell(5).innerHTML = '<input id="pills" name="pills" class="form-control" type="number" onkeyup="calculateAmount()">';
         row.insertCell(6).innerHTML = '<input id="duration" class="form-control" type="number" onkeyup="calculateAmount()">';
-        row.insertCell(7).innerHTML = '<input id="qty" class="form-control" type="text" onkeyup="calculateAmount()">';
-        row.insertCell(8).innerHTML = '<input id="amount" class="form-control" disabled type="text">';
+        row.insertCell(7).innerHTML = `<input id="qty" class="form-control" type="text" name="invoiceQuantities[${index}].quantity" onkeyup="calculateAmount()">`;
+        row.insertCell(8).innerHTML = `<input id="amount" class="form-control" name="invoiceQuantities[${index}].amount" readonly type="text">`;
     }
     else {
         row.insertCell(3).innerHTML = `<span id="SyrupSelling">${array[4]}</span>`;
         row.insertCell(4).innerHTML = '<select disabled class="form-control" default="1" id="frequencyRatio" name="frequencyRatio"><option>BD <span type="hidden" value="2"></span></option><option>TDS <span type="hidden" value="3"></span></option><option>OD <span type="hidden" value="1"></span></option><option>OM <span type="hidden" value="1"></span></option><option>ON <span type="hidden" value="1"></span></option> <option>PRN <span type="hidden" value="0"></span></option><option>QDS <span type="hidden" value="4"></span></option> <option>QQH <span type="hidden" value="6"></span></option> <option>TID <span type="hidden" value="3"></span></option> <option>FIVE_TIMES <span type="hidden" value="5"></span></option></select>';
         row.insertCell(5).innerHTML = '<input class="form-control" disabled type="number">';
         row.insertCell(6).innerHTML = '<input class="form-control" disabled type="number">';
-        row.insertCell(7).innerHTML = '<input id="SyrupQty" class="form-control" type="text" onkeyup="calculateAmount()">';
-        row.insertCell(8).innerHTML = '<input id="SyrupAmount" class="form-control" disabled type="text">';
+        row.insertCell(7).innerHTML = `<input id="SyrupQty" class="form-control" name="invoiceQuantities[${index}].quantity" type="text" onkeyup="calculateAmount()">`;
+        row.insertCell(8).innerHTML = `<input id="SyrupAmount" class="form-control" name="invoiceQuantities[${index}].amount" readonly type="text">`;
     }
 
 
@@ -535,7 +498,7 @@ function deleteRow(obj) {
 
 //balance settlement
 $("#amountTendered").on("keyup", function () {
-    $("#balance").val($("#amountTendered").val() - $("#amount").val());
+    $("#balance").val($("#amountTendered").val() - $("#TotalAmount").val()).toFixed(2);
 
     if ($("#balance").val() < 0) {
         backgroundColourChangeBad($(this));
@@ -570,13 +533,14 @@ $("#cmbDiscountRatio").on("change", function () {
 //payment method show and hide
 $("#cmbPaymentMethod").on("change", function () {
     $("#cardNumber, #bankName").val("");
+    console.log("payment",$("#cmbPaymentMethod").val())
     if ($("#cmbPaymentMethod").val() === "CREDITCARD" || $("#cmbPaymentMethod").val() === "CHEQUE") {
-        contentHide(document.getElementById("cash"));
-        contentShow(document.getElementById("card"));
+        $("#cash").hide();
+        $("#card").show();
         $("#amountTendered, #balance").val(" ");
     } else {
-        contentHide(document.getElementById("card"));
-        contentShow(document.getElementById("cash"));
+        $("#card").hide();
+        $("#cash").show();
 
     }
 });

@@ -3,11 +3,13 @@ package lk.excellent.pharamacy_management.asset.process.finance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.excellent.pharamacy_management.asset.customer.entity.Customer;
-import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lk.excellent.pharamacy_management.asset.process.finance.entity.Enum.InvoicePrintOrNot;
 import lk.excellent.pharamacy_management.asset.process.finance.entity.Enum.PaymentMethod;
-import lk.excellent.pharamacy_management.util.audit.AuditEntity;
-import lombok.*;
+import lk.excellent.pharamacy_management.security.entity.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -20,12 +22,15 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode( callSuper = true )
 @JsonIgnoreProperties(value = {"balance","discountAmount","bankName","cardNumber"}, allowGetters = true)
-public class Invoice extends AuditEntity {
+public class Invoice {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "number", nullable = false, unique = true)
-    private Integer number;
+    private String number;
 
     @Column(name = "payment_method", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
@@ -37,7 +42,7 @@ public class Invoice extends AuditEntity {
 
 
     @Column(name = "amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal amount;
+    private BigDecimal TotalAmount;
 
     @Column(name = "discountAmount",  precision = 10, scale = 2)
     private BigDecimal discountAmount;
@@ -71,11 +76,11 @@ public class Invoice extends AuditEntity {
     @ManyToOne
     private Customer customer;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    /*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "invoice_item",
             joinColumns = @JoinColumn(name = "invoice_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private List<Item> items;
+    private List<Item> items;*/
 /*
     @ManyToOne
     private Branch branch;*/
@@ -83,6 +88,11 @@ public class Invoice extends AuditEntity {
 
     @ManyToOne
     private DiscountRatio discountRatio;
+    @ManyToOne
+    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice")
+    private List<InvoiceQuantity> invoiceQuantities;
 
 
     /*@ManyToOne

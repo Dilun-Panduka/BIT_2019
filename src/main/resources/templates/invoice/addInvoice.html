@@ -12,7 +12,7 @@
         <div class="panel panel-heading text-center">
             <h4><b><span th:text="${'Add New Invoice'}"></span></b></h4>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="background-color: #344e64">
             <div class="row">
                 <div class="col-sm-4 ">
                     <a class="btn btn-primary" href="/home"> Return Home</a>
@@ -22,11 +22,12 @@
                 </div>
                 <div class="col-sm-4 text-right">
                     <a href="/invoice">
-                        <button class="btn btn-sm btn-primary"><span
+                        <button class="btn btn-primary"><span
                                 class="glyphicon glyphicon-list">&nbsp; View List </span></button>
                     </a>
                 </div>
             </div>
+            <br>
             <!-- /.row -->
 
             <div class="row">
@@ -82,12 +83,12 @@
                                 </div>
                             </div>
                             <!-- Customer Detail-->
-                            <div class="col-sm-12 well well-sm" id="customerDetail">
+                            <div class="col-sm-12 well well-sm" id="customerDetail" style="background-color: #5cb85c">
                                 <div class="col-sm-6 text-left">
                                     <div class="form-group" id="customerIdShow">
-                                        <label class="control-label col-md-4" for="customerId">ID :</label>
+                                        <label class="control-label col-md-4" for="id">ID :</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" id="customerId" name="customer.id"
+                                            <input class="form-control" id="id" name="customer.id"
                                                    placeholder="Enter ID Here"
                                                    type="text" readonly/>
                                         </div>
@@ -266,7 +267,7 @@
                                     <label class="control-label col-sm-6"
                                            for="TotalAmount">Amount :</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" id="TotalAmount"
+                                       <input class="form-control" id="TotalAmount"
                                                name="TotalAmount" readonly type="text"/>
                                     </div>
                                 </div>
@@ -276,6 +277,7 @@
                                     <div class="col-sm-6">
                                         <select class="form-control" th:default="${'1'}"
                                                 id="cmbPaymentMethod" name="paymentMethod">
+                                            <option selected="true" disabled>Select a Payment Method</option>
                                             <option th:each="paymentMethod : ${paymentMethods}"
                                                     th:text="${paymentMethod.paymentMethod}"
                                                     th:value="${paymentMethod}"></option>

@@ -12,6 +12,7 @@ import lk.excellent.pharamacy_management.security.entity.Role;
 import lk.excellent.pharamacy_management.security.entity.User;
 import lk.excellent.pharamacy_management.security.service.RoleService;
 import lk.excellent.pharamacy_management.security.service.UserService;
+import lk.excellent.pharamacy_management.util.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,8 @@ public class EmployeeCtrl {
 
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private EmailService emailService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -84,5 +87,11 @@ public class EmployeeCtrl {
         System.out.println(employee);
 
     }
-
+@GetMapping("/email")
+    public void sendEmail(){
+        String email = "keerthinuwan12345@gmail.com";
+        String subjec = "kelaweyan ";
+        String message = " nuwan enawo  ";
+        emailService.sendEmployeeRegistrationEmail(email,subjec,message);
+}
 }

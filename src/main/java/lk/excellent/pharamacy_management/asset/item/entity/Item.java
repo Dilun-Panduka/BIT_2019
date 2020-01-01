@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Category;
 import lk.excellent.pharamacy_management.asset.commonAsset.Enum.Status;
 import lk.excellent.pharamacy_management.asset.commonAsset.entity.SupplierItem;
-import lk.excellent.pharamacy_management.asset.process.finance.entity.Invoice;
+import lk.excellent.pharamacy_management.asset.process.finance.entity.InvoiceQuantity;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledger;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GrnQuantity;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.ItemQuantity;
@@ -72,11 +72,14 @@ public class Item {
     @OneToMany(mappedBy = "item")
     private List<ItemQuantity> itemQuantities;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "item")
+    private List<InvoiceQuantity> invoiceQuantities;
+
+    /*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "invoice_item",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "invoice_id"))
-    private List<Invoice> invoices;
+    private List<Invoice> invoices;*/
 
     @Transient
     private int quantity;

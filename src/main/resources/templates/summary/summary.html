@@ -10,7 +10,7 @@
 <div class="container-fluid" style="margin-top: 60px">
     <div class="panel panel-primary">
         <div class="panel panel-heading text-center">
-            <h3><span th:text="${date}"></span>&nbsp;Summary</h3>
+            <h3><span th:text="${{date}}"></span>&nbsp;Summary</h3>
         </div>
         <div class="container text-center">
             <div class="panel panel-body">
@@ -30,14 +30,17 @@
                             <div class="row">
                                 <div class="container-fluid text-center">
                                     <h4 class="text-info"><b> Custom Search</b></h4>
-                                    <form class="form-inline" th:action="@{/process/searchSummary}" th:method="POST">
+                                    <form class="form-inline" th:object="${dateObject}"
+                                          th:action="@{/report/search}" th:method="POST">
                                         <div class="form-group">
                                             <label for="startDate">FROM :</label>
-                                            <input class="form-control" id="startDate" name="startDate" type="date"/>
+                                            <input class="form-control" id="startDate" name="startDate"
+                                                   th:field="*{startDate}" type="date"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="endDate">TO :</label>
-                                            <input class="form-control" id="endDate" name="endDate" type="date"/>
+                                            <input class="form-control" id="endDate" name="endDate"
+                                                   th:field="*{endDate}" type="date"/>
                                         </div>
                                         <button class="btn btn-success" id="btnSummaryFind" type="submit"><span
                                                 class="glyphicon glyphicon-search"></span>&nbsp;Search
@@ -48,7 +51,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid" th:if="${#authorization.expression('hasRole(''ROLE_MLT1'')') || #authorization.expression('hasRole(''ROLE_MANAGER'')') || #authorization.expression('hasRole(''ROLE_CASHIER'')')}">
+                <div class="container-fluid"
+                     th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')') || #authorization.expression('hasRole(''ROLE_MANAGER'')') || #authorization.expression('hasRole(''ROLE_CASHIER'')')}">
                     <div class="row" id="summary">
                         <div class="container-fluid">
                             <div class="row">
@@ -71,16 +75,6 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr class="text-info">
-                                                <th>LAB INVESTIGATIONS COLLECTION</th>
-                                                <th class="text-right"><span th:text="${{labCollection}}"></span></th>
-                                            </tr>
-                                            <tr class="text-info">
-                                                <th>MEDICAL PACKAGES COLLECTION</th>
-                                                <th class="text-right"><span
-                                                        th:text="${{medicalPackageCollection}}"></span>
-                                                </th>
-                                            </tr>
                                             <tr class="text-primary">
                                                 <th>TOTAL COLLECTION</th>
                                                 <th class="text-right"><span th:text="${{totalCollection}}"></span></th>
@@ -90,10 +84,10 @@
                                                 <th class="text-right"><span th:text="${{discountedAmount}}"></span>
                                                 </th>
                                             </tr>
-                                            <tr class="text-warning">
+                                            <!--<tr class="text-warning">
                                                 <th>REFUND COLLECTION</th>
                                                 <th class="text-right"><span th:text="${{totalRefund}}"></span></th>
-                                            </tr>
+                                            </tr>-->
                                             <tr class="text-info">
                                                 <th>TOTAL CASH COLLECTION</th>
                                                 <th class="text-right"><span th:text="${{totalCash}}"></span></th>
@@ -114,7 +108,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="container-fluid" th:if="${print==true}">
+                        <div class="container-fluid" >
                             <button class="btn btn-success" onclick="printContent('summary')"><span
                                     class="glyphicon glyphicon-print"></span>&nbsp;Print
                             </button>
@@ -142,9 +136,9 @@
                                         <th class="text-right" th:text="${{invoicedCount}}"></th>
                                     </tr>
                                     <tr class="text-info">
-                                        <th>Patient Count</th>
+                                        <th>Customer Count</th>
                                         <th class="text-right" th:text="${{patientCount}}"></th>
-                                    </tr>
+                                    </tr><!--
                                     <tr class="text-info">
                                         <th>Medical Package Count</th>
                                         <th class="text-right" th:text="${medicalPackageCount}"></th>
@@ -152,14 +146,14 @@
                                     <tr class="text-success">
                                         <th>Total Investigation Count</th>
                                         <th class="text-right" th:text="${{investigationCount}}"></th>
-                                    </tr>
+                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="container-fluid" th:if="${print==true}">
+                        <div class="container-fluid" >
                             <button class="btn btn-success" onclick="printContent('workLoad')"><span
                                     class="glyphicon glyphicon-print"></span>&nbsp;Print
                             </button>

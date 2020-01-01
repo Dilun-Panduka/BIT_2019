@@ -18,16 +18,18 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public boolean sendEmployeeRegistrationEmail(String recieverEmail,String subject, String messageText) throws MailException {
+    public boolean sendEmployeeRegistrationEmail(String receiverEmail,String subject, String messageText) throws MailException {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         try {
-            mailMessage.setTo(recieverEmail);
+            mailMessage.setTo(receiverEmail);
             mailMessage.setFrom("Excellent_Health_Solution");
             mailMessage.setSubject(subject);
             mailMessage.setText(messageText);
 
             javaMailSender.send(mailMessage);
+            System.out.println("successfully send");
         } catch (Exception e) {
+            System.out.println("exception "+ e.toString());
             return false;
         }
         return true;
@@ -47,7 +49,6 @@ public class EmailService {
         }
         return true;
     }
-
     public boolean sendSupplierRegistrationEmail(String recieverEmail,String subject, String messageText) throws MailException {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         try {

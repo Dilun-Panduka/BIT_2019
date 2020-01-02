@@ -473,13 +473,17 @@ $("#startDate").bind("input", function () {
 });
 $("#endDate").bind("input", function () {
     let endDate = document.getElementById("endDate").value;
+    let startDate = document.getElementById("startDate").value;
     let milliSecondToDay = Date.parse(new Date());
 //only start date has value
     if (endDate.length !== 0) {
-        let milliSecondStartDate = Date.parse(endDate);
-        if (milliSecondToDay > milliSecondStartDate) {
+        let milliSecondEndDate = Date.parse(endDate);
+        let milliSecondStartDate = Date.parse(startDate);
+console.log(milliSecondStartDate,milliSecondEndDate);
+        if (milliSecondToDay > milliSecondEndDate) {
             backgroundColourChangeGood($(this));
-        } else {
+        }
+        if (milliSecondEndDate < milliSecondStartDate || milliSecondToDay < milliSecondEndDate) {
             backgroundColourChangeBad($(this));
         }
     } else {
@@ -496,8 +500,7 @@ $("#btnSummaryFind").bind("mouseover", function () {
         let milliSecondStartDate = Date.parse(startDate);
         let milliSecondEndDate = Date.parse(endDate);
 
-        if (milliSecondToDay < milliSecondStartDate || milliSecondToDay < milliSecondEndDate) {
-
+        if (milliSecondToDay < milliSecondStartDate || milliSecondToDay < milliSecondEndDate || milliSecondEndDate < milliSecondStartDate) {
             swal({
                 title: "Date range is not valid",
                 icon: "warning",

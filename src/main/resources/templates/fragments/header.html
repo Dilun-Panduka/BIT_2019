@@ -11,7 +11,6 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li class="dropdown dropdown-toggle"><a href="/home">Home</a></li>
-					<li class="dropdown dropdown-toggle" sec:authorize="!isAuthenticated()"><a  href="/invoiceProcess">Lab Test &amp; Medical Package</a></li>
 			 		<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" sec:authorize="isAuthenticated()">General <span class="caret"></span></a>
 						<!--CASHIER NAV BAR CONTENT -->
@@ -24,7 +23,7 @@
 							<li><a href="/customer">Customer Management</a></li>
 							<li><a href="/supplier">Supplier Management </a></li>
 							<li><a href="/item">Item Management </a></li>
-							<li><a href="/invoice">Invoice Management</a></li>
+							<li><a href="/invoice/addForm">Invoice Management</a></li>
 							<li><a href="/user">User Management </a></li>
 						</ul>
 					</li>
@@ -45,6 +44,7 @@
 							<li><a href="/supplier/add">Supplier Registration</a></li>
 							<li><a href="/item/add">Add a New Item</a></li>
 							<li><a href="/user/add">New User</a></li>
+							<li><a href="/role/add">New Role</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
@@ -59,25 +59,12 @@
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" sec:authorize="isAuthenticated()">Report<span class="caret"></span></a>
 						<!--CASHIER NAV BAR CONTENT -->
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_CASHIER'')')}">
-							<li><a href="/process/summary">Summury </a></li>
-						</ul>
-						<!--MLT1 NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MLT1'')')}">
-							<li><a href="/process/summary">Summary</a></li>
-						</ul>
-						<!--MLT2 NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MLT2'')')}">
-							<li><a href="/process/summary">Summary  </a></li>
+							<li><a href="/report/form">Summary </a></li>
 						</ul>
 						<!--MANAGER NAV BAR CONTENT -->
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
-							<li><a href="/sammary">Summary </a></li>
-							<li><a href="#">Medical Center </a></li>
-							<li><a href="#">Referral Doctor </a></li>
-						</ul>
-						<!--PHLABOTO NAV BAR CONTENT -->
-						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_PHLEBOTOMY'')')}">
-							<li><a href="/process/summary">Patient Count </a></li>
+							<li><a href="/report/form">Summary </a></li>
+							<li><a href="/itemReport/form">Created Itmes Summary</a></li>
 						</ul>
 					</li>
 				</ul>

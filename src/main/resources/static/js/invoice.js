@@ -366,25 +366,26 @@ function selectedItem(obj) {
     row.insertCell(0).innerHTML = `<span>${array[0]}<input type="hidden" name="invoiceQuantities[${index}].item" value="${array[0]}"/></span>`;
     row.insertCell(1).innerHTML = `<span>${array[1]}</span>`;
     row.insertCell(2).innerHTML = `<span>${array[2]}</span>`;
+    row.insertCell(3).innerHTML = `<span>${array[3]}</span>`;
     if (array[3] == "Tablet" || array[3] == "Capsule") {
-        row.insertCell(3).innerHTML = `<span id="selling">${array[4]}</span>`;
-        row.insertCell(4).innerHTML = `<select class="form-control" default="1" id="frequencyRatio" name="frequencyRatio" onChange="calculateAmount()"><option value="2">BD</option><option value="3">TDS</option><option value="1">OD</option><option value="1">OM </option><option value="1">ON </option><option value="4">QDS</option><option value="6">QQH</option><option value="3">TID</option><option value="5">FIVE_TIMES</option></select>`;
-        row.insertCell(5).innerHTML = '<input id="pills" name="pills" class="form-control" type="number" onkeyup="calculateAmount()">';
-        row.insertCell(6).innerHTML = '<input id="duration" class="form-control" type="number" onkeyup="calculateAmount()">';
-        row.insertCell(7).innerHTML = `<input id="qty" class="form-control" type="text" name="invoiceQuantities[${index}].quantity" onkeyup="calculateAmount()">`;
-        row.insertCell(8).innerHTML = `<input id="amount" class="form-control" name="invoiceQuantities[${index}].amount" readonly type="text">`;
+        row.insertCell(4).innerHTML = `<span id="selling">${array[4]}</span>`;
+        row.insertCell(5).innerHTML = `<select class="form-control" default="1" id="frequencyRatio" name="frequencyRatio" onChange="calculateAmount()"><option value="2">BD</option><option value="3">TDS</option><option value="1">OD</option><option value="1">OM </option><option value="1">ON </option><option value="4">QDS</option><option value="6">QQH</option><option value="3">TID</option><option value="5">FIVE_TIMES</option></select>`;
+        row.insertCell(6).innerHTML = '<input id="pills" name="pills" class="form-control" type="number" onkeyup="calculateAmount()">';
+        row.insertCell(7).innerHTML = '<input id="duration" class="form-control" type="number" onkeyup="calculateAmount()">';
+        row.insertCell(8).innerHTML = `<input id="qty" class="form-control" type="text" name="invoiceQuantities[${index}].quantity" onkeyup="calculateAmount()">`;
+        row.insertCell(9).innerHTML = `<input id="amount" class="form-control" name="invoiceQuantities[${index}].amount" readonly type="text">`;
     }
     else {
-        row.insertCell(3).innerHTML = `<span id="SyrupSelling">${array[4]}</span>`;
-        row.insertCell(4).innerHTML = '<select disabled class="form-control" default="1" id="frequencyRatio" name="frequencyRatio"><option>BD <span type="hidden" value="2"></span></option><option>TDS <span type="hidden" value="3"></span></option><option>OD <span type="hidden" value="1"></span></option><option>OM <span type="hidden" value="1"></span></option><option>ON <span type="hidden" value="1"></span></option> <option>PRN <span type="hidden" value="0"></span></option><option>QDS <span type="hidden" value="4"></span></option> <option>QQH <span type="hidden" value="6"></span></option> <option>TID <span type="hidden" value="3"></span></option> <option>FIVE_TIMES <span type="hidden" value="5"></span></option></select>';
-        row.insertCell(5).innerHTML = '<input class="form-control" disabled type="number">';
+        row.insertCell(4).innerHTML = `<span id="SyrupSelling">${array[4]}</span>`;
+        row.insertCell(5).innerHTML = '<select disabled class="form-control" default="1" id="frequencyRatio" name="frequencyRatio"><option>BD <span type="hidden" value="2"></span></option><option>TDS <span type="hidden" value="3"></span></option><option>OD <span type="hidden" value="1"></span></option><option>OM <span type="hidden" value="1"></span></option><option>ON <span type="hidden" value="1"></span></option> <option>PRN <span type="hidden" value="0"></span></option><option>QDS <span type="hidden" value="4"></span></option> <option>QQH <span type="hidden" value="6"></span></option> <option>TID <span type="hidden" value="3"></span></option> <option>FIVE_TIMES <span type="hidden" value="5"></span></option></select>';
         row.insertCell(6).innerHTML = '<input class="form-control" disabled type="number">';
-        row.insertCell(7).innerHTML = `<input id="SyrupQty" class="form-control" name="invoiceQuantities[${index}].quantity" type="text" onkeyup="calculateAmount()">`;
-        row.insertCell(8).innerHTML = `<input id="SyrupAmount" class="form-control" name="invoiceQuantities[${index}].amount" readonly type="text">`;
+        row.insertCell(7).innerHTML = '<input class="form-control" disabled type="number">';
+        row.insertCell(8).innerHTML = `<input id="SyrupQty" class="form-control" name="invoiceQuantities[${index}].quantity" type="text" onkeyup="calculateAmount()">`;
+        row.insertCell(9).innerHTML = `<input id="SyrupAmount" class="form-control" name="invoiceQuantities[${index}].amount" readonly type="text">`;
     }
 
 
-    row.insertCell(9).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
+    row.insertCell(10).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
 
 }
 

@@ -30,13 +30,6 @@
                 <div class="row">
                     <div class="container-fluid">
                         <h4>
-                            Expected Date : <span th:text="${grnDetail.expectedDate}"></span>
-                        </h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container-fluid">
-                        <h4>
                             Received Date : <span th:text="${grnDetail.receivedDate}"></span>
                         </h4>
                     </div>
@@ -45,6 +38,13 @@
                     <div class="container-fluid">
                         <h4>
                             Supplier : <span th:text="${grnDetail.supplier.name}"></span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid">
+                        <h4>
+                            Supplier Invoice No. : <span th:text="${grnDetail.supplierInvoice}"></span>
                         </h4>
                     </div>
                 </div>
@@ -57,47 +57,41 @@
                             <thead>
                             <tr>
                                 <th>Index</th>
-                                <th>Supplier</th>
                                 <th>Item</th>
-                                <th>Available Qty.</th>
-                                <th>Requested Qty.</th>
-                                <th>Received Qty.</th>
                                 <th>Cost</th>
                                 <th>Selling Price</th>
-                                <th>Batch No.</th>
-                                <th>Expired Date</th>
-                                <th class="text-center">Modify</th>
+                                <th>Requested Qty.</th>
+                                <th>Received Qty.</th>
+                                <th>Amount</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="ledger, rowCount : ${ledgers}">
+                            <tr th:each="item, rowCount : ${grnDetail.grnQuantities}">
                                 <th th:text="${rowCount.count}"></th>
-                                <th th:text="${ledger.supplier.name}">
-                                    <input type="hidden" th:value="${ledger.supplier}">
+                                <th th:text="${item.item.description}">
+                                    <input type="hidden" th:value="${item.item}">
                                 </th>
-                                <th th:text="${ledger.item.description}">
-                                    <input type="hidden" th:value="${ledger.item}">
-                                </th>
-                                <th th:text="${ledger.availableQuantity}"></th>
-                                <th th:text="${ledger.requestedQuantity}"></th>
-                                <th><input type="text" th:field="*{quantity}"></th>
-                                <th><input type="text" th:field="*{cost}"></th>
-                                <th><input type="text" th:field="*{selling}"></th>
-                                <th><input type="text" th:field="*{batchNo}"></th>
-                                <th><input type="date" th:field="*{expDate}"></th>
-
-                                <th><a class="btn btn-danger"><i
-                                        aria-hidden="true" class="fa fa-trash-o"></i>
-                                    Delete</a></th>
+                                <th th:text="${item.item.cost}"></th>
+                                <th th:text="${item.item.selling}"></th>
+                                <th th:text="${item.requestedQty}"></th>
+                                <th th:text="${item.receivedQuantity}"></th>
+                                <th th:text="${item.amount}"></th>
                             </tr>
+                            <tfoot>
+                            <tr>
+                                <th colspan="4" class="text-right"><label class="control-label text-capitalize">Total
+                                    :</label></th>
+                                <th th:text="${grnDetail.total}"></th>
+                            </tr>
+                            </tfoot>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div th:if="${addStatus==false}">
+            <div>
                 <div class="col-sm-6 text-center">
-                    <a href="/item">
+                    <a href="/grn">
                         <button class="btn btn-primary"><span class="glyphicon glyphicon-backward"></span>&nbsp;
                             Back
                         </button>

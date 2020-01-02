@@ -53,12 +53,12 @@ public class Invoice {
     @Column(name = "balance", precision = 10, scale = 2)
     private BigDecimal balance;
 
-    @Column(name = "bank_name")
+//    @Column(name = "bank_name")
     private String bankName;
 
 
-    @Column(name = "card_number")
-    private Integer cardNumber;
+//    @Column(name = "card_number")
+    private String cardNumber;
 
 
     @Column(name = "remarks", length = 150)

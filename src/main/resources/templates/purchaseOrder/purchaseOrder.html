@@ -33,6 +33,7 @@
                             <th>Created Date</th>
                             <th>Expected Date</th>
                             <th>Purchase Order Status</th>
+                            <th>Total</th>
                             <th class="text-center">Modify</th>
                         </tr>
                         </thead>
@@ -45,13 +46,11 @@
                             <th th:text="${purchaseOrder.expectedDate}"></th>
                             <th th:text="${purchaseOrder.purchaseOrderStatus.purchaseOrderStatus}"></th>
                             <th th:text="${purchaseOrder.total}"></th>
-                            <th><a class="btn btn-success" th:href="${'/purchaseOrder/' + purchaseOrder.id}"><i
+                            <th class="text-center"><a class="btn btn-success" th:href="${'/purchaseOrder/' + purchaseOrder.id}"><i
                                     class="fa fa-folder-open"></i>&nbsp;View</a>
-                                <a class="btn btn-primary" th:href="${'/purchaseOrder/edit/' + purchaseOrder.id}"><i
-                                        class="fa fa-edit"></i>&nbsp;Edit</a>
                                 <a class="btn btn-danger" th:href="${'/purchaseOrder/remove/' + purchaseOrder.id}"><i
                                         aria-hidden="true" class="fa fa-trash-o"></i>
-                                    Delete</a></th>
+                                    Cancel</a></th>
                         </tr>
                         </tbody>
                     </table>

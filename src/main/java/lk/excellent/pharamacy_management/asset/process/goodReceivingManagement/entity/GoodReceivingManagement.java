@@ -39,6 +39,8 @@ public class GoodReceivingManagement {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate receivedDate;
 
+    private String supplierInvoice;
+
     private String remarks;
 
     private BigDecimal total;

@@ -30,38 +30,18 @@
             </div>
             <div class="container-fluid" th:if="${searchArea==true}">
                 <div class="col-sm-offset-2">
-                    <div class="row">
+                    <div class="row" style="width: 50%; height: 10vh; background-color: #2eabf1; margin: auto 400px auto auto;">
                         <form action="/grn/findByPOCode" class="form-horizontal" method="post">
-                            <!--<div class="col-sm-5">
-                                <div class="col-md-4 form-group">
-                                    <label for="supp">Select Parameter:</label>
-                                    <select class="form-control" id="supp">
-                                        <option value=""> Please Select</option>
-                                        <option value="name">Name</option>
-                                        <option value="code">Code</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-1"></div>
-                                <div class=" col-md-6 form-group text-left">
-                                    <label class="" for="criteria">Value :</label>
-                                    <input class="form-control" id="criteria" placeholder="Enter Search Value Here"
-                                           type="text"/>
-                                </div>
-                                <div class="text-center col-md-1 form-group">
-                                    <br>
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                </div>
-                            </div>-->
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-5">
-                                <div class="col-md-4 form-group">
-                                    <label for="code">PO Code:</label>
-                                    <input class="form-control" type="text" id="code" name="code"
-                                           placeholder="Please Enter PO code">
-                                </div>
-                                <div class="text-center col-md-1 form-group">
-                                    <br>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                            <div class="row">
+                                <div class="col-sm-9" style="display: flex; flex-direction: row; justify-content: center; align-items: flex-end">
+                                    <div class="col-md-6 form-group">
+                                        <label for="code">PO Code:</label>
+                                        <input class="form-control" type="text" id="code" name="code"
+                                               placeholder="Please Enter PO code">
+                                    </div> &nbsp;
+                                    <div class="text-center col-md-1 form-group">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -221,15 +201,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6" th:if="${addStatus == false}">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4" for="poS">PO Status</label>
-                                        <div class="col-md-4">
-                                            <select class="form-control" id="poS" th:field="*{grnStatus}">
-                                                <option th:each="p : ${grnStatus}"
-                                                        th:text="${p.grnStatus}"
-                                                        th:value="${p}"></option>
-                                            </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <div class="form-group text-left">
+                                        <label class="control-label col-md-4" for="supplierInvoice">Supplier Invoice No.:</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="supplierInvoice"
+                                                   th:field="*{supplierInvoice}" type="text" required/>
                                         </div>
                                     </div>
                                 </div>

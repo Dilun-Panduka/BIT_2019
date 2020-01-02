@@ -41,6 +41,21 @@ public class GoodReceivingManagementController {
         this.itemService = itemService;
     }
 
+    @RequestMapping
+    public String grnPage(Model model) {
+        List<GoodReceivingManagement> goodReceivingManagements = goodReceivingManagementService.findAll();
+        model.addAttribute("grns", goodReceivingManagements);
+        return "grn/grn";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String grnView(@PathVariable("id") Integer id, Model model){
+        GoodReceivingManagement goodReceivingManagement = goodReceivingManagementService.findById(id);
+        model.addAttribute("grnDetail", goodReceivingManagement);
+        model.addAttribute("addStatus", false);
+        return "grn/grn-detail";
+    }
+
     @GetMapping("/add")
     public String grnAddForm(Model model) {
         List<String> codesList = new ArrayList<>();
@@ -130,8 +145,16 @@ public class GoodReceivingManagementController {
                 }
             }
         }
-
-
+        String grn = "";
+        if (goodReceivingManagementService.lastGrn() == null) {
+            grn = "EHGRC00";
+        } else {
+            grn = goodReceivingManagementService.lastGrn().getCode();
+        }
+        String grnNumber = grn.replaceAll("[^0-9]+", "");
+        Integer grnN = Integer.parseInt(grnNumber);
+        int newGrnNumber = grnN + 1;
+        goodReceivingManagement.setCode("EHGRC" + newGrnNumber);
         goodReceivingManagement.setCreatedDate(dateTimeAgeService.getCurrentDate());
         goodReceivingManagement.setUpdatedDate(dateTimeAgeService.getCurrentDate());
         goodReceivingManagement.setGrnQuantities(grnQuantities);
@@ -159,6 +182,6 @@ public class GoodReceivingManagementController {
         }
 
 
-        return "redirect:/grn/add";
+        return "redirect:/grn";
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -62,5 +63,9 @@ public class ItemService implements AbstractService<Item, Integer> {
 
     public List<Item> findByCategory(Category category) {
         return itemDao.findByCategory(category);
+    }
+
+    public List<Item> findByCreatedAtBetween(LocalDate from, LocalDate to){
+        return itemDao.findByCreatedAtBetween(from, to);
     }
 }

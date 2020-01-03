@@ -130,6 +130,7 @@ public class ItemController {
             ledger.setAvailableQuantity(item1.getSoh());
             ledger.setCost(item1.getCost());
             ledger.setReorderLimit(item1.getReorderLimit());
+            ledger.setExpireDate(item.getExpireDate());
             ledger.setUpdatedAt(dateTimeAgeService.getCurrentDate());
             return "redirect:/item";
         }
@@ -145,6 +146,7 @@ public class ItemController {
         ledger.setAvailableQuantity(item1.getSoh());
         ledger.setCost(item1.getCost());
         ledger.setReorderLimit(item1.getReorderLimit());
+        ledger.setExpireDate(item.getExpireDate());
         ledger.setCreatedAt(dateTimeAgeService.getCurrentDate());
         ledger.setUpdatedAt(dateTimeAgeService.getCurrentDate());
         ledgerService.persist(ledger);

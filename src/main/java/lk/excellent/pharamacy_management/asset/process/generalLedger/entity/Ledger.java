@@ -3,6 +3,7 @@ package lk.excellent.pharamacy_management.asset.process.generalLedger.entity;
 
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -33,6 +34,9 @@ public class Ledger {
 
     @Column(nullable = false)
     private int reorderLimit;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate expireDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Item item;

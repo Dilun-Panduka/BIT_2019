@@ -2,9 +2,11 @@ package lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.
 
 import lk.excellent.pharamacy_management.asset.item.entity.Item;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -23,6 +25,9 @@ public class GrnQuantity {
     private int receivedQuantity;
 
     private BigDecimal amount;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate expireDate;
 
     @ManyToOne
     private Item item;

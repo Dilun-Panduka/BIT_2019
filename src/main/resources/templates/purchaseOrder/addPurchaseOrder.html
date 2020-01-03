@@ -201,10 +201,10 @@
                                         <th><input type="hidden"
                                                    th:field="*{itemQuantity[__${rowCount.index}__].item}"
                                                    th:value="${item.item}">
-                                            <input type="text" class="form-control" id="qty" onkeyup="calculateAmount()"
+                                            <input type="number" min="1" class="form-control" id="qty" onkeyup="calculateAmount()"
                                                    th:field="*{itemQuantity[__${rowCount.index}__].quantity}"></th>
                                         <th><span class="cost" th:text="${item.item.cost}"></span></th>
-                                        <th><input type="text" class="form-control" id="amount"
+                                        <th><input type="number" step=".01" class="form-control" id="amount"
                                                    th:field="*{itemQuantity[__${rowCount.index}__].amount}" readonly>
                                         </th>
                                         <th><a class="btn btn-danger" onclick="deleteRows(this)"><i

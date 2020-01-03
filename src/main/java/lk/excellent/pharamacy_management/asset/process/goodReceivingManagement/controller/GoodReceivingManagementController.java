@@ -97,9 +97,10 @@ public class GoodReceivingManagementController {
 
         List<GrnQuantity> grnQuantities = new ArrayList<>();
         for (GrnQuantity grnQuantity : goodReceivingManagement.getGrnQuantities()) {
+            grnQuantity.setGoodReceivingManagement(goodReceivingManagement);
             Ledger ledger = ledgerService.findByItem(grnQuantity.getItem());
             if (ledger != null) {
-                if (ledger.getItem().getCost().equals(grnQuantity.getItem().getCost())) {
+                if (ledger.getItem().getCost().equals(grnQuantity.getItem().getCost()) && ledger.getItem().getExpireDate().equals(grnQuantity.getItem().getExpireDate())) {
                     ledger.setAvailableQuantity(ledger.getAvailableQuantity() + grnQuantity.getReceivedQuantity());
                     Item item = itemService.findById(grnQuantity.getItem().getId());
                     item.setSoh(ledger.getAvailableQuantity());
@@ -114,6 +115,7 @@ public class GoodReceivingManagementController {
                     item.setCategory(ledger.getItem().getCategory());
                     item.setReorderLimit(ledger.getItem().getReorderLimit());
                     item.setStatus(ledger.getItem().getStatus());
+
                     item.setSoh(grnQuantity.getReceivedQuantity());
                     String c = "";
                     if (itemService.lastItem() == null) {
@@ -127,6 +129,7 @@ public class GoodReceivingManagementController {
                     item.setCode("EHS" + newItemNumber);
                     item.setCost(grnQuantity.getItem().getCost());
                     item.setSelling(grnQuantity.getItem().getSelling());
+                    item.setExpireDate(grnQuantity.getItem().getExpireDate());
                     item.setCreatedAt(dateTimeAgeService.getCurrentDate());
                     item.setUpdatedAt(dateTimeAgeService.getCurrentDate());
                     Item item1 = itemService.persist(item);
@@ -138,6 +141,7 @@ public class GoodReceivingManagementController {
                     ledger1.setAvailableQuantity(item1.getSoh());
                     ledger1.setCost(item1.getCost());
                     ledger1.setReorderLimit(item1.getReorderLimit());
+                    ledger1.setExpireDate(item1.getExpireDate());
                     ledger1.setCreatedAt(dateTimeAgeService.getCurrentDate());
                     ledger1.setUpdatedAt(dateTimeAgeService.getCurrentDate());
                     grnQuantity.setItem(ledgerService.persist(ledger1).getItem());

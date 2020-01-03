@@ -24,10 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.servlet.ServletContext;
@@ -63,6 +60,20 @@ public class InvoiceController {
         this.fileHandelService = fileHandelService;
         this.context = context;
     }
+    @RequestMapping
+    public String allInvoices(Model model){
+        List<Invoice> invoices = invoiceService.findAll();
+        model.addAttribute("invoices", invoices);
+        return "invoice/invoice";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String invoiceView(@PathVariable("id") Integer id, Model model){
+        Invoice invoice = invoiceService.findById(id);
+        model.addAttribute("invoiceDetail", invoice);
+        model.addAttribute("addStatus", false);
+        return "invoice/invoice-detail";
+    }
 
     @GetMapping("/addForm")
     public String giveForm(Model model) {
@@ -88,7 +99,8 @@ public class InvoiceController {
             e.printStackTrace();
         }
         /*Medicines all*/
-        model.addAttribute("items", itemService.findAll());
+        List<Item> items = itemService.findAll().stream().filter(x->x.getSoh()> 0).collect(Collectors.toList());
+        model.addAttribute("items", items);
         model.addAttribute("frequencies", Frequency.values());
 
         /*Discounts and Payment Methods*/
@@ -148,7 +160,7 @@ public class InvoiceController {
             String fullPath = request.getServletContext().getRealPath("/resources/report/" + "invoices" + ".pdf");
             fileHandelService.filedownload(fullPath, response, "invoices.pdf");
         }
-        return "redirect:/addForm";
+        return "redirect:/invoice";
     }
 
 }

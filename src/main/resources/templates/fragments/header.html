@@ -53,6 +53,7 @@
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
 							<li><a href="/purchaseOrder">Purchase Orders </a></li>
 							<li><a href="/grn">Received Goods</a></li>
+							<li><a href="/invoice">Invoices</a></li>
 						</ul>
 					</li>
 					<li class="dropdown" >
@@ -64,7 +65,8 @@
 						<!--MANAGER NAV BAR CONTENT -->
 						<ul class="dropdown-menu" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
 							<li><a href="/report/form">Summary </a></li>
-							<li><a href="/itemReport/form">Created Itmes Summary</a></li>
+							<li><a href="/itemReport/form">Created Items Summary</a></li>
+							<li><a href="/itemReport/purchaseOrderForm">Purchase Orders Summary</a></li>
 						</ul>
 					</li>
 				</ul>

@@ -5,33 +5,56 @@
 
     <style th:replace="fragments/style"></style>
 </head>
-<body style="background-image: url('img/mainWindowbg.jpg'); background-size: cover;" >
+<body style="background-image: url('img/mainWindowbg.jpg'); background-size: cover;">
 <nav class="navbar navbar-default" th:replace="fragments/header :: header"></nav>
 <div class="container-fluid" style="height: 90vh">
     <div class="container" style="margin-top: 70px;">
         <div class="row">
             <div class="col-sm-9">
-
                 <div class="row" style="margin-top: 70px;">
                     <div class="col-sm-4">
-                        <a href="item" style="text-decoration: none !important; color: black !important"> <img src="img/items.png" alt=""><h3 class="home-icon">Manage Medicine</h3></a>
+                        <a href="item" style="text-decoration: none !important; color: black !important"> <img
+                                src="img/items.png" alt="">
+                            <h3 class="home-icon">Manage Medicine</h3></a>
                     </div>
                     <div class="col-sm-4">
-                        <a href="/purchaseOrder"style="text-decoration: none !important; color: black !important"> <img src="img/purchase.png" alt=""><h3 class="home-icon">Manage Purchases</h3></a>
+                        <a href="/purchaseOrder" style="text-decoration: none !important; color: black !important"> <img
+                                src="img/purchase.png" alt="">
+                            <h3 class="home-icon">Manage Purchases</h3></a>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 70px;">
                     <div class="col-sm-4">
-                        <a href="/grn/add"style="text-decoration: none !important; color: black !important"> <img src="img/list.png" alt=""><h3 class="home-icon">GRN</h3></a>
+                        <a href="/grn/add" style="text-decoration: none !important; color: black !important"> <img
+                                src="img/list.png" alt="">
+                            <h3 class="home-icon">GRN</h3></a>
                     </div>
                     <div class="col-sm-4">
-                        <a href="/invoice/addForm" style="text-decoration: none !important; color: black !important"> <img src="img/pos.png" alt=""><h3 class="home-icon">Invoice</h3></a>
+                        <a href="/invoice/addForm" style="text-decoration: none !important; color: black !important">
+                            <img src="img/pos.png" alt="">
+                            <h3 class="home-icon">Invoice</h3></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="row" style="margin-top: 70px;">
+                    <div class="col-sm-4">
+                        <a href="ledger" style="text-decoration: none !important; color: black !important"> <img
+                                src="img/items.png" alt="">
+                            <h3 class="home-icon">Ledger</h3></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" style="margin-top: 70px;">
+                        <a href="customer" style="text-decoration: none !important; color: black !important"> <img
+                                src="img/manager/editPatient.jpg" style="width: 80px; height: 80px;" alt="">
+                            <h3 class="home-icon">Manage Customers</h3></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
 <footer class="page-footer" th:replace="fragments/footer"></footer>
 <script th:replace="fragments/script"></script>
 </body>

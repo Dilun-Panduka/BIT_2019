@@ -109,7 +109,7 @@ public class InvoiceService implements AbstractService<Invoice, Integer> {
             paragraph.setSpacingAfter(10);
             document.add(paragraph);
 
-            Paragraph customer = new Paragraph("Customer : "+invoice.getCustomer().getName()+"\t"+"Mobile : "+invoice.getCustomer().getMobile()
+            Paragraph customer = new Paragraph("Customer : "+invoice.getCustomer().getName()+"      "+"Mobile : "+invoice.getCustomer().getMobile()
                     , customerFont);
             customer.setAlignment(Element.ALIGN_LEFT);
             customer.setIndentationLeft(50);

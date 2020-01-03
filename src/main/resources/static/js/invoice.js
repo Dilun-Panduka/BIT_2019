@@ -135,17 +135,17 @@ class customer {
 class item {
     constructor(id, code, description, category, selling
                 // , frequency, pills, duration, qty, price
-    ){
+    ) {
         this._id = id;
         this._code = code;
         this._description = description;
         this._category = category;
         this._selling = selling;
-       /* this._frequency = frequency;
-        this._pills = pills;
-        this._duration = duration;
-        this._qty = qty;
-        this._price = price;*/
+        /* this._frequency = frequency;
+         this._pills = pills;
+         this._duration = duration;
+         this._qty = qty;
+         this._price = price;*/
     }
 
     get id() {
@@ -385,7 +385,8 @@ function selectedItem(obj) {
     }
 
 
-    row.insertCell(10).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
+        row.insertCell(10).innerHTML = '<button type="button" class="btn btn-danger" onClick="deleteRow(this)">Remove</button>';
+
 
 }
 
@@ -418,7 +419,7 @@ function calculateAmount() {
         pillQty.push(parseFloat(pills[i].value));
     }
 
-    for (let w = 0; w < sel.length; w++){
+    for (let w = 0; w < sel.length; w++) {
         selling.push(parseFloat(sel[w].textContent));
     }
     for (let r = 0; r < freq.length; r++) {
@@ -441,13 +442,13 @@ function calculateAmount() {
         }
     }
 
-    for (let val = 0; val < quantity.length; val++){
+    for (let val = 0; val < quantity.length; val++) {
         let price = selling[val] * quantity[val];
         amnt[val].value = price.toFixed(2);
 
-        if (!isNaN(amnt[val].value)){
+        if (!isNaN(amnt[val].value)) {
             amount.push(parseFloat(amnt[val].value));
-        }else{
+        } else {
             amnt[val].value = 0.0;
             amount.push(parseFloat(amnt[val].value));
         }
@@ -455,7 +456,7 @@ function calculateAmount() {
     //</editor-fold>
 
     //<editor-fold desc="Calculate Amount of Other Categories">
-    for (let w = 0; w < sel1.length; w++){
+    for (let w = 0; w < sel1.length; w++) {
         selling1.push(parseFloat(sel1[w].textContent));
     }
 
@@ -465,9 +466,9 @@ function calculateAmount() {
 
     for (let n = 0; n < Sqty.length; n++) {
         amnt1[n].value = Squantity[n] * selling1[n];
-        if (!isNaN(amnt1[n].value)){
+        if (!isNaN(amnt1[n].value)) {
             amounts.push(parseFloat(amnt1[n].value));
-        }else{
+        } else {
             amnt1[n].value = 0.0;
             amounts.push(parseFloat(amnt1[n].value));
         }
@@ -487,15 +488,16 @@ function calculateTotal(amount1, amount2) {
     for (let m = 0; m < amount2.length; m++) {
         p = p + amount2[m];
     }
-    total.value = t + p;
+    total.value = (t + p).toFixed(2);
     discountedPrice();
 }
 
 function discountedPrice() {
-    if($("#cmbDiscountRatio option:selected").text() === "No Discount"){
+    if ($("#cmbDiscountRatio option:selected").text() === "No Discount") {
         $("#TotalAmount").val($("#totalPrice").val());
-    }else {
-        $("#TotalAmount").val($("#totalPrice").val() - ($("#totalPrice").val() * (parseFloat($("#cmbDiscountRatio option:selected").text()) / 100))).toFixed(2);
+    } else {
+
+        $("#TotalAmount").val($("#totalPrice").val() - ($("#totalPrice").val() * (parseFloat($("#cmbDiscountRatio option:selected").text()) / 100)).toFixed(2));
     }
 }
 
@@ -528,7 +530,7 @@ $("#cmbDiscountRatio").on("change", function () {
 
     if ($("#amountTendered").val() !== "") {
 
-        $("#balance").val($("#amountTendered").val() - $("#amount").val());
+        $("#balance").val($("#amountTendered").val() - $("#amount").val()).toFixed(2);
 
         if ($("#balance").val() < 0) {
             contentHide(document.getElementById("btnSubmitInvoice"));
@@ -542,7 +544,7 @@ $("#cmbDiscountRatio").on("change", function () {
 //payment method show and hide
 $("#cmbPaymentMethod").on("change", function () {
     $("#cardNumber, #bankName").val("");
-    console.log("payment",$("#cmbPaymentMethod").val())
+    console.log("payment", $("#cmbPaymentMethod").val())
     if ($("#cmbPaymentMethod").val() === "CREDITCARD" || $("#cmbPaymentMethod").val() === "CHEQUE") {
         $("#cash").hide();
         $("#card").show();

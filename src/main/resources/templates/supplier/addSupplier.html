@@ -129,7 +129,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="items">Items:</label>
                                 <div class="col-md-8">
-                                    <select class="form-control" id="items" th:field="*{ids}" multiple required>
+                                    <select class="form-control" style="height: 30vh" id="items" th:field="*{ids}" multiple required>
                                         <option th:each="item : ${items}"
                                                 th:text="${item.description}"
                                                 th:value="${item.id}"

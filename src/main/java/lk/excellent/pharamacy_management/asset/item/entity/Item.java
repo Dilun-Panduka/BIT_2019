@@ -11,6 +11,7 @@ import lk.excellent.pharamacy_management.asset.process.generalLedger.entity.Ledg
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.entity.GrnQuantity;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.ItemQuantity;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,7 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonIgnoreProperties(value = {"createdAt","updatedAt"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @JsonFilter("Item")
 public class Item {
 
@@ -55,6 +56,9 @@ public class Item {
     private int soh;
 
     private int reorderLimit;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate expireDate;
 
     private LocalDate updatedAt;
 

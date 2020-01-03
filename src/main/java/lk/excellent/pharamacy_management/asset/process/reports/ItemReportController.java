@@ -5,6 +5,7 @@ import lk.excellent.pharamacy_management.asset.item.service.ItemService;
 import lk.excellent.pharamacy_management.asset.process.finance.service.InvoiceService;
 import lk.excellent.pharamacy_management.asset.process.generalLedger.service.LedgerService;
 import lk.excellent.pharamacy_management.asset.process.goodReceivingManagement.service.GoodReceivingManagementService;
+import lk.excellent.pharamacy_management.asset.process.purchaseOrder.entity.PurchaseOrder;
 import lk.excellent.pharamacy_management.asset.process.purchaseOrder.service.PurchaseOrderService;
 import lk.excellent.pharamacy_management.asset.process.reports.entityHelp.ReportHelp;
 import lk.excellent.pharamacy_management.security.entity.User;
@@ -71,5 +72,31 @@ public class ItemReportController {
         List<Item> items = itemService.findByCreatedAtBetween(reportHelp.getStartDate(),reportHelp.getEndDate());
         model.addAttribute("items", items);
         return "summary/ItemSummary";
+    }
+
+    @GetMapping("/purchaseOrderForm")
+    public String purchaseOrderDailyReport(Model model){
+        model.addAttribute("givenDate", dateTimeAgeService.getCurrentDate().toString());
+        User user = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("dateObject", new ReportHelp());
+        model.addAttribute("date", dateTimeAgeService.getCurrentDateTime());
+        model.addAttribute("user", user.getEmployee().getTitle().getTitle() + " " + user.getEmployee().getName());
+        List<PurchaseOrder> purchaseOrders = purchaseOrderService.findByCreatedAtBetween(dateTimeAgeService.getCurrentDate(), dateTimeAgeService.getCurrentDate());
+        model.addAttribute("purchaseOrders", purchaseOrders);
+        return "summary/POSummary";
+    }
+
+    @PostMapping("/POrange")
+    public String purchaseOrderRangeReport(@Valid @ModelAttribute ReportHelp reportHelp, Model model){
+        User user = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("dateObject", new ReportHelp());
+        model.addAttribute("date", dateTimeAgeService.getCurrentDateTime());
+        model.addAttribute("user", user.getEmployee().getTitle().getTitle() + " " + user.getEmployee().getName());
+
+        model.addAttribute("givenDate", "FROM : " + reportHelp.getStartDate().toString() + "  TO : " + reportHelp.getEndDate().toString());
+        List<PurchaseOrder> purchaseOrders = purchaseOrderService.findByCreatedAtBetween(reportHelp.getStartDate(), reportHelp.getEndDate());
+        model.addAttribute("purchaseOrders", purchaseOrders);
+        return "summary/POSummary";
     }
 }

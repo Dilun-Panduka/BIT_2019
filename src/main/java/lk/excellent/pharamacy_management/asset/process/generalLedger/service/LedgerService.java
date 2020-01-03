@@ -24,7 +24,7 @@ public class LedgerService implements AbstractService<Ledger, Integer > { privat
 
     @Override
     public List<Ledger> findAll() {
-        return null;
+        return ledgerDao.findAll();
     }
 
     @Override
